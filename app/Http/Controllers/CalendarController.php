@@ -44,7 +44,7 @@ class CalendarController
      *
      * @return view('calendar.calendar')
      */
-    function getMonths($yearsDiff=0)
+    function getMonths(Request $request, $yearsDiff=0)
     {
         $user_id = Auth::user()->id;
 //        $events = CalendarModel::where('event.user_id', $user_id)->where('deleted_at', null)->get();
