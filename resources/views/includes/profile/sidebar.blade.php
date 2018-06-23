@@ -7,7 +7,7 @@
 {{--Бутон за покзаване на менюто--}}
 <div style="background-color: rgb(255,255,255,.5); " class="ui fixed vertical menu">
     <a style="background-color: rgb(255,255,255,.5)" class="item">
-        <div id="sideBarShowButton" class="ui icon  orange   circular button fixed">
+        <div id="sideBarShowButton" class="ui icon  red  circular button fixed">
             <i class="ui large bars right  icon"></i>
         </div>
     </a>
@@ -27,7 +27,7 @@
             </div>
             {{--Бутон за скриване на sidebar-а--}}
             <div class="ui eight wide column right aligned">
-                <div id="sideBarHideButton" class="ui icon  orange circular button"><i class="ui arrow left  icon"></i>
+                <div id="sideBarHideButton" class="ui icon  red circular button"><i class="ui arrow left  icon"></i>
                 </div>
             </div>
 

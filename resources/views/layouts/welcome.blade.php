@@ -28,7 +28,7 @@
     {{--side bar-a (профил меню и навигация)--}}
     @yield('sidebar')
     {{--Основната част от сайта--}}
-    <div class="pusher">
+    <div class="pusher background">
         @yield('main')
     </div>
 
