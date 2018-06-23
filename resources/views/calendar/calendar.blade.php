@@ -42,13 +42,16 @@
             </div>
         </div>
     {{--върти цикъл за имената на месеците --}}
-        {{$yearsDiff}}
+
     @for($i=$yearsDiff*12; $i<=$numberOfMonths+$yearsDiff*12; $i++)
         <!-- Име на месец -->
             <div {{$i!=$yearsDiff*12?'style=display:none':''}}
                  id="monthName{{$i}}"  class="ui row  monthName">
                 <div
+                        @if(date('n') + $i-$yearsDiff*12 == 12) data-should-increment-year="1" @endif
+                        @if(date('n') + $i-$yearsDiff*12 == 11) data-should-decrement-year="1" @endif
                         data-month="{{$i}}" class="ui column ">
+
                 @unless($i!=$yearsDiff*12)
                     <!-- Стрелка към предишния месец -->
                         <a href="{{route('calendar.month',[$yearsDiff-1])}}">
@@ -66,7 +69,7 @@
                             @unless($i==$numberOfMonths+$yearsDiff*12)
                                 &nbsp; &nbsp; <i class="ui green chevron circle right icon large toNextMonth" style="color: white"></i>
                             @else
-                                    <a href="{{route('calendar.month',[$yearsDiff-1])}}">
+                                    <a href="{{route('calendar.month',[$yearsDiff+1])}}">
                                         <i class="ui green chevron circle right icon large " style="color: white"></i>
                                     </a>
                             @endunless
@@ -74,7 +77,7 @@
 
 
                 </div>
-
+                <span id="year" style="color: white;">{{date('Y')+$yearsDiff}}</span> <!--година-->
             </div>
 
         @php
