@@ -16,6 +16,13 @@ use Illuminate\Support\Facades\Auth;
 class CalendarController
 {
     /**
+     * Връща view-то за седмица
+     */
+    function getWeekView(){
+        return view('calendar.week');
+    }
+
+    /**
      * getWeek
      *
      * Зарежда дните от седмицата

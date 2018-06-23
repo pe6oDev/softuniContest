@@ -1,0 +1,49 @@
+/**
+
+за страницата за седмица (на календара и храните)
+
+ */
+
+
+.ui.segment.eventBox{
+    width: 90%;
+    vertical-align: middle;
+    padding-top: 0;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ui.segment.mealBox>div {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.ui.segment.mealBox>div >div {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+.eventBox span{
+    display: inline;
+    vertical-align: middle;
+}
+
+.eventBox >*>*{
+    vertical-align: middle;
+}
+
+.weekDisabled {
+    opacity: .4;
+}
+
+#floatingButton{
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    box-shadow: 0px 2px 5px #666;
+}
