@@ -14,10 +14,6 @@
 
 function changeMonths($button,$forwardOrBackwards){
     clickedId=$button.parent().attr('data-month');
-    shouldIncrementYear = $button.parent().attr('data-should-increment-year');
-    shouldDecrementYear = $button.parent().attr('data-should-decrement-year');
-    console.log(shouldIncrementYear);
-    console.log(shouldDecrementYear);
     $('.monthName').hide();
     $('.month').hide();
     if($forwardOrBackwards==-1 || $forwardOrBackwards=="backwards" ){
@@ -33,14 +29,7 @@ function changeMonths($button,$forwardOrBackwards){
         console.log(clickedId);
 
     }
-    if( shouldDecrementYear){
-        year = Number($('#year').text());
-        $('#year').text( year-1);
-    }
-    if( shouldIncrementYear){
-        year = Number($('#year').text());
-        $('#year').text( year+1);
-    }
+
 }
 
 

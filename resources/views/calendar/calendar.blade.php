@@ -47,10 +47,7 @@
         <!-- Име на месец -->
             <div {{$i!=$yearsDiff*12?'style=display:none':''}}
                  id="monthName{{$i}}"  class="ui row  monthName">
-                <div
-                        @if(date('n') + $i-$yearsDiff*12 == 12) data-should-increment-year="1" @endif
-                        @if(date('n') + $i-$yearsDiff*12 == 11) data-should-decrement-year="1" @endif
-                        data-month="{{$i}}" class="ui column ">
+                <div data-month="{{$i}}" class="ui column ">
 
                 @unless($i!=$yearsDiff*12)
                     <!-- Стрелка към предишния месец -->
@@ -77,7 +74,8 @@
 
 
                 </div>
-                <span id="year" style="color: white;">{{date('Y')+$yearsDiff}}</span> <!--година-->
+                <span id="year" style="color: white;">{{date('Y')+$yearsDiff  + (int)( (date('n') + $i-$yearsDiff*12) > 12)}}</span> <!--година-->
+
             </div>
 
         @php
