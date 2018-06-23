@@ -42,7 +42,7 @@
             </div>
         </div>
     {{--върти цикъл за имената на месеците --}}
-    @for($i=0; $i<=$numberOfMonths; $i++)
+    @for($i=$yearsDiff; $i<=$numberOfMonths+$yearsDiff; $i++)
         <!-- Име на месец -->
             <div {{$i!=0?'style=display:none':''}}
                  id="monthName{{$i}}" class="ui row  monthName">

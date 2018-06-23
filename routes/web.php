@@ -84,4 +84,9 @@ Route::middleware('auth')->group(function (){
     })->name('dashboard');
 
     Route::get('getWeekDays', 'CalendarController@getWeek')->name('getCalendarWeek');
+
+    Route::get('week',function(){})->name('week');//TODO::remove
+    Route::get('1',function(){})->name('getDay');//TODO::remove
+    Route::get('/month/{yearsDiff?}', 'CalendarController@getMonths')->name('calendar.month');
+
 });
