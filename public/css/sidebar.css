@@ -1,0 +1,8 @@
+.vertical.menu {visibility: hidden;}
+#sideBarShowButton {visibility: visible;}
+#floatingButton{
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    box-shadow: 0px 2px 5px #666;
+}

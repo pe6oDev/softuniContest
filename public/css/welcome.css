@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:700');
+@import url('https://fonts.googleapis.com/css?family=Jura');
+
+
+.menu * {
+    font-family: 'Open Sans', sans-serif,
+    "Gotham_SSm_3r", Helvetica, Arial, sans-serif;
+}
+
+#app{
+    background: linear-gradient(60deg, rgba(255, 0, 0, 0.09), rgba(255, 255, 0, 0.03));
+}
+
+#inspirations>div{
+    /*text-shadow: #616161 1px 1px 0px;*/
+    /*font-family: 'Poiret One', cursive;*/
+    font-size: 270%;
+    font-family: 'Jura', sans-serif;
+    font-weight: normal;
+}
+
+
+/**
+за логото (текста) във навигацията
+ */
+#logoText {
+    font-size: 33px;
+    font-color: black;
+    font-family: 'Roboto Mono', monospace;
+}
+
+@media screen and (max-width: 700px) {
+    #logoText{
+        display: none;
+    }
+}
