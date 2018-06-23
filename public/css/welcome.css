@@ -14,12 +14,13 @@
     padding: 20px 20px 20px 20px;
 }
 
-#app{
 
-}
+
 
 #menuContainer{
-    background: linear-gradient(60deg, rgba(72, 146, 255, 0.5), rgba(255, 35, 0, 0.51));
+    /*background: linear-gradient(60deg, rgba(255, 35, 0, 0.51), rgba(72, 146, 255, 0.5));*/
+    background-color: white;
+     border-bottom: 1px solid rgba(34,36,38,.15);
 }
 
 #inspirations>div{

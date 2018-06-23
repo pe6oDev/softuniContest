@@ -1,0 +1,8 @@
+.background{
+    background: linear-gradient(60deg, rgba(255, 35, 0, 0.51), rgba(72, 146, 255, 0.5));
+    height: 100%;
+}
+
+#app{
+    background-size: cover;
+}

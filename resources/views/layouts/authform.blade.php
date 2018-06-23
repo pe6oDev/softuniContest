@@ -11,20 +11,20 @@
 @endsection
 
 @section('main')
-    {{--залената черта горе--}}
-    <div id="topLine"></div>
-
-    <div class="ui  container">
-        <br><br><br><br><br><br><br>
-        {{--Контейнер за формата--}}
-        <div class="ui grid one column center aligned stackable ">
-            <div class="ui seven wide column">
-                <div class="ui segment">
-                    @yield('form')
+    <div class="background">
+        <div class="ui  container ">
+            <br><br><br><br><br><br><br>
+            {{--Контейнер за формата--}}
+            <div class="ui grid one column center aligned stackable ">
+                <div class="ui seven wide column">
+                    <div class="ui segment">
+                        @yield('form')
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 
 
 @endsection
@@ -40,15 +40,5 @@
     }
 
 
-    /*#topLine {*/
-        /*background-color: #f20700;*/
-        /*width: 100%;*/
-        /*height: 3px;*/
-    /*}*/
-
-    #app{
-        background: linear-gradient(60deg, rgba(255, 35, 0, 0.51), rgba(72, 146, 255, 0.5));
-        height: 100%;
-    }
 </style>
 @endpush

@@ -40,5 +40,6 @@
 @include('includes.headers.headerSemantic')
 
 </body>
+
 </html>
 

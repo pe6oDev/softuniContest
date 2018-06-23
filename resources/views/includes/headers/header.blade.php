@@ -22,6 +22,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 
+<link rel="stylesheet" href="{{asset('css/main.css')}}">
 
 
 @if(isset($scripts))
@@ -49,11 +50,17 @@
 @endif
 
 
-    @if (config('app.cache'))
-        <script src="{{asset('js/main.js')}}"  ></script>
-        <link rel="stylesheet" href="{{asset('css/main.css')}}">
-    @else
-        <script  src="{{asset('js/main.js')}}?{{str_random()}}"></script>
-        <link rel="stylesheet" href="{{asset('css/main.css')}}?{{str_random()}}">
-    @endif
+@if (config('app.cache'))
+    <script src="{{asset('js/main.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('css/main.css')}}">
+@else
+    <script src="{{asset('js/main.js')}}?{{str_random()}}"></script>
+    <link rel="stylesheet" href="{{asset('css/main.css')}}?{{str_random()}}">
+@endif
 
+{{--За смяната на картинките на сезоните--}}
+<style>
+    #app{
+        background-image: url('{{asset('images/'.season().'.jpg')}}')
+    }
+</style>
