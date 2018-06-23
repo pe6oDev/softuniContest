@@ -14,7 +14,7 @@ class AddUserTypeField extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('type',['admin', 'employee', 'partner', 'customer']);
+            $table->enum('type',['admin', 'employee', 'partner', 'customer'])->default('customer');
         });
     }
 
