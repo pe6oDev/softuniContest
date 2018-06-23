@@ -4,7 +4,6 @@
 
 
 @php
-    $theme = theme();
     if(\Illuminate\Support\Facades\App::getLocale() == "bg"){
         $months = \App\Calendar::monthsBg;
         $weekDays = \App\Calendar::weekDaysBg;
@@ -72,7 +71,7 @@
             @for($i=0; $i < 7; $i++)
                 <div id="daySegment{{$i}}" class="two wide column">
                     <a id="weekDay{{$i}}" href="">
-                        <h3 style="text-decoration: none; {{$theme === "dark" ? 'color:white' : 'color:black'}}">{{$weekDays[$i]}}</h3>
+                        <h3 style="text-decoration: none">{{$weekDays[$i]}}</h3>
                         <span id="dayHeaderDate{{$i}}"></span>
                     </a>
                     <div class="ui segment eventHolders" id="eventsHolder{{$i}}" style="padding-bottom: 65px">
@@ -91,6 +90,9 @@
                 </div>
             @endfor
         </div>
+        <a href="#" id="floatingButton" class=" ui red button huge circular icon">
+            <i class="ui add icon"></i>
+        </a>
     </div>
     <br><br>
 @endsection
@@ -105,11 +107,10 @@
     <script>
         var hideSidebar = true;
 
-        var changeWeekUrl = "{{route('getCalendarWeek')}}";
-        var getWeekEventsUrl = "{{route('getWeekEvents')}}";
-        var deleteEventUrl = "{{route('deleteEvent')}}";
+        {{--var changeWeekUrl = "{{route('getCalendarWeek')}}";--}}
+        {{--var getWeekEventsUrl = "{{route('getWeekEvents')}}";--}}
+        {{--var deleteEventUrl = "{{route('deleteEvent')}}";--}}
         var token = "{{Session::token()}}";
-        var theme = "{{$theme}}";
         var months = {!!  json_encode(\App\Calendar::getMonths())!!};
     </script>
 @endsection
