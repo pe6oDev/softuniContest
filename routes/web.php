@@ -90,4 +90,8 @@ Route::middleware('auth')->group(function (){
     Route::get('1',function(){})->name('getDay');//TODO::remove
     Route::get('/month/{yearsDiff?}', 'CalendarController@getMonths')->name('calendar.month');
 
+    Route::get('users',function(){
+       return view('users.users');
+    });
+
 });
