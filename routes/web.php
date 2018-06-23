@@ -83,4 +83,5 @@ Route::middleware('auth')->group(function (){
         return view('dashboard');
     });
 
+    Route::get('getWeekDays', 'CalendarController@getWeek')->name('getCalendarWeek');
 });
