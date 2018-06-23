@@ -42,26 +42,36 @@
             </div>
         </div>
     {{--върти цикъл за имената на месеците --}}
-    @for($i=$yearsDiff; $i<=$numberOfMonths+$yearsDiff; $i++)
+        {{$yearsDiff}}
+    @for($i=$yearsDiff*12; $i<=$numberOfMonths+$yearsDiff*12; $i++)
         <!-- Име на месец -->
-            <div {{$i!=0?'style=display:none':''}}
-                 id="monthName{{$i}}" class="ui row  monthName">
+            <div {{$i!=$yearsDiff*12?'style=display:none':''}}
+                 id="monthName{{$i}}"  class="ui row  monthName">
                 <div
                         data-month="{{$i}}" class="ui column ">
-                @unless($i!=0)
+                @unless($i!=$yearsDiff*12)
                     <!-- Стрелка към предишния месец -->
-                        <i style="display: none" class="ui  icon large"></i>
+                        <a href="{{route('calendar.month',[$yearsDiff-1])}}">
+                            <i class="ui green chevron circle left icon large" ></i>
+                        </a>
+
                         @else
                             <i class="ui green chevron circle left icon large toPreviousMonth"></i> &nbsp; &nbsp;
                             @endunless
-                            <h3 class="ui  icon   header">
+                            <h3 class="ui  icon   header" style="color: white">
                                 {{\App\Calendar::getMonths(date('n') + $i)}}
                             </h3>
 
                             <!-- Стрелка към следващия месец -->
-                            @unless($i==$numberOfMonths)
-                                &nbsp; &nbsp; <i class="ui green chevron circle right icon large toNextMonth"></i>
+                            @unless($i==$numberOfMonths+$yearsDiff*12)
+                                &nbsp; &nbsp; <i class="ui green chevron circle right icon large toNextMonth" style="color: white"></i>
+                            @else
+                                    <a href="{{route('calendar.month',[$yearsDiff-1])}}">
+                                        <i class="ui green chevron circle right icon large " style="color: white"></i>
+                                    </a>
                             @endunless
+
+
 
                 </div>
 
@@ -72,7 +82,7 @@
             $month = array_search($monthName, App\Calendar::getMonthsNumber());
         @endphp
         <!-- Календар с дните от месеца -->
-            <div {{$i!=0 ?'style=display:none':''}}  class="ui row month" id="month{{$i}}">
+            <div {{$i!=$yearsDiff*12 ?'style=display:none':''}}  class="ui row month   " id="month{{$i}}">
 
                 @include('calendar.month',[
                 'freeSpaces'=>\App\Calendar::getFirstDayOfWeek($i),

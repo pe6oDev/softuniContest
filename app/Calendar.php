@@ -226,7 +226,7 @@ class Calendar extends Model
         if (($month - (int)floor($month / 12) * 12) == 0)
             return $months[($month - (int)floor($month / 12) * 12) + 12];
 
-        else  return $months[($month - (int)floor($month / 12) * 12)];
+        else  return $months[($month - (int)floor($month / 12) * 12)] ;
     }
 
     /** getDaysOfWeek
