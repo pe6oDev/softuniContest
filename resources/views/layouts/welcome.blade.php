@@ -20,6 +20,11 @@
 </head>
 <body>
 
+{{--тапета (с градиента)--}}
+<div class="background">
+    <div class="gradient"></div>
+</div>
+
 <main id="app">
     {{--page loader-a--}}
     <div  id="pageLoader" class="ui active dimmer">
@@ -27,8 +32,11 @@
     </div>
     {{--side bar-a (профил меню и навигация)--}}
     @yield('sidebar')
+
+
+
     {{--Основната част от сайта--}}
-    <div class="pusher background">
+    <div class="pusher ">
         @yield('main')
     </div>
 

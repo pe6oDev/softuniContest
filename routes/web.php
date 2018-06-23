@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
-use Sarfraznawaz2005\VisitLog\Facades\VisitLog;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,9 +13,9 @@ use Sarfraznawaz2005\VisitLog\Facades\VisitLog;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function (\Illuminate\Http\Request $request) {
     if(Auth::user()){
-        return view('calendar.calendar');
+        return app('App\Http\Controllers\CalendarController')->getMonths($request);
     } else {
         return view('welcome');
     }

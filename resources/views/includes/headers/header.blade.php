@@ -60,7 +60,7 @@
 
 {{--За смяната на картинките на сезоните--}}
 <style>
-    #app{
+    .background{
         background-image: url('{{asset('images/'.season().'.jpg')}}')
     }
 </style>

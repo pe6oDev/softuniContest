@@ -26,7 +26,7 @@
         <div class="ui  row" >
             <div class="ui sixteen wide right aligned column">
                 <a href="{{route('calendar.month')}}">
-                    <div class="ui icon  green button" style="margin-top: 0.5cm; margin-right: 0.5cm">
+                    <div class="ui icon  red button" style="margin-top: 0.5cm; margin-right: 0.5cm">
                         @lang('назад')
                         <i class="ui right arrow icon"></i>
                     </div>

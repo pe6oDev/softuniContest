@@ -11,7 +11,12 @@
 @endsection
 
 @section('main')
+
+    {{--тапета (с градиента)--}}
     <div class="background">
+        <div class="gradient"></div>
+    </div>
+
         <div class="ui  container ">
             <br><br><br><br><br><br><br>
             {{--Контейнер за формата--}}
@@ -23,7 +28,7 @@
                 </div>
             </div>
         </div>
-    </div>
+
 
 
 

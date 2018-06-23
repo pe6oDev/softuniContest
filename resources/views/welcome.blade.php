@@ -2,7 +2,7 @@
 @section('title','ImeFamilia')
 
 @section('main')
-    <div class="background">
+
         {{--Навигация--}}
         <div id="menuContainer"
              class="ui top fixed text big  menu">
@@ -22,7 +22,7 @@
 
 
         </div>
-        @for($i=0;$i<=16;$i++)
+        @for($i=0;$i<=12;$i++)
             <br>
         @endfor
 
@@ -46,7 +46,7 @@
 
 
 
-    </div>
+
 
 
 @endsection

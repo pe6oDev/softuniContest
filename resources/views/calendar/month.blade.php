@@ -15,7 +15,7 @@ if(auth()->user()->theme){$theme=auth()->user()->theme;}
 ?>
 
 <!-- Календар с дните от месеца -->
-<div class="ui seven wide column segment" style="background-color: rgba(242,233,232,0.84)">
+<div class="ui seven wide column segment" style="background-color: rgba(255,255,255,0.8)">
 
     <div class="ui seven column internally celled grid">
         <div class="ui  red row">

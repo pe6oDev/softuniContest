@@ -97,6 +97,9 @@
         @endfor
     </div>
 
+    <a href="#" id="floatingButton" class=" ui red button huge circular icon">
+        <i class="ui add icon"></i>
+    </a>
 
 @endsection
 
