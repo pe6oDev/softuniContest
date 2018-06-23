@@ -22,7 +22,7 @@
         <div class="ui  row" >
             <div class="ui sixteen wide right aligned column">
                 <a href="{{route('dashboard')}}">
-                    <div class="ui icon  green button" style="margin-top: 0.5cm; margin-right: 0.5cm">
+                    <div class="ui icon  red button" style="margin-top: 0.5cm; margin-right: 0.5cm">
                         @lang('назад')
                         <i class="ui right arrow icon"></i>
                     </div>
@@ -42,21 +42,21 @@
             </div>
         </div>
     {{--върти цикъл за имената на месеците --}}
-        {{$yearsDiff}}
+
     @for($i=$yearsDiff*12; $i<=$numberOfMonths+$yearsDiff*12; $i++)
         <!-- Име на месец -->
             <div {{$i!=$yearsDiff*12?'style=display:none':''}}
                  id="monthName{{$i}}"  class="ui row  monthName">
-                <div
-                        data-month="{{$i}}" class="ui column ">
+                <div data-month="{{$i}}" class="ui column ">
+
                 @unless($i!=$yearsDiff*12)
                     <!-- Стрелка към предишния месец -->
                         <a href="{{route('calendar.month',[$yearsDiff-1])}}">
-                            <i class="ui green chevron circle left icon large" ></i>
+                            <i class="ui blue chevron circle left icon large" ></i>
                         </a>
 
                         @else
-                            <i class="ui green chevron circle left icon large toPreviousMonth"></i> &nbsp; &nbsp;
+                            <i class="ui blue chevron circle left icon large toPreviousMonth"></i> &nbsp; &nbsp;
                             @endunless
                             <h3 class="ui  icon   header" style="color: white">
                                 {{\App\Calendar::getMonths(date('n') + $i)}}
@@ -64,16 +64,17 @@
 
                             <!-- Стрелка към следващия месец -->
                             @unless($i==$numberOfMonths+$yearsDiff*12)
-                                &nbsp; &nbsp; <i class="ui green chevron circle right icon large toNextMonth" style="color: white"></i>
+                                &nbsp; &nbsp; <i class="ui blue chevron circle right icon large toNextMonth" style="color: white"></i>
                             @else
-                                    <a href="{{route('calendar.month',[$yearsDiff-1])}}">
-                                        <i class="ui green chevron circle right icon large " style="color: white"></i>
+                                    <a href="{{route('calendar.month',[$yearsDiff+1])}}">
+                                        <i class="ui blue chevron circle right icon large " style="color: white"></i>
                                     </a>
                             @endunless
 
 
 
                 </div>
+                <span id="year" style="color: white;">{{date('Y')+$yearsDiff  + (int)( (date('n') + $i-$yearsDiff*12) > 12)}}</span> <!--година-->
 
             </div>
 

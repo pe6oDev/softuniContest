@@ -18,7 +18,7 @@ if(auth()->user()->theme){$theme=auth()->user()->theme;}
 <div class="ui seven wide column segment" style="background-color: rgba(242,233,232,0.84)">
 
     <div class="ui seven column internally celled grid">
-        <div class="ui  green row">
+        <div class="ui  red row">
             {{--имената на дните от седмицата --}}
             @foreach(\App\Calendar::getWeekDaysShorts() as $day)
                 <div class="ui column">

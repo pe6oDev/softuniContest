@@ -19,13 +19,12 @@ function changeMonths($button,$forwardOrBackwards){
     if($forwardOrBackwards==-1 || $forwardOrBackwards=="backwards" ){
         $('#monthName'+(clickedId-1)).show();
         $('#month'+(clickedId-1)).show();
-        console.log('#monthName'+(clickedId-1))
     }
     else if($forwardOrBackwards==1 || $forwardOrBackwards=="forward"){
         $('#monthName'+(Number(clickedId)+1)).show();
         $('#month'+(Number(clickedId)+1)).show();
-        console.log(clickedId);
     }
+
 }
 
 
