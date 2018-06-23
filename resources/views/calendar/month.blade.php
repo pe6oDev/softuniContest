@@ -13,33 +13,6 @@
 $theme = \Illuminate\Support\Facades\Cookie::get('theme');
 if(auth()->user()->theme){$theme=auth()->user()->theme;}
 ?>
-@push('header')
-<style>
-    {{--За да изглежда добре и при тъмна тема --}}
-    @unless($theme=='dark' )
-        .calendarDayDisabled {
-        color: grey;
-    }
-    .calendarDayEnabled {
-        color: black;
-    }
-    .hasEvent{
-        background-color: #fdf1c4;
-    }
-    @else
-             .calendarDayDisabled {
-        color: #6e6e6e;
-    }
-    .calendarDayEnabled {
-        color: 	#F5F5F5;
-    }
-    .hasEvent{
-        background-color: #545000;
-    }
-    @endunless
-
-</style>
-@endpush
 
 <!-- Календар с дните от месеца -->
 <div class="ui seven wide column">
@@ -82,19 +55,9 @@ if(auth()->user()->theme){$theme=auth()->user()->theme;}
                     @if($newRow==1)
                         <div  class="ui row ">
                             @endif
-                            <a @if($day<$currentDay && $monthRelativeIndex==0)  @else href="{{route('getDay', [$month, $day])}}"
-                               @endif class="ui column {{array_key_exists($dayMonth, $dates) ? 'hasEvent' : ''}}"
-                               @if(array_key_exists($dayMonth, $dates))
-                               data-tooltip="{{$dates[$dayMonth]}}
-                               @if($dates[$dayMonth] > 1)
-                               @lang('събития')
-                               @else
-                               @lang('събитие')
-                               @endif
-                                       "
-                                    @endif>
+                            <a href="{{route('getDay', [$month, $day])}}" class="ui column">
 
-                                <span  class="{{($day<$currentDay && $monthRelativeIndex==0) ? 'calendarDayDisabled' : 'calendarDayEnabled'}}">{{$day}}</span>
+                                <span>{{$day}}</span>
 
                             </a>
                             @if($newRow==7 || $day==$numberOfDays)

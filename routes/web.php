@@ -15,7 +15,7 @@ use Sarfraznawaz2005\VisitLog\Facades\VisitLog;
 
 Route::get('/', function () {
     if(Auth::user()){
-        return redirect()->route('dashboard');
+        return view('calendar.calendar');
     } else {
         return view('welcome');
     }
