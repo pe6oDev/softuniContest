@@ -44,7 +44,7 @@
         @include('includes.warnings.allErrors')
     @endif
     <br>
-    <button id="signUpButton" class="ui big fluid button orange">
+    <button id="signUpButton" class="ui big fluid button red">
         {{$text}}
     </button>
 

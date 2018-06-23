@@ -39,10 +39,16 @@
         background-color: #f3f3f3;
     }
 
-    #topLine {
-        background-color: #f2711c;
-        width: 100%;
-        height: 3px;
+
+    /*#topLine {*/
+        /*background-color: #f20700;*/
+        /*width: 100%;*/
+        /*height: 3px;*/
+    /*}*/
+
+    #app{
+        background: linear-gradient(60deg, rgba(255, 35, 0, 0.51), rgba(72, 146, 255, 0.5));
+        height: 100%;
     }
 </style>
 @endpush

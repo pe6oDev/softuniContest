@@ -7,11 +7,11 @@
     <div style="background-color: white;border-bottom: 1px solid rgba(34,36,38,.15);"
          class="ui top fixed text big  menu">
         <div id="menuContainer" class="ui  container">
-
-            <p id="logoText" class="active item">TheCommunityHelper</p>
+            <img class="postBankLogo" src="https://www.postbank.bg/web/images/logo-bg.svg" alt="">
+            {{--<p id="logoText" class="active item">Пощенска банка календар</p>--}}
             <div class="right menu">
                 <a  href="{{route('getLogInForm')}}" class="item">
-                        <span class="ui orange button">
+                        <span class="ui blue button">
                             влез
                         </span>
                 </a>

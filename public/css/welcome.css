@@ -8,8 +8,18 @@
     "Gotham_SSm_3r", Helvetica, Arial, sans-serif;
 }
 
+.postBankLogo{
+    width: 300px;
+    height: auto;
+    padding: 20px 20px 20px 20px;
+}
+
 #app{
-    background: linear-gradient(60deg, rgba(255, 0, 0, 0.09), rgba(255, 255, 0, 0.03));
+
+}
+
+#menuContainer{
+    background: linear-gradient(60deg, rgba(72, 146, 255, 0.5), rgba(255, 35, 0, 0.51));
 }
 
 #inspirations>div{
