@@ -93,7 +93,11 @@ Route::middleware('auth')->group(function (){
 
     Route::post('postEvent', 'CalendarController@postEvent')->name('postEvent');
 
+    Route::get('getRestDays', 'CalendarController@getRestDays')->name('getRestDays');
+
     Route::post('postRestDay', 'CalendarController@postRestDay')->name('postRestDay');
+
+    Route::post('deleteRestDay', 'CalendarController@deleteRestDay')->name('deleteRestDay');
 
 
     Route::get('/month/{yearsDiff?}', 'CalendarController@getMonths')->name('calendar.month');

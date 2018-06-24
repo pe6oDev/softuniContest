@@ -111,7 +111,7 @@ class CalendarController
         $startTime = strtotime($request->get('startDate'));
         $endTime = strtotime($request->get('endDate'));
         $notifications = $request->get('notifications');
-        $type = $request->get('type');
+        $visibility = $request->get('visibility');
         if($startTime < $endTime || $wholeDay == true){
             $startDate = date('d/m/Y', $startTime);
             $endDate = date('d/m/Y', $endTime);
@@ -123,10 +123,19 @@ class CalendarController
                     $calendar->startDate = $startTime;
                     $calendar->endDate = $endTime;
                 }
-                $calendar->type = $type;
+                $calendar->visibility = $visibility;
                 $calendar->save();
             }
         }
+    }
+
+    function getRestDays(){
+        $restDays = CalendarModel::where('type', 'restDay')->get();
+        foreach($restDays as $day){
+            $day->normalDate = date('d/m/Y', $day->startDate);
+        }
+
+        return response()->json(['restDays' => $restDays], 200);
     }
 
     function postRestDay(Request $request){
@@ -136,7 +145,19 @@ class CalendarController
         $calendar->name = "Почивен ден";
         $calendar->wholeDay = true;
         $calendar->startDate = $restDay;
-        $calendar->type = "public";
+        $calendar->visibility = "public";
+        $calendar->type = "restDay";
         $calendar->save();
+        $calendar->normalDate = date('d/m/Y', $restDay);
+
+        return response()->json(['newRest' => $calendar], 200);
+    }
+
+    function deleteRestDay(Request $request){
+        $id = $request->get('id');
+
+        CalendarModel::where('_id', $id)->forceDelete();
+
+        return response()->json([], 200);
     }
 }

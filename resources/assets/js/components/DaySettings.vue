@@ -15,8 +15,8 @@
         <div class="ui divider"></div>
         <div class="ui eight wide center aligned column" v-for="(date,i) in dates">
             <div class="ui segment" style="padding: 10px 10px 10px 10px">
-                {{date | humandate }}
-                <div v-on:click="deleteDate(i)" class="ui icon  small circular red button">
+                {{date.normalDate}}
+                <div v-on:click="deleteDate(date._id, i)" class="ui icon  small circular red button">
                     <i class="icon trash"></i>
                 </div>
             </div>
@@ -27,9 +27,16 @@
 
 <script>
     export default {
-        props:['saveUrl'],
+        props:[
+            'saveUrl',
+            'getUrl',
+            'deleteUrl'
+        ],
         mounted() {
             console.log('Component mounted.')
+            axios.get(this.getUrl).then(response => {
+                this.dates = response.data.restDays
+            })
         },
         data: function(){
             return {
@@ -42,31 +49,34 @@
                     var restDay =  $('#calendar').calendar('get date')
                     var data = {restDay: restDay}
                     axios.post(this.saveUrl, data).then(response => {
-                        this.dates.push(restDay);
+                        this.dates.push(response.data.newRest);
                         $('#calendar').calendar('clear');
                         this.date = null;
                     })
                 }
 
             },
-            deleteDate:function(i){
-                console.log(i);
-                this.dates.splice(i,1);
-            }
-        },
-        filters: {
-            humandate: function (value) {
-                let date = new Date(value);
-                return  date.getUTCDate()+' . '+(date.getUTCMonth()+1) +' . '+date.getFullYear();
-            }
-        },
-        watch:{
-            //За промяна на датите (заявка отзад)
-            dates:function(){
-                axios.post(this.saveUrl,{
-                    dates:this.dates
+            deleteDate:function(id, i){
+                this.dates.splice(i);
+                var data = {id: id}
+                axios.post(deleteUrl, data).then(response => {
+
                 })
             }
-        }
+        },
+//        filters: {
+//            humandate: function (value) {
+//                let date = new Date(value);
+//                return  date.getUTCDate()+' . '+(date.getUTCMonth()+1) +' . '+date.getFullYear();
+//            }
+//        },
+//        watch:{
+//            //За промяна на датите (заявка отзад)
+//            dates:function(){
+//                axios.post(this.saveUrl,{
+//                    dates:this.dates
+//                })
+//            }
+//        }
     }
 </script>

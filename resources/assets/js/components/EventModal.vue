@@ -286,7 +286,7 @@ export default {
             var startDate = $('#calendarStart').calendar('get date');
             var endDate = $('#calendarEnd').calendar('get date');
             var data = {
-                type:vue.visibility,
+                visibility:vue.visibility,
                 name: vue.name,
                 startDate: startDate,
                 endDate: endDate,

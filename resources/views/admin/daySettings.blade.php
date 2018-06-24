@@ -13,7 +13,12 @@
                     <h2 class="header">Настройки за неработни дни</h2>
                 </div>
             </div>
-            <day-settings save-url="{{route('postRestDay')}}"></day-settings>
+            <day-settings
+                save-url="{{route('postRestDay')}}"
+                get-url="{{route('getRestDays')}}"
+                delete-url = "{{route('deleteRestDay')}}"
+            >
+            </day-settings>
         </div>
     </div>
 @endsection
