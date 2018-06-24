@@ -1388,7 +1388,7 @@ function applyToTag (styleElement, obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(14);
-module.exports = __webpack_require__(63);
+module.exports = __webpack_require__(68);
 
 
 /***/ }),
@@ -1419,6 +1419,7 @@ Vue.component('user-info', __webpack_require__(53));
 Vue.component('event-modal', __webpack_require__(56));
 Vue.component('admin-table', __webpack_require__(59));
 Vue.component('day-settings', __webpack_require__(62));
+Vue.component('name-days-settings', __webpack_require__(65));
 
 var app = new Vue({
   el: '#app'
@@ -1502,7 +1503,7 @@ if (token) {
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.10';
+  var VERSION = '4.17.5';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -1926,14 +1927,6 @@ if (token) {
   /** Used to access faster Node.js helpers. */
   var nodeUtil = (function() {
     try {
-      // Use `util.types` for Node.js 10+.
-      var types = freeModule && freeModule.require && freeModule.require('util').types;
-
-      if (types) {
-        return types;
-      }
-
-      // Legacy `process.binding('util')` for Node.js < 10.
       return freeProcess && freeProcess.binding && freeProcess.binding('util');
     } catch (e) {}
   }());
@@ -30479,18 +30472,15 @@ module.exports = Vue;
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
-            (typeof self !== "undefined" && self) ||
-            window;
-var apply = Function.prototype.apply;
+/* WEBPACK VAR INJECTION */(function(global) {var apply = Function.prototype.apply;
 
 // DOM APIs, for completeness
 
 exports.setTimeout = function() {
-  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
+  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
 };
 exports.setInterval = function() {
-  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
+  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
 };
 exports.clearTimeout =
 exports.clearInterval = function(timeout) {
@@ -30505,7 +30495,7 @@ function Timeout(id, clearFn) {
 }
 Timeout.prototype.unref = Timeout.prototype.ref = function() {};
 Timeout.prototype.close = function() {
-  this._clearFn.call(scope, this._id);
+  this._clearFn.call(window, this._id);
 };
 
 // Does not start the time, just sets up the members needed.
@@ -30533,7 +30523,7 @@ exports._unrefActive = exports.active = function(item) {
 
 // setimmediate attaches itself to the global object
 __webpack_require__(38);
-// On some exotic environments, it's not clear which object `setimmediate` was
+// On some exotic environments, it's not clear which object `setimmeidate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
 exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
@@ -32177,14 +32167,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         createEvent: function createEvent(url, modal) {
             var vue = this;
 
-            var startDate = $('#calendarStart').calendar('get date');
-            var endDate = $('#calendarEnd').calendar('get date');
+            var startDate = $('#calendarStart').getDate();
+            var endDate = $('#calendarEnd').getDate();
+
             var data = {
                 name: vue.name,
                 startDate: startDate,
                 endDate: endDate,
                 notifications: vue.notifications,
-                wholeDay: vue.wholeDay,
                 event_id: vue.eventId
             };
             axios.post(url, data).then(function (response) {
@@ -33698,9 +33688,9 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(67)
+var __vue_script__ = __webpack_require__(63)
 /* template */
-var __vue_template__ = __webpack_require__(68)
+var __vue_template__ = __webpack_require__(64)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -33740,15 +33730,6 @@ module.exports = Component.exports
 
 /***/ }),
 /* 63 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -33822,7 +33803,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 68 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -33908,6 +33889,296 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-20d5b3f8", module.exports)
   }
 }
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(66)
+/* template */
+var __vue_template__ = __webpack_require__(67)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/NameDays.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-c66cec8e", Component.options)
+  } else {
+    hotAPI.reload("data-v-c66cec8e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 66 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['saveUrl'],
+    data: function data() {
+        return {
+            nameDays: [],
+            nameDay: '',
+            description: 'описание'
+        };
+    },
+    methods: {
+        addDay: function addDay() {
+            if ($('#calendar').calendar('get date') && this.nameDay && this.description) {
+                this.nameDays.push({
+                    'date': $('#calendar').calendar('get date'),
+                    'name': this.nameDay,
+                    'description': this.description
+                });
+                $('#calendar').calendar('clear');
+                this.nameDay = '';
+                this.description = '';
+            }
+        },
+        deleteDate: function deleteDate(i) {
+            this.nameDays.splice(i, 1);
+        }
+    },
+    filters: {
+        humandate: function humandate(value) {
+            var date = new Date(value);
+            return date.getUTCDate() + '.' + (date.getUTCMonth() + 1) + '.' + date.getFullYear();
+        }
+    },
+    watch: {
+        //За промяна на датите (заявка отзад)
+        dates: function dates() {
+            axios.post(this.saveUrl, {
+                dates: this.nameDays
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "ui row" },
+    [
+      _c("div", { staticClass: "six wide column" }, [
+        _c("div", { staticClass: "ui form" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "ui field" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.nameDay,
+                  expression: "nameDay"
+                }
+              ],
+              attrs: { placeholder: "именн ден", type: "text" },
+              domProps: { value: _vm.nameDay },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.nameDay = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "field" }, [
+            _c(
+              "textarea",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.description,
+                    expression: "description"
+                  }
+                ],
+                domProps: { value: _vm.description },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.description = $event.target.value
+                  }
+                }
+              },
+              [_vm._v("Информация")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _c("br"),
+        _c("br")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "three wide column" }, [
+        _c("i", {
+          staticClass: "inverted circular add  link blue icon",
+          on: { click: _vm.addDay }
+        })
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.nameDays, function(day, i) {
+        return _c(
+          "div",
+          { staticClass: "ui eight wide center aligned column" },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "ui segment",
+                staticStyle: { padding: "10px 10px 10px 10px" }
+              },
+              [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm._f("humandate")(day.date)) +
+                    " - " +
+                    _vm._s(day.name) +
+                    "\n              \n            "
+                ),
+                _c(
+                  "div",
+                  {
+                    staticClass: "ui icon  small circular red button",
+                    on: {
+                      click: function($event) {
+                        _vm.deleteDate(i)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "icon trash" })]
+                )
+              ]
+            )
+          ]
+        )
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ui field" }, [
+      _c("div", { staticClass: "ui calendar", attrs: { id: "calendar" } }, [
+        _c("div", { staticClass: "ui input fluid left icon" }, [
+          _c("i", { staticClass: "calendar icon" }),
+          _vm._v(" "),
+          _c("input", { attrs: { type: "text", placeholder: "именн ден " } })
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-c66cec8e", module.exports)
+  }
+}
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

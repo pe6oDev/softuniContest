@@ -104,6 +104,8 @@ Route::middleware('auth')->group(function (){
         Route::post('users/change/type', 'Admin\AdminController@postChangeType')->name('changeUserType');
 
         Route::get('daySettings', 'Admin\AdminController@getDaySettings')->name('getDaySettings');
+
+        Route::get('name/days', 'Admin\AdminController@getNameDaySettings')->name('getDaySettings');
     });
 
 

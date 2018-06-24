@@ -1,0 +1,89 @@
+<template>
+    <div class="ui row">
+        <div class="six wide column">
+            <div class="ui form">
+                <div class="ui field">
+                    <div class="ui calendar" id="calendar">
+                        <div class="ui input fluid left icon">
+                            <i class="calendar icon"></i>
+                            <input type="text"  placeholder="именн ден "/>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui field">
+                    <input v-model="nameDay" placeholder="именн ден" type="text"/>
+                </div>
+                <div class="field">
+                    <textarea v-model="description">Информация</textarea>
+                </div>
+
+            </div>
+
+            <br><br><br>
+        </div>
+        <div class="three wide column">
+            <i v-on:click="addDay"
+               class="inverted circular add  link blue icon"></i>
+
+
+        </div>
+
+
+
+        <div class="ui eight wide center aligned column" v-for="(day,i) in nameDays">
+            <div class="ui segment" style="padding: 10px 10px 10px 10px">
+                {{day.date | humandate }} - {{day.name}}
+                &nbsp;&nbsp;
+                <div v-on:click="deleteDate(i)" class="ui icon  small circular red button">
+                    <i class="icon trash"></i>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    props: ['saveUrl'],
+    data: function () {
+        return {
+            nameDays: [],
+            nameDay: '',
+            description: 'описание'
+        }
+    },
+    methods: {
+        addDay: function () {
+            if ($('#calendar').calendar('get date') && this.nameDay && this.description) {
+                this.nameDays.push({
+                    'date': $('#calendar').calendar('get date'),
+                    'name':this.nameDay,
+                    'description': this.description,
+                });
+                $('#calendar').calendar('clear');
+                this.nameDay = '';
+                this.description = '';
+            }
+
+        },
+        deleteDate: function (i) {
+            this.nameDays.splice(i, 1);
+        }
+    },
+    filters: {
+        humandate: function (value) {
+            let date = new Date(value);
+            return date.getUTCDate() + '.' + (date.getUTCMonth() + 1) + '.' + date.getFullYear();
+        }
+    },
+    watch: {
+        //За промяна на датите (заявка отзад)
+        dates: function () {
+            axios.post(this.saveUrl, {
+                dates: this.nameDays
+            })
+        }
+    }
+}
+</script>

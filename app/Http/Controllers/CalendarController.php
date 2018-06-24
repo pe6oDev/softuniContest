@@ -100,6 +100,11 @@ class CalendarController
 
     }
 
+    /**
+     * Запазва event в mongodb
+     *
+     * @param Request $request
+     */
     function postEvent(Request $request){
         $name = $request->get('name');
         $wholeDay = $request->get('wholeDay');
@@ -107,7 +112,7 @@ class CalendarController
         $endTime = strtotime($request->get('endDate'));
         $notifications = $request->get('notifications');
         $type = "personal";
-
+        dd($name);
         if($startTime < $endTime || $wholeDay == true){
             $startDate = date('d/m/Y', $startTime);
             $endDate = date('d/m/Y', $endTime);
