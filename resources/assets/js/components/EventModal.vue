@@ -46,7 +46,7 @@
 
                 </div>
                 <!--Часове-->
-                <div v-show="!wholeDay" class="ui row">
+                <div  class="ui row">
                     <!--Начални час и дата-->
                     <div class="ui eight wide column">
                         <div class="ui calendar " id="calendarStart">
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     <!--Крайни час и дата-->
-                    <div class="ui eight wide column">
+                    <div v-show="!wholeDay" class="ui eight wide column">
                         <div class="ui calendar" id="calendarEnd">
                             <div class="ui input left fluid icon">
                                 <i class="calendar icon"></i>

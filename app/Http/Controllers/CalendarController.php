@@ -95,7 +95,12 @@ class CalendarController
             'monthNow' => $monthNow,
             'monthInt' => $relativeMonth,
             'carbonDt' => $dt,
-            'year' => $year
+            'year' => $year,
+            'wholeDayEvents' => CalendarModel
+                ::where('wholeDay', true)
+                ->where('user_id', Auth::user()->id)
+//                ->where('startDate', time())
+                ->get()
         ]);
 
     }

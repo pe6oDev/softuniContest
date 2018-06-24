@@ -52,7 +52,6 @@
         </div>
 
 
-
         <div class="ui row">
             <div class="ui success message" id="postMessage" style="display: none">Събитието беше записано успешно!
             </div>
@@ -64,18 +63,16 @@
         <div class="ui row">
             <div class="ui ten wide column">
 
-                @include('includes.wholeDayEvent',[
-                'id'=>1,
-                'color'=>App\EventsColors::colors['promotion'],
-                'header'=>'Промоция на телевизори',
-                'description'=>'Descriptio long verry long'
-                ])
-                @include('includes.wholeDayEvent',[
-               'id'=>2,
-               'color'=>App\EventsColors::colors['nameDay'],
-               'header'=>'Промоция на телевизори',
-               'description'=>'Descriptio long verry long'
-               ])
+
+                @foreach($wholeDayEvents as $event )
+                    @include('includes.wholeDayEvent',[
+                                    'id'=>$event->id,
+                                    'color'=>App\EventsColors::colors[$event->type],
+                                    'header'=>$event->name,
+                                    'description'=>$event->description
+                                    ])
+                @endforeach
+
 
                 <div class="ui segment" id="eventsHolder" style="padding-bottom: 65px">
                     <div id="first" class="ui horizontal divider" style="display: none;"></div>
@@ -114,8 +111,8 @@
             {{--getOneEventUrl = "{{route('getOneEvent')}}";--}}
             {{--deleteEventUrl = "{{route('deleteEvent')}}";--}}
             {{--editEventUrl = "{{route('editEvent')}}";--}}
-            date = "{{$date}}";
-        token = "{{Session::token()}}";
+        date = "{{$date}}";
+    token = "{{Session::token()}}";
     //за сменянето на дни със слайдване на пръста
     var monthOrDay = 'day';
     var hasPrevDay = '{{!($day<=$currentDay && $monthInt==0)}}';

@@ -70,12 +70,12 @@
         <div class="ui row">
             @for($i=0; $i < 7; $i++)
                 <div id="daySegment{{$i}}" class="two wide column">
-                    @include('includes.wholeDayEvent',[
-                'id'=>$i,
-                'color'=>App\EventsColors::colors['promotion'],
-                'header'=>'Промоция на телевизори',
-                'description'=>'Descriptio long verry long'
-                ])
+                    {{--@include('includes.wholeDayEvent',[--}}
+                {{--'id'=>$i,--}}
+                {{--'color'=>App\EventsColors::colors['promotion'],--}}
+                {{--'header'=>'Промоция на телевизори',--}}
+                {{--'description'=>'Descriptio long verry long'--}}
+                {{--])--}}
                     <a id="weekDay{{$i}}" class="weekHeaders" href="">
                         <h3 style="text-decoration: none">{{$weekDays[$i]}}</h3>
                         <span id="dayHeaderDate{{$i}}"></span>
