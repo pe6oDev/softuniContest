@@ -111,7 +111,7 @@ class CalendarController
         $startTime = strtotime($request->get('startDate'));
         $endTime = strtotime($request->get('endDate'));
         $notifications = $request->get('notifications');
-        $type = "personal";
+        $type = $request->get('type');
         if($startTime < $endTime || $wholeDay == true){
             $startDate = date('d/m/Y', $startTime);
             $endDate = date('d/m/Y', $endTime);

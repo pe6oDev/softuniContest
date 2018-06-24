@@ -27,12 +27,25 @@
                 </div>
                 <!--Дали да е целодневно-->
                 <div class="ui row">
-                    <div class="ui toggle checkbox">
-                        <input v-model="wholeDay" name="public" type="checkbox"/>
-                        <label>Цял ден</label>
+                    <div class="ui eight wide column">
+                        <div class="ui toggle checkbox">
+                            <input v-model="wholeDay" name="public" type="checkbox"/>
+                            <label>Цял ден</label>
+                        </div>
                     </div>
+                    <div v-show="wholeDay" v-if="user.type!='customer' && user.type!='partner'" class="ui eight wide column">
+                        <select v-model="visibility" class="ui dropdown">
+                            <option value="">Видимост</option>
+                            <option value="personal">Лично</option>
+                            <option value="public">Глобално (видимо от всички)</option>
+                            <option value="partners">видимо от партньори и служители</option>
+                            <option value="employees">видимо само от служители</option>
+                            <option v-if="user.type!='admin' " value="admin">видимо само от другите admin-и</option>
+                        </select>
+                    </div>
+
                 </div>
-               <!--Часове-->
+                <!--Часове-->
                 <div v-show="!wholeDay" class="ui row">
                     <!--Начални час и дата-->
                     <div class="ui eight wide column">
@@ -162,7 +175,9 @@ export default {
 
     data: function () {
         return {
-            wholeDay:false,
+            visibility:'personal',
+            user: Laravel.user,
+            wholeDay: false,
             errors: {},
             name: '',
             eventId: "",
@@ -271,6 +286,7 @@ export default {
             var startDate = $('#calendarStart').calendar('get date');
             var endDate = $('#calendarEnd').calendar('get date');
             var data = {
+                type:vue.visibility,
                 name: vue.name,
                 startDate: startDate,
                 endDate: endDate,
@@ -344,6 +360,9 @@ export default {
             if (this.maxNumberReached) {
                 this.errors.push('Твърде много известия')
             }
+        },
+        wholeDay:function () {
+            $('.dropdown').dropdown();
         }
     }
     ,
