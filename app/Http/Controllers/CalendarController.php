@@ -115,7 +115,7 @@ class CalendarController
         if($startTime < $endTime || $wholeDay == true){
             $startDate = date('d/m/Y', $startTime);
             $endDate = date('d/m/Y', $endTime);
-            if($startDate === $endDate){
+            if($startDate == $endDate){
                 $calendar = new CalendarModel;
                 $calendar->name = $name;
                 $calendar->wholeDay = $wholeDay;
@@ -129,6 +129,11 @@ class CalendarController
         }
     }
 
+    /**
+     * за запазване на почивни дни
+     *
+     * @param Request $request
+     */
     function postRestDay(Request $request){
         $restDay = strtotime($request->get('restDay'));
 
