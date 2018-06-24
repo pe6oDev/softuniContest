@@ -79,4 +79,8 @@ class AdminController extends Controller
     public function getNameDaySettings(){
         return view('admin.nameDays');
     }
+
+    public function getPromotionsSettings(){
+        return view('admin.promotions');
+    }
 }

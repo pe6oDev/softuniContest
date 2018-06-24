@@ -46,7 +46,7 @@
             </div>
         </div>
         <!-- Бутони за смяна на седмицата -->
-        <div class="ui row ">
+        <div class="ui row  ">
             <i class="ui blue chevron circle left icon large toPreviousWeek"></i> &nbsp; &nbsp;
             <div class="header"><b id="startDate"></b>-<b id="endDate"></b></div> &nbsp; &nbsp;
             <i class="ui blue chevron circle right icon large toNextWeek"></i> &nbsp; &nbsp;
@@ -59,7 +59,7 @@
             </div>
         </div>
         <!-- Дни от седмицата -->
-        <div class="ui row">
+        <div class="ui row ">
             @for($i=0; $i < 7; $i++)
                 <div class="five wide column">
                     <div onclick="goToDay({{$i}})" class="ui blue button dayButtons">{{$weekDays[$i]}}</div>
@@ -70,7 +70,7 @@
         <div class="ui row">
             @for($i=0; $i < 7; $i++)
                 <div id="daySegment{{$i}}" class="two wide column">
-                    <a id="weekDay{{$i}}" href="">
+                    <a id="weekDay{{$i}}" class="weekHeaders" href="">
                         <h3 style="text-decoration: none">{{$weekDays[$i]}}</h3>
                         <span id="dayHeaderDate{{$i}}"></span>
                     </a>
@@ -114,7 +114,7 @@
     </script>
 
     <style>
-        h3,.header{
+        h3,.weekHeaders, .header{
             color:white;
         }
     </style>

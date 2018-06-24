@@ -20,7 +20,7 @@
 @endpush
 
 
-<div style="z-index: 10; display:none" id="sideBar"   class="ui sidebar  visible overlay  inverted segment">
+<div style="z-index: 10; display:none" id="sideBar" class="ui sidebar  visible overlay  inverted segment">
     <div class="ui   grid">
         <div class="ui row">
             <div class="ui eight wide column left aligned">
@@ -39,11 +39,12 @@
                 <div style="color: white" class="ui  header">
                     {{auth()->user()->email}}
                 </div>
-                <div id="profileEditButton" class="ui button circular icon" data-tooltip="редактирай" data-position="right center"><i
+                <div id="profileEditButton" class="ui button circular icon" data-tooltip="редактирай"
+                     data-position="right center"><i
                             class="ui edit icon"></i></div>
-               </div>
             </div>
         </div>
+    </div>
     <br><br>
     <div class="ui row">
         <div class="ui sixteen wide column">
@@ -51,14 +52,35 @@
                 <div class="ui button fluid icon ">излез <i class="ui sign out icon"></i></div>
             </a>
             <br>
-                <div class="ui divider"></div>
+            <div class="ui divider"></div>
         </div>
     </div>
     <div class="ui row">
         <div class="ui sixteen wide column">
-            <a>
-                <div class="ui button fluid icon ">Меню буттон 1</div>
+
+            <a href="{{route('calendar.month')}}">
+                <div class="ui button fluid icon ">Календар</div>
             </a>
+            <br>
+            <a href="{{route('dashboard')}}">
+                <div class="ui button fluid icon ">Известия</div>
+            </a>
+            <br>
+
+            @if(auth()->user()->type=='admin')
+                <a href="{{route('getPromotionsSettings')}}">
+                    <div class="ui button fluid icon ">Промоции</div>
+                </a>
+                <br>
+                <a href="{{route('getNameDaysSettings')}}">
+                    <div class="ui button fluid icon ">Именни дни</div>
+                </a>
+                <br>
+                <a href="{{route('getDaySettings')}}">
+                    <div class="ui button fluid icon ">Почивни дни</div>
+                </a>
+
+            @endif
             <br>
         </div>
     </div>

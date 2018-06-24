@@ -1388,7 +1388,7 @@ function applyToTag (styleElement, obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(14);
-module.exports = __webpack_require__(68);
+module.exports = __webpack_require__(71);
 
 
 /***/ }),
@@ -1420,6 +1420,7 @@ Vue.component('event-modal', __webpack_require__(56));
 Vue.component('admin-table', __webpack_require__(59));
 Vue.component('day-settings', __webpack_require__(62));
 Vue.component('name-days-settings', __webpack_require__(65));
+Vue.component('promotions-settings', __webpack_require__(68));
 
 var app = new Vue({
   el: '#app'
@@ -1503,7 +1504,7 @@ if (token) {
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.10';
+  var VERSION = '4.17.5';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -1927,14 +1928,6 @@ if (token) {
   /** Used to access faster Node.js helpers. */
   var nodeUtil = (function() {
     try {
-      // Use `util.types` for Node.js 10+.
-      var types = freeModule && freeModule.require && freeModule.require('util').types;
-
-      if (types) {
-        return types;
-      }
-
-      // Legacy `process.binding('util')` for Node.js < 10.
       return freeProcess && freeProcess.binding && freeProcess.binding('util');
     } catch (e) {}
   }());
@@ -30480,18 +30473,15 @@ module.exports = Vue;
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
-            (typeof self !== "undefined" && self) ||
-            window;
-var apply = Function.prototype.apply;
+/* WEBPACK VAR INJECTION */(function(global) {var apply = Function.prototype.apply;
 
 // DOM APIs, for completeness
 
 exports.setTimeout = function() {
-  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
+  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
 };
 exports.setInterval = function() {
-  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
+  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
 };
 exports.clearTimeout =
 exports.clearInterval = function(timeout) {
@@ -30506,7 +30496,7 @@ function Timeout(id, clearFn) {
 }
 Timeout.prototype.unref = Timeout.prototype.ref = function() {};
 Timeout.prototype.close = function() {
-  this._clearFn.call(scope, this._id);
+  this._clearFn.call(window, this._id);
 };
 
 // Does not start the time, just sets up the members needed.
@@ -30534,7 +30524,7 @@ exports._unrefActive = exports.active = function(item) {
 
 // setimmediate attaches itself to the global object
 __webpack_require__(38);
-// On some exotic environments, it's not clear which object `setimmediate` was
+// On some exotic environments, it's not clear which object `setimmeidate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
 exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
@@ -33870,14 +33860,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['saveUrl', 'getUrl', 'deleteUrl'],
+    props: ['saveUrl'],
     mounted: function mounted() {
-        var _this = this;
-
         console.log('Component mounted.');
-        axios.get(this.getUrl).then(function (response) {
-            _this.dates = response.data.restDays;
-        });
     },
 
     data: function data() {
@@ -33887,38 +33872,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         addDay: function addDay() {
-            var _this2 = this;
-
             if ($('#calendar').calendar('get date')) {
-                var restDay = $('#calendar').calendar('get date');
-                var data = { restDay: restDay };
-                axios.post(this.saveUrl, data).then(function (response) {
-                    _this2.dates.push(response.data.newRest);
-                    $('#calendar').calendar('clear');
-                    _this2.date = null;
-                });
+                this.dates.push($('#calendar').calendar('get date'));
+                $('#calendar').calendar('clear');
+                this.date = null;
             }
         },
-        deleteDate: function deleteDate(id, i) {
-            this.dates.splice(i);
-            var data = { id: id };
-            axios.post(deleteUrl, data).then(function (response) {});
+        deleteDate: function deleteDate(i) {
+            console.log(i);
+            this.dates.splice(i, 1);
+        }
+    },
+    filters: {
+        humandate: function humandate(value) {
+            var date = new Date(value);
+            return date.getUTCDate() + ' . ' + (date.getUTCMonth() + 1) + ' . ' + date.getFullYear();
+        }
+    },
+    watch: {
+        //За промяна на датите (заявка отзад)
+        dates: function dates() {
+            axios.post(this.saveUrl, {
+                dates: this.dates
+            });
         }
     }
-    //        filters: {
-    //            humandate: function (value) {
-    //                let date = new Date(value);
-    //                return  date.getUTCDate()+' . '+(date.getUTCMonth()+1) +' . '+date.getFullYear();
-    //            }
-    //        },
-    //        watch:{
-    //            //За промяна на датите (заявка отзад)
-    //            dates:function(){
-    //                axios.post(this.saveUrl,{
-    //                    dates:this.dates
-    //                })
-    //            }
-    //        }
 });
 
 /***/ }),
@@ -33957,7 +33935,9 @@ var render = function() {
               },
               [
                 _vm._v(
-                  "\n            " + _vm._s(date.normalDate) + "\n            "
+                  "\n            " +
+                    _vm._s(_vm._f("humandate")(date)) +
+                    "\n            "
                 ),
                 _c(
                   "div",
@@ -33965,7 +33945,7 @@ var render = function() {
                     staticClass: "ui icon  small circular red button",
                     on: {
                       click: function($event) {
-                        _vm.deleteDate(date._id, i)
+                        _vm.deleteDate(i)
                       }
                     }
                   },
@@ -34293,6 +34273,329 @@ if (false) {
 
 /***/ }),
 /* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(69)
+/* template */
+var __vue_template__ = __webpack_require__(70)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Promotions.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-06304da7", Component.options)
+  } else {
+    hotAPI.reload("data-v-06304da7", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 69 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['saveUrl'],
+    data: function data() {
+        return {
+            promotions: [],
+            name: '',
+            description: 'описание'
+        };
+    },
+    methods: {
+        addDay: function addDay() {
+            if ($('#calendarStart').calendar('get date') && $('#calendarEnd').calendar('get date') && this.name && this.description) {
+                this.promotions.push({
+                    'start': $('#calendarStart').calendar('get date'),
+                    'end': $('#calendarEnd').calendar('get date'),
+                    'name': this.name,
+                    'description': this.description
+                });
+                $('#calendarStart').calendar('clear');
+                $('#calendarEnd').calendar('clear');
+                this.name = '';
+                this.description = '';
+            }
+        },
+        deleteDate: function deleteDate(i) {
+            this.promotions.splice(i, 1);
+        }
+    },
+    filters: {
+        humandate: function humandate(value) {
+            var date = new Date(value);
+            return date.getUTCDate() + '.' + (date.getUTCMonth() + 1) + '.' + date.getFullYear();
+        }
+    },
+    watch: {
+        //За промяна на датите (заявка отзад)
+        dates: function dates() {
+            axios.post(this.saveUrl, {
+                dates: this.promotions
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "ui row" },
+    [
+      _c("div", { staticClass: "six wide column" }, [
+        _c("div", { staticClass: "ui form" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "ui field" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.name,
+                  expression: "name"
+                }
+              ],
+              attrs: { placeholder: "заглавие на промоцията", type: "text" },
+              domProps: { value: _vm.name },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.name = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "field" }, [
+            _c(
+              "textarea",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.description,
+                    expression: "description"
+                  }
+                ],
+                domProps: { value: _vm.description },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.description = $event.target.value
+                  }
+                }
+              },
+              [_vm._v("Информация")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _c("br"),
+        _c("br")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "three wide column" }, [
+        _c("i", {
+          staticClass: "inverted circular add  link blue icon",
+          on: { click: _vm.addDay }
+        })
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.promotions, function(day, i) {
+        return _c(
+          "div",
+          { staticClass: "ui eight wide center aligned column" },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "ui segment",
+                staticStyle: { padding: "10px 10px 10px 10px" }
+              },
+              [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm._f("humandate")(day.start)) +
+                    " -  " +
+                    _vm._s(_vm._f("humandate")(day.end)) +
+                    ":  " +
+                    _vm._s(day.name) +
+                    "\n              \n            "
+                ),
+                _c(
+                  "div",
+                  {
+                    staticClass: "ui icon  small circular red button",
+                    on: {
+                      click: function($event) {
+                        _vm.deleteDate(i)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "icon trash" })]
+                )
+              ]
+            )
+          ]
+        )
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ui two fields" }, [
+      _c("div", { staticClass: "ui field" }, [
+        _c(
+          "div",
+          { staticClass: "ui calendar", attrs: { id: "calendarStart" } },
+          [
+            _c("div", { staticClass: "ui input fluid left icon" }, [
+              _c("i", { staticClass: "calendar icon" }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "text", placeholder: "начало на промоцията" }
+              })
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "ui field" }, [
+        _c(
+          "div",
+          { staticClass: "ui calendar", attrs: { id: "calendarEnd" } },
+          [
+            _c("div", { staticClass: "ui input fluid left icon" }, [
+              _c("i", { staticClass: "calendar icon" }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "text", placeholder: "край  на промоцията" }
+              })
+            ])
+          ]
+        )
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-06304da7", module.exports)
+  }
+}
+
+/***/ }),
+/* 71 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
