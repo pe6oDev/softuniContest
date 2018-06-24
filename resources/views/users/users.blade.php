@@ -9,8 +9,7 @@
     <div class="ui center aligned container">
         <div class="ui center aligned doubling grid">
             <div class="ui segment text container center aligned ">
-                Тука трябва да се показват потребителите и да може да им се сменят правата
-                (видимо само за админи!) //Трябва да сложа midleware :D
+              <div class="header">Потребители - смяна на права</div>
             </div>
         </div>
 
@@ -28,11 +27,10 @@
                 'Създаден на',
                 'Тип',
             ]"
-                :keys="['email','created_at','groceries','notes']"
+                :keys="['email','created_at','type']"
                 :show-total-num="true"
-
                 {{--:row-width="[50,12,12,12,12]"--}}
-                {{--:no-search="[1,2,3,4]"--}}
+                :no-search="[2,1]"
                 {{--:no-sort="[4]"--}}
         ></admin-table>
 

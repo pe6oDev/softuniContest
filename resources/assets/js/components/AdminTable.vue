@@ -10,10 +10,6 @@ Vue компонент за всички таблици в admin панела
 <template>
 
     <div class="ui center aligned  grid">
-        <!--Заглавие-->
-        <div class="ui row">
-            <h2 class="center aligned header">{{headerName}}</h2>
-        </div>
         <!--колко от колко -->
         <div v-if="data && showTotalNum" class="ui row">
             <div class="ui sixteen wide right aligned column">

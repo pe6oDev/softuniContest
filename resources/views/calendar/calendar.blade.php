@@ -110,8 +110,9 @@
     'scripts'=>[
         asset('js/changeMonth.js'),
         asset('js/sideBar.js'),
-        asset('js/leftRightGesture.js')
+
     ]])
+    {{--asset('js/leftRightGesture.js')--}}
 @endsection
 
 @push('header')

@@ -86,12 +86,15 @@ Route::middleware('auth')->group(function (){
     Route::get('week', 'CalendarController@getWeekView')->name('week');
 
     Route::get('1',function(){})->name('getDay');//TODO::remove
+
     Route::get('/month/{yearsDiff?}', 'CalendarController@getMonths')->name('calendar.month');
 
-    Route::get('users','Admin\AdminController@getUsers');
+    Route::middleware('admin')->group(function(){
+        Route::get('users','Admin\AdminController@getUsers');
 
-    Route::post('users/ajax','Admin\AdminController@getUsersAjax')->name('usersAjax');
+        Route::post('users/ajax','Admin\AdminController@getUsersAjax')->name('usersAjax');
 
-    Route::post('users/change/type', 'Admin\AdminController@postChangeType')->name('changeUserType');
+        Route::post('users/change/type', 'Admin\AdminController@postChangeType')->name('changeUserType');
+    });
 
 });
