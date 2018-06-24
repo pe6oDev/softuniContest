@@ -66,7 +66,17 @@ class AdminController extends Controller
         return response(200);
     }
 
+    /*
+     * Връща view за насторйки на почивни дни
+     */
     public function getDaySettings(){
         return view('admin.daySettings');
+    }
+
+    /*
+     * Връща view за настройки на именни дни
+     */
+    public function getNameDaySettings(){
+        return view('admin.nameDays');
     }
 }
