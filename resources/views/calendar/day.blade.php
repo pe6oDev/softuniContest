@@ -40,7 +40,6 @@
                     <a href="{{ $routePrevDay}}">
                         <i class="ui blue chevron circle left icon medium toPreviousMonth"></i> &nbsp;
                     </a>
-
                 @endunless
                 <span style="color: white"> {{$day}} {{$calendar->getMonths($month)}}</span>
                 {{--стрелка за следващ ден--}}
@@ -50,6 +49,8 @@
 
             </h2>
         </div>
+
+
 
         <div class="ui row">
             <div class="ui success message" id="postMessage" style="display: none">Събитието беше записано успешно!
@@ -61,6 +62,20 @@
         </div>
         <div class="ui row">
             <div class="ui ten wide column">
+
+                @include('includes.wholeDayEvent',[
+                'id'=>1,
+                'color'=>App\EventsColors::colors['promotion'],
+                'header'=>'Промоция на телевизори',
+                'description'=>'Descriptio long verry long'
+                ])
+                @include('includes.wholeDayEvent',[
+               'id'=>2,
+               'color'=>App\EventsColors::colors['nameDay'],
+               'header'=>'Промоция на телевизори',
+               'description'=>'Descriptio long verry long'
+               ])
+
                 <div class="ui segment" id="eventsHolder" style="padding-bottom: 65px">
                     <div id="first" class="ui horizontal divider" style="display: none;"></div>
                     @for($i=0; $i <= 23; $i++)
