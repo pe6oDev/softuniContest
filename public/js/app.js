@@ -1388,7 +1388,7 @@ function applyToTag (styleElement, obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(14);
-module.exports = __webpack_require__(68);
+module.exports = __webpack_require__(71);
 
 
 /***/ }),
@@ -1420,6 +1420,7 @@ Vue.component('event-modal', __webpack_require__(56));
 Vue.component('admin-table', __webpack_require__(59));
 Vue.component('day-settings', __webpack_require__(62));
 Vue.component('name-days-settings', __webpack_require__(65));
+Vue.component('promotions-settings', __webpack_require__(68));
 
 var app = new Vue({
   el: '#app'
@@ -32185,7 +32186,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var startDate = $('#calendarStart').calendar('get date');
             var endDate = $('#calendarEnd').calendar('get date');
             var data = {
-                type: vue.visibility,
+                visibility: vue.visibility,
                 name: vue.name,
                 startDate: startDate,
                 endDate: endDate,
@@ -34272,6 +34273,329 @@ if (false) {
 
 /***/ }),
 /* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(69)
+/* template */
+var __vue_template__ = __webpack_require__(70)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Promotions.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-06304da7", Component.options)
+  } else {
+    hotAPI.reload("data-v-06304da7", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 69 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['saveUrl'],
+    data: function data() {
+        return {
+            promotions: [],
+            name: '',
+            description: 'описание'
+        };
+    },
+    methods: {
+        addDay: function addDay() {
+            if ($('#calendarStart').calendar('get date') && $('#calendarEnd').calendar('get date') && this.name && this.description) {
+                this.promotions.push({
+                    'start': $('#calendarStart').calendar('get date'),
+                    'end': $('#calendarEnd').calendar('get date'),
+                    'name': this.name,
+                    'description': this.description
+                });
+                $('#calendarStart').calendar('clear');
+                $('#calendarEnd').calendar('clear');
+                this.name = '';
+                this.description = '';
+            }
+        },
+        deleteDate: function deleteDate(i) {
+            this.promotions.splice(i, 1);
+        }
+    },
+    filters: {
+        humandate: function humandate(value) {
+            var date = new Date(value);
+            return date.getUTCDate() + '.' + (date.getUTCMonth() + 1) + '.' + date.getFullYear();
+        }
+    },
+    watch: {
+        //За промяна на датите (заявка отзад)
+        dates: function dates() {
+            axios.post(this.saveUrl, {
+                dates: this.promotions
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "ui row" },
+    [
+      _c("div", { staticClass: "six wide column" }, [
+        _c("div", { staticClass: "ui form" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "ui field" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.name,
+                  expression: "name"
+                }
+              ],
+              attrs: { placeholder: "заглавие на промоцията", type: "text" },
+              domProps: { value: _vm.name },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.name = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "field" }, [
+            _c(
+              "textarea",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.description,
+                    expression: "description"
+                  }
+                ],
+                domProps: { value: _vm.description },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.description = $event.target.value
+                  }
+                }
+              },
+              [_vm._v("Информация")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _c("br"),
+        _c("br")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "three wide column" }, [
+        _c("i", {
+          staticClass: "inverted circular add  link blue icon",
+          on: { click: _vm.addDay }
+        })
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.promotions, function(day, i) {
+        return _c(
+          "div",
+          { staticClass: "ui eight wide center aligned column" },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "ui segment",
+                staticStyle: { padding: "10px 10px 10px 10px" }
+              },
+              [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm._f("humandate")(day.start)) +
+                    " -  " +
+                    _vm._s(_vm._f("humandate")(day.end)) +
+                    ":  " +
+                    _vm._s(day.name) +
+                    "\n              \n            "
+                ),
+                _c(
+                  "div",
+                  {
+                    staticClass: "ui icon  small circular red button",
+                    on: {
+                      click: function($event) {
+                        _vm.deleteDate(i)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "icon trash" })]
+                )
+              ]
+            )
+          ]
+        )
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ui two fields" }, [
+      _c("div", { staticClass: "ui field" }, [
+        _c(
+          "div",
+          { staticClass: "ui calendar", attrs: { id: "calendarStart" } },
+          [
+            _c("div", { staticClass: "ui input fluid left icon" }, [
+              _c("i", { staticClass: "calendar icon" }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "text", placeholder: "начало на промоцията" }
+              })
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "ui field" }, [
+        _c(
+          "div",
+          { staticClass: "ui calendar", attrs: { id: "calendarEnd" } },
+          [
+            _c("div", { staticClass: "ui input fluid left icon" }, [
+              _c("i", { staticClass: "calendar icon" }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "text", placeholder: "край  на промоцията" }
+              })
+            ])
+          ]
+        )
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-06304da7", module.exports)
+  }
+}
+
+/***/ }),
+/* 71 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

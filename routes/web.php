@@ -106,6 +106,8 @@ Route::middleware('auth')->group(function (){
         Route::get('daySettings', 'Admin\AdminController@getDaySettings')->name('getDaySettings');
 
         Route::get('name/days', 'Admin\AdminController@getNameDaySettings')->name('getDaySettings');
+
+        Route::get('promotion/days', 'Admin\AdminController@getPromotionsSettings')->name('getDaySettings');
     });
 
 
