@@ -12,7 +12,6 @@
         @if($id === "editModal")
         ref="editModal"
         @endif
-        day-month="{{$dayMonth}}"
         day-id="{{$dayId}}"
         month-id="{{$monthId}}"
         header = "@lang($type)"

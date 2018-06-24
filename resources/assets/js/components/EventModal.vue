@@ -25,70 +25,96 @@
                         </div>
                     </div>
                 </div>
-                <!--Полета за дата-->
-                <div v-show="date === ''" class="ui row">
-                    <div class="ui column seven wide">
-                        <select v-model="selectedDay" v-bind:id="dayId" class="ui fluid dropdown">
-                            <option value="">Ден</option>
-                            <option v-for="n in 31" v-bind:value="n">{{n}}</option>
-                        </select>
+                <div class="ui row">
+                    <h3 class="subheader">Начало</h3>
+                </div>
+                <div class="ui row">
+                    <div class="ui calendar" id="example1">
+                        <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <input type="text" placeholder="Date/Time">
+                        </div>
                     </div>
-                    <div class="ui column seven wide">
-                        <select v-model="selectedMonth" v-bind:id="monthId" class="ui fluid dropdown">
-                            <option value="">Месец</option>
-                            <option v-for="n in 12" v-bind:value="n">{{months[n]}}</option>
-                        </select>
-                    </div>
+                    <!--Полета за началната дата-->
+                    <!--<div class="ui eight wide column">-->
+                        <!--<div v-show="date === ''" class="ui grid">-->
+                            <!--<div class="ui column seven wide">-->
+                                <!--<select v-model="startDay" v-bind:id="dayId" class="ui fluid dropdown">-->
+                                    <!--<option value="">Ден</option>-->
+                                    <!--<option v-for="n in 31" v-bind:value="n">{{n}}</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                            <!--<div class="ui column seven wide">-->
+                                <!--<select v-model="startMonth" v-bind:id="monthId" class="ui fluid dropdown">-->
+                                    <!--<option value="">Месец</option>-->
+                                    <!--<option v-for="n in 12" v-bind:value="n">{{months[n]}}</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="eight wide column">-->
+                        <!--<div class="ui grid">-->
+                            <!--<div class="ui column">-->
+                                <!--<div class="ui fluid   input">-->
+                                    <!--<input v-model="startHour" type="number" name="startHour" min="0" max="24"-->
+                                           <!--v-bind:placeholder="hour">-->
+                                    <!--<span style="font-size: 25px"><b>&nbsp;:&nbsp;</b></span>-->
+                                    <!--<input v-model="startMinutes" type="number" name="startMinutes" min="0" step="5"-->
+                                           <!--max="59" v-bind:placeholder="minutes">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
                 </div>
                 <!--Полета за начало, край и продължителност-->
-                <div class="ui row">
-                    <div class="ui eight wide column one column grid ">
-                        <div class="column">
-                            <h4 class="subheader" style="text-align: center">{{beginning}}</h4>
-                        </div>
-                        <div class="ui column">
-                            <div class="ui fluid   input">
-                                <input v-model="startHour" type="number" name="startHour" min="0" max="24"
-                                       v-bind:placeholder="hour">
-                                <span style="font-size: 25px"><b>&nbsp;:&nbsp;</b></span>
-                                <input v-model="startMinutes" type="number" name="startMinutes" min="0" step="5"
-                                       max="59" v-bind:placeholder="minutes">
-                            </div>
-                        </div>
-                    </div>
+                <!--<div class="ui row">-->
+                    <!--<div class="ui eight wide column one column grid ">-->
+                        <!--<div class="column">-->
+                            <!--<h4 class="subheader" style="text-align: center">{{beginning}}</h4>-->
+                        <!--</div>-->
+                        <!--<div class="ui column">-->
+                            <!--<div class="ui fluid   input">-->
+                                <!--<input v-model="startHour" type="number" name="startHour" min="0" max="24"-->
+                                       <!--v-bind:placeholder="hour">-->
+                                <!--<span style="font-size: 25px"><b>&nbsp;:&nbsp;</b></span>-->
+                                <!--<input v-model="startMinutes" type="number" name="startMinutes" min="0" step="5"-->
+                                       <!--max="59" v-bind:placeholder="minutes">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
-                    <div class="ui eight wide column one column grid">
-                        <div class="column">
-                            <h4 class="subheader">{{end}}</h4>
-                        </div>
-                        <div class="ui column">
-                            <div class="ui fluid   input">
-                                <input v-model="endHour" type="number" name="endHour" min="0" max="24"
-                                       v-bind:placeholder="hour">
-                                <span style="font-size: 25px"><b>&nbsp;:&nbsp;</b></span>
-                                <input v-model="endMinutes" type="number" name="endMinutes" min="0" step="5" max="59"
-                                       v-bind:placeholder="minutes">
-                                <input v-model="eventId" type="hidden">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui row">
-                    <div class="ui fifteen wide column one column grid">
-                        <div class="column">
-                            <h4 class="subheader" style="text-align: center">{{duration}}</h4>
-                        </div>
-                        <div class="ui column">
-                            <div class="ui fluid   input">
-                                <input v-model="durationHour" type="number" name="durationHour" min="0" max="24"
-                                       v-bind:placeholder="hour">
-                                <span style="font-size: 25px"><b>&nbsp;:&nbsp;</b></span>
-                                <input v-model="durationMin" type="number" name="durationMin" min="0" step="5"
-                                       max="59" v-bind:placeholder="minutes">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <!--<div class="ui eight wide column one column grid">-->
+                        <!--<div class="column">-->
+                            <!--<h4 class="subheader">{{end}}</h4>-->
+                        <!--</div>-->
+                        <!--<div class="ui column">-->
+                            <!--<div class="ui fluid   input">-->
+                                <!--<input v-model="endHour" type="number" name="endHour" min="0" max="24"-->
+                                       <!--v-bind:placeholder="hour">-->
+                                <!--<span style="font-size: 25px"><b>&nbsp;:&nbsp;</b></span>-->
+                                <!--<input v-model="endMinutes" type="number" name="endMinutes" min="0" step="5" max="59"-->
+                                       <!--v-bind:placeholder="minutes">-->
+                                <!--<input v-model="eventId" type="hidden">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="ui row">-->
+                    <!--<div class="ui fifteen wide column one column grid">-->
+                        <!--<div class="column">-->
+                            <!--<h4 class="subheader" style="text-align: center">{{duration}}</h4>-->
+                        <!--</div>-->
+                        <!--<div class="ui column">-->
+                            <!--<div class="ui fluid   input">-->
+                                <!--<input v-model="durationHour" type="number" name="durationHour" min="0" max="24"-->
+                                       <!--v-bind:placeholder="hour">-->
+                                <!--<span style="font-size: 25px"><b>&nbsp;:&nbsp;</b></span>-->
+                                <!--<input v-model="durationMin" type="number" name="durationMin" min="0" step="5"-->
+                                       <!--max="59" v-bind:placeholder="minutes">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
                 <!--За напомняниеята-->
                 <div class="ui row">
                     <h3 class="header" style="margin-right: 10px">{{notifText}}</h3>
@@ -162,7 +188,6 @@
 <script>
     export default {
         props: ['id',
-            'dayMonth',
             'header',
             'question',
             'beginning',
@@ -217,8 +242,10 @@
                 showNotif: false,
                 notifId: '',
                 loadedDate: '',
-                selectedDay: '',
-                selectedMonth: ''
+                startDay: '',
+                startMonth: '',
+                endDay: '',
+                endMonth: ''
             }
         },
         methods: {
@@ -316,9 +343,13 @@
                 var vue = this;
 
                 if (vue.id === "postModal") {
-                    var date = vue.dayMonth
+                    if(vue.date === ""){
+                        var day = vue.selectedDay
+                        var month = vue.selectedMonth
+                        var dayMonth = "" + day + "/" + month + ""
+                    }
                 } else {
-                    var date = vue.loadedDate
+                    var dayMonth = vue.loadedDate
                 }
 
                 var data = {
@@ -327,7 +358,7 @@
                     startMinutes: parseInt(vue.startMinutes),
                     endHour: parseInt(vue.endHour),
                     endMinutes: parseInt(vue.endMinutes),
-                    dayMonth: date,
+                    dayMonth: dayMonth,
                     notifications: vue.notifications,
                     event_id: vue.eventId
                 };

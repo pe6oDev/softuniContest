@@ -45,4 +45,11 @@ $(document).ready(function(){
             .modal('show')
 
     });
+
+    $('#example1').calendar();
+
+    $('.calendar').click(function(){
+        $('#example1').popup()
+    })
+
 });
