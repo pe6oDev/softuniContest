@@ -32490,21 +32490,25 @@ var render = function() {
                 : _vm._e()
             ]),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: !_vm.wholeDay,
-                    expression: "!wholeDay"
-                  }
-                ],
-                staticClass: "ui row"
-              },
-              [_vm._m(0), _vm._v(" "), _vm._m(1)]
-            ),
+            _c("div", { staticClass: "ui row" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: !_vm.wholeDay,
+                      expression: "!wholeDay"
+                    }
+                  ],
+                  staticClass: "ui eight wide column"
+                },
+                [_vm._m(1)]
+              )
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "ui row" }, [
               _c(
@@ -32792,15 +32796,17 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ui eight wide column" }, [
-      _c("div", { staticClass: "ui calendar", attrs: { id: "calendarEnd" } }, [
+    return _c(
+      "div",
+      { staticClass: "ui calendar", attrs: { id: "calendarEnd" } },
+      [
         _c("div", { staticClass: "ui input left fluid icon" }, [
           _c("i", { staticClass: "calendar icon" }),
           _vm._v(" "),
           _c("input", { attrs: { type: "text", placeholder: "Край" } })
         ])
-      ])
-    ])
+      ]
+    )
   }
 ]
 render._withStripped = true

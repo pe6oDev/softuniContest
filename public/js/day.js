@@ -137,33 +137,3 @@ function deleteEvent(id) {
         .modal('show')
 }
 
-//Отваря модала за редактиране на събитие
-function editEvent(id) {
-    vueApp.$refs.editModal.showEditModal(id)
-}
-
-//Показва модала за преглед списък
-function viewLoad(id) {
-    vueApp.$refs.viewGroceryModal.loadView(id).then(()=>{
-        $("#viewGroceryModal")
-.modal({
-        transition: 'fade',
-    })
-        .modal('show')
-    console.log('loaded');
-})
-
-}
-
-//Показва модала за редактиране на списъй
-function showEditModal(id) {
-    vueApp.$refs.editGroceryModal.loadEdit(id)
-        .then(() => {
-        $('#viewGroceryModal').modal('hide')
-    $("#editGroceryModal")
-        .modal({
-            transition: 'fade',
-        })
-        .modal('show');
-})
-}
