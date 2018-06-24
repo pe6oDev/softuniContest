@@ -85,7 +85,7 @@ Route::middleware('auth')->group(function (){
 
     Route::get('week', 'CalendarController@getWeekView')->name('week');
 
-    Route::get('day/{day}/{month}/{year}','CalendarController@getDay')->name('getDay');//TODO::implement
+    Route::get('day/{day}/{month}/{year}','CalendarController@getDay')->name('getDay');
 
     Route::get('getWeekEvents', function (){
         return [];
@@ -107,9 +107,9 @@ Route::middleware('auth')->group(function (){
 
         Route::get('daySettings', 'Admin\AdminController@getDaySettings')->name('getDaySettings');
 
-        Route::get('name/days', 'Admin\AdminController@getNameDaySettings')->name('getDaySettings');
+        Route::get('name/days', 'Admin\AdminController@getNameDaySettings')->name('getNameDaysSettings');
 
-        Route::get('promotion/days', 'Admin\AdminController@getPromotionsSettings')->name('getDaySettings');
+        Route::get('promotion/days', 'Admin\AdminController@getPromotionsSettings')->name('getPromotionsSettings');
     });
 
 
