@@ -25,30 +25,33 @@
                         </div>
                     </div>
                 </div>
+                <!--Дали да е целодневно-->
+                <div class="ui row">
+                    <div class="ui toggle checkbox">
+                        <input v-model="wholeDay" name="public" type="checkbox"/>
+                        <label>Цял ден</label>
+                    </div>
+                </div>
                <!--Часове-->
-                <div class="ui two column row">
+                <div v-show="!wholeDay" class="ui row">
                     <!--Начални час и дата-->
-                    <div class="ui column">
-                        <div class="ui calendar" id="calendarStart">
-                            <div class="ui input left icon">
+                    <div class="ui eight wide column">
+                        <div class="ui calendar " id="calendarStart">
+                            <div class="ui input fluid left icon">
                                 <i class="calendar icon"></i>
                                 <input type="text" placeholder="Начало"/>
                             </div>
                         </div>
                     </div>
                     <!--Крайни час и дата-->
-                    <div class="ui column">
+                    <div class="ui eight wide column">
                         <div class="ui calendar" id="calendarEnd">
-                            <div class="ui input left icon">
+                            <div class="ui input left fluid icon">
                                 <i class="calendar icon"></i>
                                 <input type="text" placeholder="Край"/>
                             </div>
                         </div>
                     </div>
-
-
-
-
                 </div>
 
 
@@ -116,7 +119,7 @@
         </div>
         <!--Бутони -->
         <div class="actions">
-            <div v-on:click="submit" class="ui green button">{{save}}</div>
+            <div v-on:click="submit" class="ui blue button">{{save}}</div>
             <div class="ui negative button">{{no}}..</div>
         </div>
     </div>
@@ -159,6 +162,7 @@ export default {
 
     data: function () {
         return {
+            wholeDay:false,
             errors: {},
             name: '',
             eventId: "",

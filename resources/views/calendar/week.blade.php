@@ -46,7 +46,7 @@
             </div>
         </div>
         <!-- Бутони за смяна на седмицата -->
-        <div class="ui row">
+        <div class="ui row ">
             <i class="ui blue chevron circle left icon large toPreviousWeek"></i> &nbsp; &nbsp;
             <div class="header"><b id="startDate"></b>-<b id="endDate"></b></div> &nbsp; &nbsp;
             <i class="ui blue chevron circle right icon large toNextWeek"></i> &nbsp; &nbsp;

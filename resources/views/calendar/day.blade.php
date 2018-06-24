@@ -13,15 +13,15 @@
 
 @php
 
-       $routePrevDay=route('getDay',[$carbonDt->subDay()->month,$carbonDt->day,$carbonDt->month ==12 ?$year+1:  $year]);
-       $routeNextDay=route('getDay',[$carbonDt->addDays(2)->month,$carbonDt->day, $carbonDt->month ==1 ?$year-1:  $year]);
-       $dayMonth = "" . $day . "/" . $month . "";
+    $routePrevDay=route('getDay',[$carbonDt->subDay()->month,$carbonDt->day,$carbonDt->month ==12 ?$year+1:  $year]);
+    $routeNextDay=route('getDay',[$carbonDt->addDays(2)->month,$carbonDt->day, $carbonDt->month ==1 ?$year-1:  $year]);
+    $dayMonth = "" . $day . "/" . $month . "";
 @endphp
 
 @section('main')
     <br>
-    <div  id="touchzone" class="ui center aligned stackable grid">
-        <div class="ui  row" >
+    <div id="touchzone" class="ui center aligned stackable grid">
+        <div class="ui  row">
             <div class="ui sixteen wide right aligned column">
                 <a href="{{route('calendar.month')}}">
                     <div class="ui icon  blue button" style="margin-right: 0.5cm">
@@ -42,7 +42,7 @@
                     </a>
 
                 @endunless
-                {{$day}} {{$calendar->getMonths($month)}}
+                <span style="color: white"> {{$day}} {{$calendar->getMonths($month)}}</span>
                 {{--стрелка за следващ ден--}}
                 <a href="{{$routeNextDay}}">
                     <i class="ui blue chevron circle right icon medium toPreviousMonth"></i> &nbsp;
@@ -50,18 +50,7 @@
 
             </h2>
         </div>
-        <div class="ui row" style="margin-top: 5px">
-            <br>
-            <div id="eventButton" class="ui green  icon button">
-                <i class="ui plus icon"></i> @lang('Добави събитие')
-            </div>
-        </div>
-        <div class="ui row" style="margin-top: 10px">
-            <br>
-            <div id="groceryButton" class="ui green  icon button">
-                <i class="ui plus icon"></i> @lang('Създай списък')
-            </div>
-        </div>
+
         <div class="ui row">
             <div class="ui success message" id="postMessage" style="display: none">Събитието беше записано успешно!
             </div>
@@ -91,6 +80,11 @@
         {{--@include('includes.modals.eventModal', ['id' => 'postModal', 'type' => 'Създаване на събитие'])--}}
         {{--@include('includes.modals.eventModal', ['id' => 'editModal', 'type' => 'Редактиране на събитие'])--}}
         {{--@include('includes.modals.yes_noModal', ['id' => 'deleteModal', 'header' => 'Изтриване на събитие', 'content' => 'Наистина ли искате да изтриете това събитие?'])--}}
+
+        <div id="floatingButton" class=" ui red button huge circular icon">
+            <i class="ui add icon"></i>
+        </div>
+
     </div>
     <br><br><br><br>
 @endsection
@@ -100,17 +94,17 @@
     var hideSidebar = true;
 
     {{--postEventUrl = "{{route('postEvent')}}";--}}
-    {{--getEventsUrl = "{{route('getEvents')}}";--}}
-    {{--getOneEventUrl = "{{route('getOneEvent')}}";--}}
-    {{--deleteEventUrl = "{{route('deleteEvent')}}";--}}
-    {{--editEventUrl = "{{route('editEvent')}}";--}}
-    {{--dayMonth = "{{$dayMonth}}";--}}
-    {{--token = "{{Session::token()}}";--}}
+            {{--getEventsUrl = "{{route('getEvents')}}";--}}
+            {{--getOneEventUrl = "{{route('getOneEvent')}}";--}}
+            {{--deleteEventUrl = "{{route('deleteEvent')}}";--}}
+            {{--editEventUrl = "{{route('editEvent')}}";--}}
+            {{--dayMonth = "{{$dayMonth}}";--}}
+        token = "{{Session::token()}}";
     //за сменянето на дни със слайдване на пръста
-    var monthOrDay='day';
-    var hasPrevDay='{{!($day<=$currentDay && $monthInt==0)}}';
-    var routePrevDay="{{$routePrevDay}}";
-    var routeNextDay="{{$routeNextDay}}";
+    var monthOrDay = 'day';
+    var hasPrevDay = '{{!($day<=$currentDay && $monthInt==0)}}';
+    var routePrevDay = "{{$routePrevDay}}";
+    var routeNextDay = "{{$routeNextDay}}";
 </script>
 <script src="{{asset('js/leftRightGesture.js')}}"></script>
 <script src="{{asset('js/day.js')}}"></script>
