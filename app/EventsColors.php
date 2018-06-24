@@ -15,5 +15,6 @@ class EventsColors
         'restDay' =>'pink',
         'nameDay' =>'yellow',
         'promotion'=>'purple',
+        null => 'orange'
     ];
 }

@@ -52,7 +52,6 @@
         </div>
 
 
-
         <div class="ui row">
             <div class="ui success message" id="postMessage" style="display: none">Събитието беше записано успешно!
             </div>
@@ -64,18 +63,16 @@
         <div class="ui row">
             <div class="ui ten wide column">
 
-                @include('includes.wholeDayEvent',[
-                'id'=>1,
-                'color'=>App\EventsColors::colors['promotion'],
-                'header'=>'Промоция на телевизори',
-                'description'=>'Descriptio long verry long'
-                ])
-                @include('includes.wholeDayEvent',[
-               'id'=>2,
-               'color'=>App\EventsColors::colors['nameDay'],
-               'header'=>'Промоция на телевизори',
-               'description'=>'Descriptio long verry long'
-               ])
+
+                @foreach($wholeDayEvents as $event )
+                    @include('includes.wholeDayEvent',[
+                                    'id'=>$event->id,
+                                    'color'=>App\EventsColors::colors[$event->type],
+                                    'header'=>$event->name,
+                                    'description'=>$event->text
+                                    ])
+                @endforeach
+
 
                 <div class="ui segment" id="eventsHolder" style="padding-bottom: 65px">
                     <div id="first" class="ui horizontal divider" style="display: none;"></div>
@@ -93,9 +90,7 @@
                 </div>
             </div>
         </div>
-        {{--@include('includes.modals.eventModal', ['id' => 'postModal', 'type' => 'Създаване на събитие'])--}}
-        {{--@include('includes.modals.eventModal', ['id' => 'editModal', 'type' => 'Редактиране на събитие'])--}}
-        {{--@include('includes.modals.yes_noModal', ['id' => 'deleteModal', 'header' => 'Изтриване на събитие', 'content' => 'Наистина ли искате да изтриете това събитие?'])--}}
+        @include('includes.modals.eventModal', ['id' => 'postModal', 'type' => 'Създаване на събитие', 'dayMonth' => '', 'dayId' => 'dayPost', 'monthId' => 'monthPost'])
 
         <div id="floatingButton" class=" ui red button huge circular icon">
             <i class="ui add icon"></i>
@@ -107,6 +102,11 @@
 
 @push('scripts')
 <script>
+
+    $('.calendar').click(function(){
+        $('#calendar').popup()
+    });
+
     var hideSidebar = true;
 
     {{--postEventUrl = "{{route('postEvent')}}";--}}
