@@ -33793,12 +33793,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         addDay: function addDay() {
-            this.dates.push($('#calendar').calendar('get date'));
-            $('#calendar').calendar('clear');
-            this.date = null;
+            if ($('#calendar').calendar('get date')) {
+                this.dates.push($('#calendar').calendar('get date'));
+                $('#calendar').calendar('clear');
+                this.date = null;
+            }
         },
-        delete: function _delete(i) {
-            delete this.dates[0];
+        deleteDate: function deleteDate(i) {
+            console.log(i);
+            this.dates.splice(i, 1);
+        }
+    },
+    filters: {
+        humandate: function humandate(value) {
+            var date = new Date(value);
+            return date.getUTCDate() + ' . ' + (date.getUTCMonth() + 1) + ' . ' + date.getFullYear();
         }
     }
 });
@@ -33807,7 +33816,83 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports={render:function(){},staticRenderFns:[]}
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "ui row" },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "three wide column" }, [
+        _c("i", {
+          staticClass: "inverted circular add  link blue icon",
+          on: { click: _vm.addDay }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "ui divider" }),
+      _vm._v(" "),
+      _vm._l(_vm.dates, function(date, i) {
+        return _c(
+          "div",
+          { staticClass: "ui eight wide center aligned column" },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "ui segment",
+                staticStyle: { padding: "10px 10px 10px 10px" }
+              },
+              [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm._f("humandate")(date)) +
+                    "\n            "
+                ),
+                _c(
+                  "div",
+                  {
+                    staticClass: "ui icon  small circular red button",
+                    on: {
+                      click: function($event) {
+                        _vm.deleteDate(i)
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "icon trash" })]
+                )
+              ]
+            )
+          ]
+        )
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "six wide column" }, [
+      _c("div", { staticClass: "ui calendar", attrs: { id: "calendar" } }, [
+        _c("div", { staticClass: "ui input fluid left icon" }, [
+          _c("i", { staticClass: "calendar icon" }),
+          _vm._v(" "),
+          _c("input", {
+            attrs: { type: "text", placeholder: "неработен ден " }
+          })
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {

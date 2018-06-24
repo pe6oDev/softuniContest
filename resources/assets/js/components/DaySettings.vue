@@ -13,10 +13,10 @@
                class="inverted circular add  link blue icon"></i>
         </div>
         <div class="ui divider"></div>
-        <div class="ui sixteen wide center aligned column" v-for="(date,i) in dates">
+        <div class="ui eight wide center aligned column" v-for="(date,i) in dates">
             <div class="ui segment" style="padding: 10px 10px 10px 10px">
-                {{date}}
-                <div v-on:click="delete(i)" class="ui icon  small circular red button">
+                {{date | humandate }}
+                <div v-on:click="deleteDate(i)" class="ui icon  small circular red button">
                     <i class="icon trash"></i>
                 </div>
             </div>
@@ -27,6 +27,7 @@
 
 <script>
     export default {
+        props:['saveUrl'],
         mounted() {
             console.log('Component mounted.')
         },
@@ -37,12 +38,30 @@
         },
         methods: {
             addDay: function(){
-                this.dates.push ( $('#calendar').calendar('get date')) ;
-                $('#calendar').calendar('clear');
-                this.date=null;
+                if($('#calendar').calendar('get date')){
+                    this.dates.push ( $('#calendar').calendar('get date')) ;
+                    $('#calendar').calendar('clear');
+                    this.date=null;
+                }
+
             },
-            delete:function(i){
-                delete this.dates[0]
+            deleteDate:function(i){
+                console.log(i);
+                this.dates.splice(i,1);
+            }
+        },
+        filters: {
+            humandate: function (value) {
+                let date = new Date(value);
+                return  date.getUTCDate()+' . '+(date.getUTCMonth()+1) +' . '+date.getFullYear();
+            }
+        },
+        watch:{
+            //За промяна на датите (заявка отзад)
+            dates:function(){
+                axios.post(this.saveUrl,{
+                    dates:this.dates
+                })
             }
         }
     }
