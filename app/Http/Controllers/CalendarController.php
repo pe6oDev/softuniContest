@@ -112,20 +112,19 @@ class CalendarController
         $endTime = strtotime($request->get('endDate'));
         $notifications = $request->get('notifications');
         $type = "personal";
-        dd($name);
         if($startTime < $endTime || $wholeDay == true){
             $startDate = date('d/m/Y', $startTime);
             $endDate = date('d/m/Y', $endTime);
             if($startDate === $endDate){
-                dd('in');
                 $calendar = new CalendarModel;
                 $calendar->name = $name;
                 $calendar->wholeDay = $wholeDay;
                 if($wholeDay == false){
-                    $calendar->startDate = $startDate;
-                    $calendar->endDate = $endDate;
+                    $calendar->startDate = $startTime;
+                    $calendar->endDate = $endTime;
                 }
                 $calendar->type = $type;
+                $calendar->save();
             }
         }
     }

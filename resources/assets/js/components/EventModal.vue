@@ -268,8 +268,8 @@ export default {
         createEvent: function (url, modal) {
             var vue = this;
 
-            var startDate = $('#calendarStart').calendar('get date')
-            var endDate = $('#calendarEnd').calendar('get date')
+            var startDate = $('#calendarStart').calendar('get date');
+            var endDate = $('#calendarEnd').calendar('get date');
             var data = {
                 name: vue.name,
                 startDate: startDate,
