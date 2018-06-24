@@ -42,14 +42,15 @@ $(document).ready(function(){
             .modal({
                 transition: 'fade',
             })
-            .modal('show')
-
+            .modal('show');
+        $('#calendarStart').calendar();
+        $('#calendarEnd').calendar();
     });
 
-    $('#example1').calendar();
+
 
     $('.calendar').click(function(){
-        $('#example1').popup()
+        $('#calendar').popup()
     })
 
 });

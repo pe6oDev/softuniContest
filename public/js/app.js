@@ -32042,72 +32042,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['id', 'header', 'question', 'beginning', 'hour', 'minutes', 'end', 'duration', 'save', 'no', 'postUrl', 'editUrl', 'theHours', 'theMinutes', 'notValid', 'notifText', 'atStart', 'hourBefore', 'hoursBefore', 'other', 'notifTime', 'addText', 'maxNumOfNotifications', 'date', 'dayId', 'monthId', 'months'],
+    props: ['id', 'header', 'question', 'beginning', 'save', 'no', 'postUrl', 'editUrl', 'theHours', 'theMinutes', 'notValid', 'notifText', 'atStart', 'hourBefore', 'hoursBefore', 'other', 'notifTime', 'addText', 'maxNumOfNotifications', 'date', 'dayId', 'monthId', 'months'],
+
     mounted: function mounted() {
         if (this.id === "postModal") {
             this.notifId = "notifHourPost";
@@ -32116,30 +32054,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
 
+
     data: function data() {
         return {
             errors: {},
             name: '',
-            endHour: "",
-            startHour: "",
-            startMinutes: "",
-            endMinutes: "",
             eventId: "",
-            oldDuration: '',
-            oldDurMin: '',
-            durPlusHour: 0,
-            currentTyping: '', //кое поле се попълва в момента
-            lastEmpty: '', //кое поле е било празно последно
             notifications: [],
             notifHour: '',
             notifHourOther: '',
             showNotif: false,
             notifId: '',
-            loadedDate: '',
-            startDay: '',
-            startMonth: '',
-            endDay: '',
-            endMonth: ''
+            loadedDate: ''
         };
     },
     methods: {
@@ -32298,70 +32224,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     $('#editModal').modal('refresh');
                 }, 200);
             });
-        },
+        }
         /**
          * Прави валидация дали стойностите на минутите/часовете са правилни
          * @param value
          * @param type:string  - 'min'|'hour'
          * @param is_end_hour дали полето е "краен час " (крайния час може да е = 24)
          */
-        validate: function validate(value, type, index) {
-            var vue = this;
-            //Задава в кое поле се попълва в момента
-            this.currentTyping = $('#' + this.id + ' :focus').attr('name');
-            //задава, кое поле е отанало не попълнено от потребителя
-            var lastEmpty = $('#' + this.id + ' input').filter(function () {
-                return $(this).val() == "" && $(this).attr('type') == 'number';
-            })[0];
-            if (lastEmpty) {
-                this.lastEmpty = $(lastEmpty).attr('name');
-            }
 
-            value = Number(value);
-            var min = 0;
-            var max = 23;
-            var dict = {
-                'min': vue.theMinutes,
-                'hour': vue.theHours
-            };
-            if (type == 'min') {
-                max = 59;
-            }
-            if (value < min || max < value) {
-                this.errors[index] = dict[type] + vue.notValid;
-            } else {
-                var oldErrs = this.errors;
-                delete oldErrs[index];
-                this.errors = oldErrs;
-            }
-        }
     },
     watch: {
-        //При промяна валидират дали стойностите са правилни
-        endMinutes: function endMinutes(m) {
-            this.validate(m, 'min', 'endMinutes');
-        },
-
-        startMinutes: function startMinutes(m) {
-            this.validate(m, 'min', 'startMinutes');
-        },
-
-        endHour: function endHour(h) {
-            this.validate(h, 'hour', 'endHour');
-        },
-
-        startHour: function startHour(h) {
-            this.validate(h, 'hour', 'startHour');
-        },
-
-        durationHour: function durationHour(h) {
-            this.validate(h, 'hour', 'durationHour');
-        },
-
-        durationMin: function durationMin(m) {
-            this.validate(m, 'min', 'durationMin');
-        },
-
         notifHour: function notifHour(value) {
             console.log(value);
             if (value === "other") {
@@ -32384,124 +32256,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         maxNumberReached: function maxNumberReached() {
             return this.notifications.length >= this.maxNumOfNotifications;
-        },
-
-        //Изчислява празните полета за часове и минути
-        durationHour: {
-            // getter
-            get: function get() {
-
-                if (this.endHour !== '' && this.endMinutes !== '' && this.startHour !== '' && this.startMinutes !== '' && this.currentTyping !== 'durationHour' && this.currentTyping !== 'durationMin') {
-
-                    var d = this.endHour - this.startHour;
-                    if (d < 0) {
-                        this.oldDuration = 24 + d - this.durPlusHour;
-                        return 24 + d - this.durPlusHour;
-                    }
-                    this.oldDuration = d - this.durPlusHour;
-                    return d - this.durPlusHour;
-                } else if (this.currentTyping == 'durationHour' || this.currentTyping == 'durationMin') {
-                    //задава край
-                    if (this.lastEmpty == 'endMinutes' || this.lastEmpty == 'endHour') {
-                        var e = Number(this.oldDuration) + Number(this.startHour) + this.durPlusHour;
-                        var end = e < 24 ? e : e - 24;
-                        if (this.endHour === '' && this.startHour !== '') {
-                            this.endHour = end;
-                        } else if (Number(this.endHour) != Number(end) && this.startHour !== '') {
-                            this.endHour = end;
-                        }
-                    } else {
-                        //задава начало
-                        var s = Number(this.endHour) - Number(this.oldDuration) - this.durPlusHour;
-                        var start = s < 0 ? s + 24 : s;
-                        if (this.startHour === '' && this.endHour !== '') {
-                            this.startHour = start;
-                        } else if (Number(this.startHour) != Number(start) && this.endHour !== '') {
-                            this.startHour = start;
-                        }
-                    }
-                }
-                return this.oldDuration;
-            },
-
-            // setter
-            set: function set(v) {
-                this.oldDuration = v;
-                if (!v) {
-                    return;
-                }
-                var dur = Number(v);
-                if (this.startHour !== '' && this.startMinutes !== '' && this.endMinutes !== '') {
-                    //ако е зададен начален час
-
-                    var start = Number(this.startHour);
-                    if (start + dur >= 24) {
-                        this.endHour = start + dur - 24 + this.durPlusHour;
-                    } else {
-                        this.endHour = start + dur + this.durPlusHour;
-                    }
-                } else if (this.endHour !== '' && this.endMinutes !== '' && this.startMinutes !== '') {
-                    //ако е зададен САМО краен час
-                    var end = Number(this.endHour);
-                    if (end - dur < 0) {
-                        this.startHour = 24 + (end - dur) + this.durPlusHour;
-                    } else {
-                        this.startHour = end - dur + this.durPlusHour;
-                    }
-                }
-            }
-        },
-
-        durationMin: {
-            // getter
-            get: function get() {
-                console.log('duration min getter');
-
-                if (this.endMinutes === '' || this.startMinutes === '') {
-                    return this.oldDurMin;
-                }
-                if (Number(this.endMinutes) >= Number(this.startMinutes)) {
-                    this.oldDurMin = this.endMinutes - this.startMinutes;
-                    this.durPlusHour = 0;
-                    return this.endMinutes - this.startMinutes;
-                }
-                this.oldDurMin = 60 - Math.abs(this.endMinutes - this.startMinutes);
-                this.durPlusHour = 1;
-                return 60 - Math.abs(this.endMinutes - this.startMinutes); //има добавен час
-            },
-
-            // setter
-            set: function set(v) {
-                if (!v) {
-                    return;
-                }
-                this.oldDurMin = v;
-                if (this.startMinutes !== '' && this.lastEmpty != 'startMinutes' && this.lastEmpty != 'startHour') {
-                    var d = Number(v); //duration
-                    var s = Number(this.startMinutes); //start
-                    if (d + s < 60) {
-                        this.endMinutes = d + s;
-                        this.durPlusHour = 0;
-                    } else {
-                        var end = d + s - 60;
-                        this.durPlusHour = 1;
-                        this.endMinutes = end; //има добавен час
-                    }
-                } else if (this.endMinutes !== '') {
-                    var _d = Number(v); //duration
-                    var e = Number(this.endMinutes); //end
-                    if (e - _d >= 0) {
-                        this.startMinutes = e - _d;
-                        this.durPlusHour = 0;
-                    } else {
-                        var start = e - _d + 60;
-                        this.durPlusHour = 1;
-                        this.startMinutes = start; //има добавен час
-                    }
-                }
-            }
         }
-
     }
 
 });
@@ -32588,8 +32343,6 @@ var render = function() {
             ]),
             _vm._v(" "),
             _vm._m(0),
-            _vm._v(" "),
-            _vm._m(1),
             _vm._v(" "),
             _c("div", { staticClass: "ui row" }, [
               _c(
@@ -32859,21 +32612,33 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ui row" }, [
-      _c("h3", { staticClass: "subheader" }, [_vm._v("Начало")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ui row" }, [
-      _c("div", { staticClass: "ui calendar", attrs: { id: "example1" } }, [
-        _c("div", { staticClass: "ui input left icon" }, [
-          _c("i", { staticClass: "calendar icon" }),
-          _vm._v(" "),
-          _c("input", { attrs: { type: "text", placeholder: "Date/Time" } })
-        ])
+    return _c("div", { staticClass: "ui two column row" }, [
+      _c("div", { staticClass: "ui column" }, [
+        _c(
+          "div",
+          { staticClass: "ui calendar", attrs: { id: "calendarStart" } },
+          [
+            _c("div", { staticClass: "ui input left icon" }, [
+              _c("i", { staticClass: "calendar icon" }),
+              _vm._v(" "),
+              _c("input", { attrs: { type: "text", placeholder: "Начало" } })
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "ui column" }, [
+        _c(
+          "div",
+          { staticClass: "ui calendar", attrs: { id: "calendarEnd" } },
+          [
+            _c("div", { staticClass: "ui input left icon" }, [
+              _c("i", { staticClass: "calendar icon" }),
+              _vm._v(" "),
+              _c("input", { attrs: { type: "text", placeholder: "Край" } })
+            ])
+          ]
+        )
       ])
     ])
   }
