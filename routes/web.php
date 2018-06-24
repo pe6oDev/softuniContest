@@ -91,6 +91,8 @@ Route::middleware('auth')->group(function (){
         return [];
     })->name('getWeekEvents'); //TODO implement
 
+    Route::get('getEvents', 'CalendarController@getEvents')->name('getEvents');
+
     Route::post('postEvent', 'CalendarController@postEvent')->name('postEvent');
 
     Route::get('getRestDays', 'CalendarController@getRestDays')->name('getRestDays');

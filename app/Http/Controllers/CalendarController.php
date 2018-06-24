@@ -142,9 +142,13 @@ class CalendarController
         $dayEvents = [];
 
         foreach ($events->all() as $event) {
-            if (date('d/m/Y', $event->event['startDate']) === $date && date('d/m/Y', $event->event['endDate']) === $date && $event->event['user_id'] == $user_id) {
-                $e = $event->event;
+            if (date('j/n/Y', $event['startDate']) === $date && date('j/n/Y', $event['endDate']) === $date && $event['user_id'] == $user_id) {
+                $e = $event;
                 $e['id'] = $event->_id;
+                $e['startHour'] = date('G', $e['startDate']);
+                $e['startMinutes'] = (int)date('i', $e['startDate']);
+                $e['endHour'] = date('G', $e['endDate']);
+                $e['endMinutes'] = (int)date('i', $e['endDate']);
                 array_push($dayEvents, $e);
                 //Mail::to('pepotov@gmail.com')->send(new newEvent($e));
             }

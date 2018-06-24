@@ -110,7 +110,7 @@
     var hideSidebar = true;
 
     {{--postEventUrl = "{{route('postEvent')}}";--}}
-            {{--getEventsUrl = "{{route('getEvents')}}";--}}
+            getEventsUrl = "{{route('getEvents')}}";
             {{--getOneEventUrl = "{{route('getOneEvent')}}";--}}
             {{--deleteEventUrl = "{{route('deleteEvent')}}";--}}
             {{--editEventUrl = "{{route('editEvent')}}";--}}

@@ -1,0 +1,23 @@
+/**
+
+Css за страницата на календара (за един ден )
+
+ */
+
+#eventsHolder .eventBox{
+    width: 97%;
+    vertical-align: middle;
+    padding-top: 0;
+    display: block;
+    background-color: rgba(205,92,92, 0.3)
+}
+
+#eventsHolder .eventBox span{
+    display: inline;
+    vertical-align: middle;
+}
+
+#eventsHolder .eventBox >*>*{
+    vertical-align: middle;
+
+}
