@@ -268,14 +268,14 @@ export default {
         createEvent: function (url, modal) {
             var vue = this;
 
-            var startDate = $('#calendarStart').getDate()
-            var endDate = $('#calendarEnd').getDate()
-
+            var startDate = $('#calendarStart').calendar('get date')
+            var endDate = $('#calendarEnd').calendar('get date')
             var data = {
                 name: vue.name,
                 startDate: startDate,
                 endDate: endDate,
                 notifications: vue.notifications,
+                wholeDay: vue.wholeDay,
                 event_id: vue.eventId
             };
             axios.post(url, data).then(response => {

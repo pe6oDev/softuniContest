@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\CalendarModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Calendar;
@@ -100,6 +101,27 @@ class CalendarController
     }
 
     function postEvent(Request $request){
-        dd($request->get('startDate'));
+        $name = $request->get('name');
+        $wholeDay = $request->get('wholeDay');
+        $startTime = strtotime($request->get('startDate'));
+        $endTime = strtotime($request->get('endDate'));
+        $notifications = $request->get('notifications');
+        $type = "personal";
+
+        if($startTime < $endTime || $wholeDay == true){
+            $startDate = date('d/m/Y', $startTime);
+            $endDate = date('d/m/Y', $endTime);
+            if($startDate === $endDate){
+                dd('in');
+                $calendar = new CalendarModel;
+                $calendar->name = $name;
+                $calendar->wholeDay = $wholeDay;
+                if($wholeDay == false){
+                    $calendar->startDate = $startDate;
+                    $calendar->endDate = $endDate;
+                }
+                $calendar->type = $type;
+            }
+        }
     }
 }
