@@ -15,7 +15,8 @@
 
     $routePrevDay=route('getDay',[$carbonDt->subDay()->month,$carbonDt->day,$carbonDt->month ==12 ?$year+1:  $year]);
     $routeNextDay=route('getDay',[$carbonDt->addDays(2)->month,$carbonDt->day, $carbonDt->month ==1 ?$year-1:  $year]);
-    $dayMonth = "" . $day . "/" . $month . "";
+    $date = "" . $day . "/" . $month . "/" . $year . "";
+
 @endphp
 
 @section('main')
@@ -113,7 +114,7 @@
             {{--getOneEventUrl = "{{route('getOneEvent')}}";--}}
             {{--deleteEventUrl = "{{route('deleteEvent')}}";--}}
             {{--editEventUrl = "{{route('editEvent')}}";--}}
-            {{--dayMonth = "{{$dayMonth}}";--}}
+            date = "{{$date}}";
         token = "{{Session::token()}}";
     //за сменянето на дни със слайдване на пръста
     var monthOrDay = 'day';

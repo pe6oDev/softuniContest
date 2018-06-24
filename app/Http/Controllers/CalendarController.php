@@ -122,11 +122,35 @@ class CalendarController
                 if($wholeDay == false){
                     $calendar->startDate = $startTime;
                     $calendar->endDate = $endTime;
+                } else {
+                    $calendar->startDate = $startTime;
+                }
+                if($visibility === "personal"){
+                    $calendar->user_id = Auth::user()->id;
                 }
                 $calendar->visibility = $visibility;
                 $calendar->save();
             }
         }
+    }
+
+    function getEvents(Request $request){
+        $date = $request->get('date');
+        $user_id = Auth::user()->id;
+
+        $events = CalendarModel::where('deleted_at', null)->get();
+        $dayEvents = [];
+
+        foreach ($events->all() as $event) {
+            if (date('d/m/Y', $event->event['startDate']) === $date && date('d/m/Y', $event->event['endDate']) === $date && $event->event['user_id'] == $user_id) {
+                $e = $event->event;
+                $e['id'] = $event->_id;
+                array_push($dayEvents, $e);
+                //Mail::to('pepotov@gmail.com')->send(new newEvent($e));
+            }
+        }
+
+        return response()->json(['events' => $dayEvents], 200);
     }
 
 

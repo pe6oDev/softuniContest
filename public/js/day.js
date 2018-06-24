@@ -49,7 +49,7 @@ $(document).ready(function () {
     $.ajax({
         method: 'GET',
         url: getEventsUrl,
-        data: {dayMonth: dayMonth, _token: token},
+        data: {date: date, _token: token},
         success: function (data) {
             $.each(data['events'], function (key, value) {
                 var event = value;
