@@ -32058,6 +32058,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['id', 'header', 'question', 'beginning', 'save', 'no', 'postUrl', 'editUrl', 'theHours', 'theMinutes', 'notValid', 'notifText', 'atStart', 'hourBefore', 'hoursBefore', 'other', 'notifTime', 'addText', 'maxNumOfNotifications', 'date', 'dayId', 'monthId', 'months'],
@@ -32073,6 +32086,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     data: function data() {
         return {
+            visibility: 'personal',
+            user: Laravel.user,
             wholeDay: false,
             errors: {},
             name: '',
@@ -32181,6 +32196,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var startDate = $('#calendarStart').calendar('get date');
             var endDate = $('#calendarEnd').calendar('get date');
             var data = {
+                type: vue.visibility,
                 name: vue.name,
                 startDate: startDate,
                 endDate: endDate,
@@ -32253,6 +32269,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.maxNumberReached) {
                 this.errors.push('Твърде много известия');
             }
+        },
+        wholeDay: function wholeDay() {
+            $('.dropdown').dropdown();
         }
     },
 
@@ -32350,47 +32369,124 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "ui row" }, [
-              _c("div", { staticClass: "ui toggle checkbox" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.wholeDay,
-                      expression: "wholeDay"
-                    }
-                  ],
-                  attrs: { name: "public", type: "checkbox" },
-                  domProps: {
-                    checked: Array.isArray(_vm.wholeDay)
-                      ? _vm._i(_vm.wholeDay, null) > -1
-                      : _vm.wholeDay
-                  },
-                  on: {
-                    change: function($event) {
-                      var $$a = _vm.wholeDay,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = null,
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 && (_vm.wholeDay = $$a.concat([$$v]))
+              _c("div", { staticClass: "ui eight wide column" }, [
+                _c("div", { staticClass: "ui toggle checkbox" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.wholeDay,
+                        expression: "wholeDay"
+                      }
+                    ],
+                    attrs: { name: "public", type: "checkbox" },
+                    domProps: {
+                      checked: Array.isArray(_vm.wholeDay)
+                        ? _vm._i(_vm.wholeDay, null) > -1
+                        : _vm.wholeDay
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.wholeDay,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.wholeDay = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.wholeDay = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
                         } else {
-                          $$i > -1 &&
-                            (_vm.wholeDay = $$a
-                              .slice(0, $$i)
-                              .concat($$a.slice($$i + 1)))
+                          _vm.wholeDay = $$c
                         }
-                      } else {
-                        _vm.wholeDay = $$c
                       }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("label", [_vm._v("Цял ден")])
-              ])
+                  }),
+                  _vm._v(" "),
+                  _c("label", [_vm._v("Цял ден")])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm.user.type != "customer" && _vm.user.type != "partner"
+                ? _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.wholeDay,
+                          expression: "wholeDay"
+                        }
+                      ],
+                      staticClass: "ui eight wide column"
+                    },
+                    [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.visibility,
+                              expression: "visibility"
+                            }
+                          ],
+                          staticClass: "ui dropdown",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.visibility = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "" } }, [
+                            _vm._v("Видимост")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "personal" } }, [
+                            _vm._v("Лично")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "public" } }, [
+                            _vm._v("Глобално (видимо от всички)")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "partners" } }, [
+                            _vm._v("видимо от партньори и служители")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "employees" } }, [
+                            _vm._v("видимо само от служители")
+                          ]),
+                          _vm._v(" "),
+                          _vm.user.type != "admin"
+                            ? _c("option", { attrs: { value: "admin" } }, [
+                                _vm._v("видимо само от другите admin-и")
+                              ])
+                            : _vm._e()
+                        ]
+                      )
+                    ]
+                  )
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c(
