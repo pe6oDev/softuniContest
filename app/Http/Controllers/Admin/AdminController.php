@@ -65,4 +65,8 @@ class AdminController extends Controller
         $user->save();
         return response(200);
     }
+
+    public function getDaySettings(){
+        return view('admin.daySettings');
+    }
 }

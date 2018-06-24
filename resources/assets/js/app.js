@@ -21,6 +21,7 @@ Vue.component('make-password', require('./components/MakePassword.vue'));
 Vue.component('user-info', require('./components/UserMoreInfo.vue'));
 Vue.component('event-modal', require('./components/EventModal.vue'));
 Vue.component('admin-table', require('./components/AdminTable.vue'));
+Vue.component('day-settings', require('./components/DaySettings.vue'))
 
 const app = new Vue({
     el: '#app'

@@ -100,6 +100,8 @@ Route::middleware('auth')->group(function (){
         Route::post('users/ajax','Admin\AdminController@getUsersAjax')->name('usersAjax');
 
         Route::post('users/change/type', 'Admin\AdminController@postChangeType')->name('changeUserType');
+
+        Route::get('daySettings', 'Admin\AdminController@getDaySettings')->name('getDaySettings');
     });
 
 
