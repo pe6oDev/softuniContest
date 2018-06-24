@@ -6,7 +6,7 @@
 {{--Модал за създаване или редактиране на събитие--}}
 <event-modal
         id="{{$id}}"
-        {{--post-url="{{route('postEvent')}}"--}}
+        post-url="{{route('postEvent')}}"
         {{--edit-url="{{route('editEvent')}}"--}}
         :months="{{json_encode ($months)}}"
         @if($id === "editModal")

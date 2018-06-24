@@ -100,4 +100,7 @@ class CalendarController
         }
     }
 
+    function postEvent(Request $request){
+        dd($request->get('startDate'));
+    }
 }
