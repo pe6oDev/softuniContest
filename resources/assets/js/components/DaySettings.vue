@@ -39,9 +39,13 @@
         methods: {
             addDay: function(){
                 if($('#calendar').calendar('get date')){
-                    this.dates.push ( $('#calendar').calendar('get date')) ;
-                    $('#calendar').calendar('clear');
-                    this.date=null;
+                    var restDay =  $('#calendar').calendar('get date')
+                    var data = {restDay: restDay}
+                    axios.post(this.saveUrl, data).then(response => {
+                        this.dates.push(restDay);
+                        $('#calendar').calendar('clear');
+                        this.date = null;
+                    })
                 }
 
             },
