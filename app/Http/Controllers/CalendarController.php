@@ -128,4 +128,15 @@ class CalendarController
             }
         }
     }
+
+    function postRestDay(Request $request){
+        $restDay = strtotime($request->get('restDay'));
+
+        $calendar = new CalendarModel;
+        $calendar->name = "Почивен ден";
+        $calendar->wholeDay = true;
+        $calendar->startDate = $restDay;
+        $calendar->type = "public";
+        $calendar->save();
+    }
 }
