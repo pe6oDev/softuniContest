@@ -54,6 +54,18 @@ return [
             'engine' => null,
         ],
 
+        'mongodb' => [
+            'driver'   => 'mongodb',
+            'host'     => env('DB_HOST', 'localhost'),
+            'port'     => env('MONGO_PORT',27017),
+            'database' => env('MONGO_DB','softuni'),
+            'username' => env('MONGO_USER','kolioPeshoDev'),
+            'password' => env('MONGO_PASS','qwerty'),
+            'options'  => [
+                'database' => env('MONGO_AUTH_DB','admin') // sets the authentication database required by mongo 3
+            ]
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),

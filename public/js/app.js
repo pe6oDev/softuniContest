@@ -377,33 +377,6 @@ module.exports = {
 /* 1 */
 /***/ (function(module, exports) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
 /* globals __VUE_SSR_CONTEXT__ */
 
 // IMPORTANT: Do NOT use ES2015 features in this file.
@@ -507,6 +480,33 @@ module.exports = function normalizeComponent (
     options: options
   }
 }
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
 
 
 /***/ }),
@@ -1382,7 +1382,7 @@ function applyToTag (styleElement, obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(13);
-module.exports = __webpack_require__(57);
+module.exports = __webpack_require__(60);
 
 
 /***/ }),
@@ -1410,6 +1410,7 @@ Vue.component('example-component', __webpack_require__(40));
 Vue.component('change-password', __webpack_require__(43));
 Vue.component('make-password', __webpack_require__(49));
 Vue.component('user-info', __webpack_require__(54));
+Vue.component('event-modal', __webpack_require__(57));
 
 var app = new Vue({
   el: '#app'
@@ -1493,7 +1494,7 @@ if (token) {
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.5';
+  var VERSION = '4.17.10';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -1917,6 +1918,14 @@ if (token) {
   /** Used to access faster Node.js helpers. */
   var nodeUtil = (function() {
     try {
+      // Use `util.types` for Node.js 10+.
+      var types = freeModule && freeModule.require && freeModule.require('util').types;
+
+      if (types) {
+        return types;
+      }
+
+      // Legacy `process.binding('util')` for Node.js < 10.
       return freeProcess && freeProcess.binding && freeProcess.binding('util');
     } catch (e) {}
   }());
@@ -18578,7 +18587,7 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(16)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(16)(module)))
 
 /***/ }),
 /* 16 */
@@ -40833,21 +40842,24 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(38).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(38).setImmediate))
 
 /***/ }),
 /* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {var apply = Function.prototype.apply;
+/* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
+            (typeof self !== "undefined" && self) ||
+            window;
+var apply = Function.prototype.apply;
 
 // DOM APIs, for completeness
 
 exports.setTimeout = function() {
-  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
+  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
 };
 exports.setInterval = function() {
-  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
+  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
 };
 exports.clearTimeout =
 exports.clearInterval = function(timeout) {
@@ -40862,7 +40874,7 @@ function Timeout(id, clearFn) {
 }
 Timeout.prototype.unref = Timeout.prototype.ref = function() {};
 Timeout.prototype.close = function() {
-  this._clearFn.call(window, this._id);
+  this._clearFn.call(scope, this._id);
 };
 
 // Does not start the time, just sets up the members needed.
@@ -40890,7 +40902,7 @@ exports._unrefActive = exports.active = function(item) {
 
 // setimmediate attaches itself to the global object
 __webpack_require__(39);
-// On some exotic environments, it's not clear which object `setimmeidate` was
+// On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
 exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
@@ -40900,7 +40912,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 39 */
@@ -41093,14 +41105,14 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(5)))
 
 /***/ }),
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(41)
 /* template */
@@ -41223,7 +41235,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(44)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(47)
 /* template */
@@ -41679,7 +41691,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(50)
 }
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(52)
 /* template */
@@ -42040,7 +42052,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(55)
 /* template */
@@ -42236,6 +42248,1350 @@ if (false) {
 
 /***/ }),
 /* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(58)
+/* template */
+var __vue_template__ = __webpack_require__(59)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/EventModal.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-d507b7ac", Component.options)
+  } else {
+    hotAPI.reload("data-v-d507b7ac", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 58 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['id', 'dayMonth', 'header', 'question', 'beginning', 'hour', 'minutes', 'end', 'duration', 'save', 'no', 'postUrl', 'editUrl', 'theHours', 'theMinutes', 'notValid', 'notifText', 'atStart', 'hourBefore', 'hoursBefore', 'other', 'notifTime', 'addText', 'maxNumOfNotifications', 'date', 'dayId', 'monthId', 'months'],
+    mounted: function mounted() {
+        if (this.id === "postModal") {
+            this.notifId = "notifHourPost";
+        } else {
+            this.notifId = "notifHourEdit";
+        }
+    },
+
+    data: function data() {
+        return {
+            errors: {},
+            name: '',
+            endHour: "",
+            startHour: "",
+            startMinutes: "",
+            endMinutes: "",
+            eventId: "",
+            oldDuration: '',
+            oldDurMin: '',
+            durPlusHour: 0,
+            currentTyping: '', //кое поле се попълва в момента
+            lastEmpty: '', //кое поле е било празно последно
+            notifications: [],
+            notifHour: '',
+            notifHourOther: '',
+            showNotif: false,
+            notifId: '',
+            loadedDate: '',
+            selectedDay: '',
+            selectedMonth: ''
+        };
+    },
+    methods: {
+        showOther: function showOther() {
+            $('.notifOther').show();
+            setTimeout(function () {
+                $('#postModal').modal('refresh');
+                $('#editModal').modal('refresh');
+            }, 300);
+        },
+
+        /**
+         * добавя известие
+         */
+        addNotif: function addNotif(hour) {
+            $('.notifOther').hide();
+            if (this.notifications.indexOf(hour) == -1) {
+                var hourArray = { beforeNotif: hour };
+                this.notifications.push(hourArray);
+            }
+            $('#postModal').modal('refresh');
+            $('#editModal').modal('refresh');
+            this.showNotif = !this.showNotif;
+        },
+        /**
+         * toggle -ва дабавянето на известия
+         */
+        notificationShow: function notificationShow() {
+            this.showNotif = !this.showNotif;
+        },
+        /**
+         * добавя известие което е добавено от полето "друго"
+         */
+        addNotifOther: function addNotifOther() {
+            ;
+            var hour = this.notifHourOther;
+            $('.notifOther').hide();
+            $('#postModal').modal('refresh');
+            $('#editModal').modal('refresh');
+            if (this.notifications.indexOf(hour) == -1) {
+                var hourArray = { beforeNotif: hour };
+                this.notifications.push(hourArray);
+            }
+            this.showNotif = !this.showNotif;
+        },
+        /**
+         * променя известие
+         */
+        editNotification: function editNotification(time, key) {
+            var hoursArray = [0, 1, 8, 12, 24];
+            if (hoursArray.indexOf(parseInt(time)) == -1) {
+                $('#' + this.notifId).val('other');
+                $('.default').text(this.other);
+                $('.notifOther').show();
+                this.notifHourOther = time;
+            } else {
+                $('#' + this.notifId).val(time);
+                if (parseInt(time) == 0) {
+                    var text = this.atStart;
+                } else if (parseInt(time) == 1) {
+                    var text = "" + time + " " + this.hourBefore;
+                } else {
+                    var text = "" + time + " " + this.hoursBefore;
+                }
+                $('.default').text(text);
+            }
+            this.showNotif = !this.showNotif;
+            this.notifications.splice(key, 1);
+        },
+        /*
+         * изтрива известие
+         */
+        removeNotification: function removeNotification(key) {
+            this.notifications.splice(key, 1);
+        },
+        //Проверява дали създава или редактира
+        submit: function submit() {
+            if (this.id == "postModal") {
+                var url = this.postUrl;
+                var modal = "postModal";
+            } else {
+                var url = this.editUrl;
+                var modal = "editModal";
+            }
+
+            this.createEvent(url, modal);
+        },
+        /**
+         * Създава или редактира асинхронно събитие
+         * @param string url
+         * @param string modal
+         */
+        createEvent: function createEvent(url, modal) {
+            var vue = this;
+
+            if (vue.id === "postModal") {
+                var date = vue.dayMonth;
+            } else {
+                var date = vue.loadedDate;
+            }
+
+            var data = {
+                name: vue.name,
+                startHour: parseInt(vue.startHour),
+                startMinutes: parseInt(vue.startMinutes),
+                endHour: parseInt(vue.endHour),
+                endMinutes: parseInt(vue.endMinutes),
+                dayMonth: date,
+                notifications: vue.notifications,
+                event_id: vue.eventId
+            };
+            axios.post(url, data).then(function (response) {
+                vue.errors = [];
+                vue.name = '';
+                vue.startHour = null;
+                vue.endHour = null;
+                vue.startMinutes = null;
+                vue.endMinutes = null;
+                vue.notifications = [];
+                $('#' + modal).modal('hide');
+                var event = response.data.event;
+                $('#' + event.id).remove();
+                eventNew(event);
+            }).catch(function (error) {
+                navigator.vibrate([100, 100, 200]);
+                var errs = error.response.data.errors;
+                vue.errors = errs;
+            });
+        },
+        /**
+         * Зарежда данни в модала за редактиране
+         * @param string event_id
+         */
+        showEditModal: function showEditModal(event_id) {
+            var vue = this;
+            axios.get('/calendar/getOneEvent', {
+                params: {
+                    event_id: event_id
+                }
+            }).then(function (response) {
+                var event = response.data.event;
+                vue.name = event.name;
+                vue.startHour = event.startHour;
+                vue.startMinutes = event.startMinutes;
+                vue.endHour = event.endHour;
+                vue.endMinutes = event.endMinutes;
+                vue.eventId = event.id;
+                vue.notifications = event.notifications;
+                vue.loadedDate = event.day;
+                $('#editModal').modal('show');
+                setTimeout(function () {
+                    $('#editModal').modal('refresh');
+                }, 200);
+            });
+        },
+        /**
+         * Прави валидация дали стойностите на минутите/часовете са правилни
+         * @param value
+         * @param type:string  - 'min'|'hour'
+         * @param is_end_hour дали полето е "краен час " (крайния час може да е = 24)
+         */
+        validate: function validate(value, type, index) {
+            var vue = this;
+            //Задава в кое поле се попълва в момента
+            this.currentTyping = $('#' + this.id + ' :focus').attr('name');
+            //задава, кое поле е отанало не попълнено от потребителя
+            var lastEmpty = $('#' + this.id + ' input').filter(function () {
+                return $(this).val() == "" && $(this).attr('type') == 'number';
+            })[0];
+            if (lastEmpty) {
+                this.lastEmpty = $(lastEmpty).attr('name');
+            }
+
+            value = Number(value);
+            var min = 0;
+            var max = 23;
+            var dict = {
+                'min': vue.theMinutes,
+                'hour': vue.theHours
+            };
+            if (type == 'min') {
+                max = 59;
+            }
+            if (value < min || max < value) {
+                this.errors[index] = dict[type] + vue.notValid;
+            } else {
+                var oldErrs = this.errors;
+                delete oldErrs[index];
+                this.errors = oldErrs;
+            }
+        }
+    },
+    watch: {
+        //При промяна валидират дали стойностите са правилни
+        endMinutes: function endMinutes(m) {
+            this.validate(m, 'min', 'endMinutes');
+        },
+
+        startMinutes: function startMinutes(m) {
+            this.validate(m, 'min', 'startMinutes');
+        },
+
+        endHour: function endHour(h) {
+            this.validate(h, 'hour', 'endHour');
+        },
+
+        startHour: function startHour(h) {
+            this.validate(h, 'hour', 'startHour');
+        },
+
+        durationHour: function durationHour(h) {
+            this.validate(h, 'hour', 'durationHour');
+        },
+
+        durationMin: function durationMin(m) {
+            this.validate(m, 'min', 'durationMin');
+        },
+
+        notifHour: function notifHour(value) {
+            console.log(value);
+            if (value === "other") {
+                this.showOther = true;
+            } else {
+                this.showOther = false;
+            }
+        },
+        maxNumberReached: function maxNumberReached() {
+            if (this.maxNumberReached) {
+                this.errors.push('Твърде много известия');
+            }
+        }
+    },
+
+    computed: {
+        hasErrors: function hasErrors() {
+            return Boolean(Object.keys(this.errors).length);
+        },
+
+        maxNumberReached: function maxNumberReached() {
+            return this.notifications.length >= this.maxNumOfNotifications;
+        },
+
+        //Изчислява празните полета за часове и минути
+        durationHour: {
+            // getter
+            get: function get() {
+
+                if (this.endHour !== '' && this.endMinutes !== '' && this.startHour !== '' && this.startMinutes !== '' && this.currentTyping !== 'durationHour' && this.currentTyping !== 'durationMin') {
+
+                    var d = this.endHour - this.startHour;
+                    if (d < 0) {
+                        this.oldDuration = 24 + d - this.durPlusHour;
+                        return 24 + d - this.durPlusHour;
+                    }
+                    this.oldDuration = d - this.durPlusHour;
+                    return d - this.durPlusHour;
+                } else if (this.currentTyping == 'durationHour' || this.currentTyping == 'durationMin') {
+                    //задава край
+                    if (this.lastEmpty == 'endMinutes' || this.lastEmpty == 'endHour') {
+                        var e = Number(this.oldDuration) + Number(this.startHour) + this.durPlusHour;
+                        var end = e < 24 ? e : e - 24;
+                        if (this.endHour === '' && this.startHour !== '') {
+                            this.endHour = end;
+                        } else if (Number(this.endHour) != Number(end) && this.startHour !== '') {
+                            this.endHour = end;
+                        }
+                    } else {
+                        //задава начало
+                        var s = Number(this.endHour) - Number(this.oldDuration) - this.durPlusHour;
+                        var start = s < 0 ? s + 24 : s;
+                        if (this.startHour === '' && this.endHour !== '') {
+                            this.startHour = start;
+                        } else if (Number(this.startHour) != Number(start) && this.endHour !== '') {
+                            this.startHour = start;
+                        }
+                    }
+                }
+                return this.oldDuration;
+            },
+
+            // setter
+            set: function set(v) {
+                this.oldDuration = v;
+                if (!v) {
+                    return;
+                }
+                var dur = Number(v);
+                if (this.startHour !== '' && this.startMinutes !== '' && this.endMinutes !== '') {
+                    //ако е зададен начален час
+
+                    var start = Number(this.startHour);
+                    if (start + dur >= 24) {
+                        this.endHour = start + dur - 24 + this.durPlusHour;
+                    } else {
+                        this.endHour = start + dur + this.durPlusHour;
+                    }
+                } else if (this.endHour !== '' && this.endMinutes !== '' && this.startMinutes !== '') {
+                    //ако е зададен САМО краен час
+                    var end = Number(this.endHour);
+                    if (end - dur < 0) {
+                        this.startHour = 24 + (end - dur) + this.durPlusHour;
+                    } else {
+                        this.startHour = end - dur + this.durPlusHour;
+                    }
+                }
+            }
+        },
+
+        durationMin: {
+            // getter
+            get: function get() {
+                console.log('duration min getter');
+
+                if (this.endMinutes === '' || this.startMinutes === '') {
+                    return this.oldDurMin;
+                }
+                if (Number(this.endMinutes) >= Number(this.startMinutes)) {
+                    this.oldDurMin = this.endMinutes - this.startMinutes;
+                    this.durPlusHour = 0;
+                    return this.endMinutes - this.startMinutes;
+                }
+                this.oldDurMin = 60 - Math.abs(this.endMinutes - this.startMinutes);
+                this.durPlusHour = 1;
+                return 60 - Math.abs(this.endMinutes - this.startMinutes); //има добавен час
+            },
+
+            // setter
+            set: function set(v) {
+                if (!v) {
+                    return;
+                }
+                this.oldDurMin = v;
+                if (this.startMinutes !== '' && this.lastEmpty != 'startMinutes' && this.lastEmpty != 'startHour') {
+                    var d = Number(v); //duration
+                    var s = Number(this.startMinutes); //start
+                    if (d + s < 60) {
+                        this.endMinutes = d + s;
+                        this.durPlusHour = 0;
+                    } else {
+                        var end = d + s - 60;
+                        this.durPlusHour = 1;
+                        this.endMinutes = end; //има добавен час
+                    }
+                } else if (this.endMinutes !== '') {
+                    var _d = Number(v); //duration
+                    var e = Number(this.endMinutes); //end
+                    if (e - _d >= 0) {
+                        this.startMinutes = e - _d;
+                        this.durPlusHour = 0;
+                    } else {
+                        var start = e - _d + 60;
+                        this.durPlusHour = 1;
+                        this.startMinutes = start; //има добавен час
+                    }
+                }
+            }
+        }
+
+    }
+
+});
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: " ui   small  vary modal", attrs: { id: _vm.id } },
+    [
+      _c("div", { staticClass: " header " }, [_vm._v(_vm._s(_vm.header))]),
+      _vm._v(" "),
+      _c("div", { staticClass: "content" }, [
+        _c(
+          "div",
+          { staticClass: "ui two column center aligned doubling grid " },
+          [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: Object.keys(_vm.errors).length,
+                    expression: "Object.keys(errors).length"
+                  }
+                ],
+                staticClass: "ui row"
+              },
+              [
+                _c("div", { staticClass: "sixteen wide column" }, [
+                  _c("div", { staticClass: "ui error message" }, [
+                    _c(
+                      "ul",
+                      _vm._l(_vm.errors, function(error) {
+                        return _c("li", [
+                          _vm._v(
+                            _vm._s(Array.isArray(error) ? error[0] : error)
+                          )
+                        ])
+                      })
+                    )
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "ui row" }, [
+              _c("div", { staticClass: "sixteen wide column" }, [
+                _c("div", { staticClass: "ui fluid  input field" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.name,
+                        expression: "name"
+                      }
+                    ],
+                    attrs: {
+                      type: "text",
+                      name: "name",
+                      placeholder: _vm.question
+                    },
+                    domProps: { value: _vm.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.name = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.date === "",
+                    expression: "date === ''"
+                  }
+                ],
+                staticClass: "ui row"
+              },
+              [
+                _c("div", { staticClass: "ui column seven wide" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.selectedDay,
+                          expression: "selectedDay"
+                        }
+                      ],
+                      staticClass: "ui fluid dropdown",
+                      attrs: { id: _vm.dayId },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.selectedDay = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "" } }, [_vm._v("Ден")]),
+                      _vm._v(" "),
+                      _vm._l(31, function(n) {
+                        return _c("option", { domProps: { value: n } }, [
+                          _vm._v(_vm._s(n))
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "ui column seven wide" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.selectedMonth,
+                          expression: "selectedMonth"
+                        }
+                      ],
+                      staticClass: "ui fluid dropdown",
+                      attrs: { id: _vm.monthId },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.selectedMonth = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "" } }, [_vm._v("Месец")]),
+                      _vm._v(" "),
+                      _vm._l(12, function(n) {
+                        return _c("option", { domProps: { value: n } }, [
+                          _vm._v(_vm._s(_vm.months[n]))
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "ui row" }, [
+              _c(
+                "div",
+                { staticClass: "ui eight wide column one column grid " },
+                [
+                  _c("div", { staticClass: "column" }, [
+                    _c(
+                      "h4",
+                      {
+                        staticClass: "subheader",
+                        staticStyle: { "text-align": "center" }
+                      },
+                      [_vm._v(_vm._s(_vm.beginning))]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "ui column" }, [
+                    _c("div", { staticClass: "ui fluid   input" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.startHour,
+                            expression: "startHour"
+                          }
+                        ],
+                        attrs: {
+                          type: "number",
+                          name: "startHour",
+                          min: "0",
+                          max: "24",
+                          placeholder: _vm.hour
+                        },
+                        domProps: { value: _vm.startHour },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.startHour = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.startMinutes,
+                            expression: "startMinutes"
+                          }
+                        ],
+                        attrs: {
+                          type: "number",
+                          name: "startMinutes",
+                          min: "0",
+                          step: "5",
+                          max: "59",
+                          placeholder: _vm.minutes
+                        },
+                        domProps: { value: _vm.startMinutes },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.startMinutes = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "ui eight wide column one column grid" },
+                [
+                  _c("div", { staticClass: "column" }, [
+                    _c("h4", { staticClass: "subheader" }, [
+                      _vm._v(_vm._s(_vm.end))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "ui column" }, [
+                    _c("div", { staticClass: "ui fluid   input" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.endHour,
+                            expression: "endHour"
+                          }
+                        ],
+                        attrs: {
+                          type: "number",
+                          name: "endHour",
+                          min: "0",
+                          max: "24",
+                          placeholder: _vm.hour
+                        },
+                        domProps: { value: _vm.endHour },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.endHour = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.endMinutes,
+                            expression: "endMinutes"
+                          }
+                        ],
+                        attrs: {
+                          type: "number",
+                          name: "endMinutes",
+                          min: "0",
+                          step: "5",
+                          max: "59",
+                          placeholder: _vm.minutes
+                        },
+                        domProps: { value: _vm.endMinutes },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.endMinutes = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.eventId,
+                            expression: "eventId"
+                          }
+                        ],
+                        attrs: { type: "hidden" },
+                        domProps: { value: _vm.eventId },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.eventId = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "ui row" }, [
+              _c(
+                "div",
+                { staticClass: "ui fifteen wide column one column grid" },
+                [
+                  _c("div", { staticClass: "column" }, [
+                    _c(
+                      "h4",
+                      {
+                        staticClass: "subheader",
+                        staticStyle: { "text-align": "center" }
+                      },
+                      [_vm._v(_vm._s(_vm.duration))]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "ui column" }, [
+                    _c("div", { staticClass: "ui fluid   input" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.durationHour,
+                            expression: "durationHour"
+                          }
+                        ],
+                        attrs: {
+                          type: "number",
+                          name: "durationHour",
+                          min: "0",
+                          max: "24",
+                          placeholder: _vm.hour
+                        },
+                        domProps: { value: _vm.durationHour },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.durationHour = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.durationMin,
+                            expression: "durationMin"
+                          }
+                        ],
+                        attrs: {
+                          type: "number",
+                          name: "durationMin",
+                          min: "0",
+                          step: "5",
+                          max: "59",
+                          placeholder: _vm.minutes
+                        },
+                        domProps: { value: _vm.durationMin },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.durationMin = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "ui row" }, [
+              _c(
+                "h3",
+                {
+                  staticClass: "header",
+                  staticStyle: { "margin-right": "10px" }
+                },
+                [_vm._v(_vm._s(_vm.notifText))]
+              ),
+              _vm._v(" "),
+              !_vm.maxNumberReached
+                ? _c("i", {
+                    staticClass: "inverted circular add  link green  icon",
+                    on: { click: _vm.notificationShow }
+                  })
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.notifications, function(notification, key) {
+              return _c("div", { staticClass: "ui row" }, [
+                _c("div", { staticClass: "ui fluid grid" }, [
+                  _c("div", { staticClass: "ten wide column" }, [
+                    _c("span", [
+                      notification.beforeNotif == 0
+                        ? _c("b", [_vm._v(_vm._s(_vm.atStart))])
+                        : notification.beforeNotif == 1
+                          ? _c("b", [
+                              _vm._v(
+                                _vm._s(notification.beforeNotif) +
+                                  " " +
+                                  _vm._s(_vm.hourBefore)
+                              )
+                            ])
+                          : _c("b", [
+                              _vm._v(
+                                _vm._s(notification.beforeNotif) +
+                                  " " +
+                                  _vm._s(_vm.hoursBefore)
+                              )
+                            ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "six wide column" }, [
+                    _c(
+                      "span",
+                      {
+                        staticClass: "ui circular blue icon mini basic button",
+                        on: {
+                          click: function($event) {
+                            _vm.editNotification(notification, key)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "ui  edit icon" })]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      {
+                        staticClass: "ui circular  red icon mini basic button",
+                        on: {
+                          click: function($event) {
+                            _vm.removeNotification(key)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "ui   remove icon" })]
+                    )
+                  ])
+                ])
+              ])
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.showNotif,
+                    expression: "showNotif"
+                  }
+                ],
+                staticClass: "ui row"
+              },
+              [
+                _c("div", { staticClass: "eight wide column" }, [
+                  _c("div", { staticClass: "ui fluid selection dropdown" }, [
+                    _c("input", { attrs: { id: _vm.notifId, type: "hidden" } }),
+                    _vm._v(" "),
+                    _c("i", { staticClass: "dropdown icon" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "default text" }, [
+                      _vm._v(_vm._s(_vm.notifTime))
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "menu" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "item notifItems",
+                          attrs: { "data-value": "0" },
+                          on: {
+                            click: function($event) {
+                              _vm.addNotif(0)
+                            }
+                          }
+                        },
+                        [_vm._v(_vm._s(_vm.atStart))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "item notifItems",
+                          attrs: { "data-value": "1" },
+                          on: {
+                            click: function($event) {
+                              _vm.addNotif(1)
+                            }
+                          }
+                        },
+                        [_vm._v("1 " + _vm._s(_vm.hourBefore))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "item notifItems",
+                          attrs: { "data-value": "8" },
+                          on: {
+                            click: function($event) {
+                              _vm.addNotif(8)
+                            }
+                          }
+                        },
+                        [_vm._v("8 " + _vm._s(_vm.hoursBefore))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "item notifItems",
+                          attrs: { "data-value": "12" },
+                          on: {
+                            click: function($event) {
+                              _vm.addNotif(12)
+                            }
+                          }
+                        },
+                        [_vm._v("12 " + _vm._s(_vm.hoursBefore))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "item notifItems",
+                          attrs: { "data-value": "24" },
+                          on: {
+                            click: function($event) {
+                              _vm.addNotif(24)
+                            }
+                          }
+                        },
+                        [_vm._v("24 " + _vm._s(_vm.hoursBefore))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "item notifItems",
+                          attrs: { "data-value": "other" },
+                          on: { click: _vm.showOther }
+                        },
+                        [_vm._v(_vm._s(_vm.other))]
+                      )
+                    ])
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "ui row notifOther",
+                staticStyle: { display: "none" }
+              },
+              [
+                _c("div", { staticClass: "ten wide column" }, [
+                  _c("div", { staticClass: "ui labeled  input" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.notifHourOther,
+                          expression: "notifHourOther"
+                        }
+                      ],
+                      attrs: { type: "number" },
+                      domProps: { value: _vm.notifHourOther },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.notifHourOther = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("label", { staticClass: "ui label" }, [
+                      _vm._v(_vm._s(_vm.hoursBefore) + " ")
+                    ])
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "ui row notifOther",
+                staticStyle: { display: "none" }
+              },
+              [
+                _c("div", { staticClass: "four wide column" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "ui green icon button",
+                      on: { click: _vm.addNotifOther }
+                    },
+                    [
+                      _c("i", { staticClass: "ui plus icon" }),
+                      _vm._v(_vm._s(_vm.addText) + "\n                    ")
+                    ]
+                  )
+                ])
+              ]
+            )
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "actions" }, [
+        _c(
+          "div",
+          { staticClass: "ui green button", on: { click: _vm.submit } },
+          [_vm._v(_vm._s(_vm.save))]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "ui negative button" }, [
+          _vm._v(_vm._s(_vm.no) + "..")
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticStyle: { "font-size": "25px" } }, [
+      _c("b", [_vm._v(" : ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticStyle: { "font-size": "25px" } }, [
+      _c("b", [_vm._v(" : ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticStyle: { "font-size": "25px" } }, [
+      _c("b", [_vm._v(" : ")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-d507b7ac", module.exports)
+  }
+}
+
+/***/ }),
+/* 60 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

@@ -19,6 +19,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 Vue.component('change-password', require('./components/ChangePassword.vue'));
 Vue.component('make-password', require('./components/MakePassword.vue'));
 Vue.component('user-info', require('./components/UserMoreInfo.vue'));
+Vue.component('event-modal', require('./components/EventModal.vue'));
 
 const app = new Vue({
     el: '#app'

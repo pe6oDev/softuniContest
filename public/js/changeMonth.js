@@ -36,4 +36,13 @@ $(document).ready(function(){
     $('.toNextMonth').click(function(){
         changeMonths($(this),1)
     });
+
+    $("#floatingButton").click(function () {
+        $("#postModal")
+            .modal({
+                transition: 'fade',
+            })
+            .modal('show')
+
+    });
 });

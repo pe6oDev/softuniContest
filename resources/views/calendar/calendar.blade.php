@@ -97,9 +97,11 @@
         @endfor
     </div>
 
-    <a href="#" id="floatingButton" class=" ui red button huge circular icon">
+    <div id="floatingButton" class=" ui red button huge circular icon">
         <i class="ui add icon"></i>
-    </a>
+    </div>
+
+    @include('includes.modals.eventModal', ['id' => 'postModal', 'type' => 'Създаване на събитие', 'dayMonth' => '', 'dayId' => 'dayPost', 'monthId' => 'monthPost'])
 
 @endsection
 
