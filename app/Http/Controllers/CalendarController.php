@@ -7,6 +7,7 @@
  */
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Calendar;
 use Illuminate\Support\Facades\Auth;
@@ -70,4 +71,33 @@ class CalendarController
 
         return view('calendar.calendar', ['dates' => $daysWithEvents, 'yearsDiff'=>$yearsDiff]);
     }
+
+    /*
+     * Връща view за ден
+     *
+     */
+    function getDay($day, $month, $year){
+
+        $monthNow = date('n');
+        $currentDay = (int)date('d');
+        $relativeMonth = $month - $monthNow;
+        $numberOfDays = Calendar::getDaysMonth($relativeMonth);
+        (int)$monthNow <= $month ? $year = (int)date('Y') : $year = (int)date('Y') + 1;
+        $dt = Carbon::createFromDate($year, $month, $day);
+        //Aко е несъществуващ ден
+        if ($day > $numberOfDays || ($month == $monthNow && $day < $currentDay)) {
+            return redirect()->route('home');
+        } else {
+            return view('calendar.day', [
+                'currentDay' => $currentDay,
+                'month' => $month,
+                'day' => $day,
+                'monthNow' => $monthNow,
+                'monthInt' => $relativeMonth,
+                'carbonDt' => $dt,
+                'year'=>$year
+            ]);
+        }
+    }
+
 }

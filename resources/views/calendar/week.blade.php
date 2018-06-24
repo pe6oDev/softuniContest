@@ -47,9 +47,9 @@
         </div>
         <!-- Бутони за смяна на седмицата -->
         <div class="ui row">
-            <i class="ui green chevron circle left icon large toPreviousWeek"></i> &nbsp; &nbsp;
+            <i class="ui blue chevron circle left icon large toPreviousWeek"></i> &nbsp; &nbsp;
             <div class="header"><b id="startDate"></b>-<b id="endDate"></b></div> &nbsp; &nbsp;
-            <i class="ui green chevron circle right icon large toNextWeek"></i> &nbsp; &nbsp;
+            <i class="ui blue chevron circle right icon large toNextWeek"></i> &nbsp; &nbsp;
         </div>
         <!-- Информационни съобщения -->
         <div class="ui row">
@@ -62,7 +62,7 @@
         <div class="ui row">
             @for($i=0; $i < 7; $i++)
                 <div class="five wide column">
-                    <div onclick="goToDay({{$i}})" class="ui green button dayButtons">{{$weekDays[$i]}}</div>
+                    <div onclick="goToDay({{$i}})" class="ui blue button dayButtons">{{$weekDays[$i]}}</div>
                 </div>
             @endfor
         </div>
@@ -102,17 +102,23 @@
     'scripts'=>[
         asset('js/calendarWeek.js'),
         asset('js/sideBar.js'),
-        asset('js/leftRightGesture.js')
     ]])
     <script>
         var hideSidebar = true;
 
-        {{--var changeWeekUrl = "{{route('getCalendarWeek')}}";--}}
-        {{--var getWeekEventsUrl = "{{route('getWeekEvents')}}";--}}
+        var changeWeekUrl = "{{route('getCalendarWeek')}}";
+        var getWeekEventsUrl = "{{route('getWeekEvents')}}";
         {{--var deleteEventUrl = "{{route('deleteEvent')}}";--}}
         var token = "{{Session::token()}}";
         var months = {!!  json_encode(\App\Calendar::getMonths())!!};
     </script>
+
+    <style>
+        h3,.header{
+            color:white;
+        }
+    </style>
+
 @endsection
 
 @push('header')
@@ -122,3 +128,4 @@
 @section('sidebar')
     @include('includes.profile.sidebar')
 @endsection
+

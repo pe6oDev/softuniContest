@@ -1,8 +1,5 @@
 {{--  Страницата за изглед "ден" на календара с събития  --}}
 
-<?php
-$theme = theme();
-?>
 
 @extends('layouts.welcome')
 @inject('calendar', 'App\Calendar')
@@ -15,8 +12,9 @@ $theme = theme();
 @endsection
 
 @php
-    $routePrevDay=route('getDay',[$carbonDt->subDay()->month,$carbonDt->day]);
-       $routeNextDay=route('getDay',[$carbonDt->addDays(2)->month,$carbonDt->day]);
+
+       $routePrevDay=route('getDay',[$carbonDt->subDay()->month,$carbonDt->day,$carbonDt->month ==12 ?$year+1:  $year]);
+       $routeNextDay=route('getDay',[$carbonDt->addDays(2)->month,$carbonDt->day, $carbonDt->month ==1 ?$year-1:  $year]);
        $dayMonth = "" . $day . "/" . $month . "";
 @endphp
 
@@ -26,7 +24,7 @@ $theme = theme();
         <div class="ui  row" >
             <div class="ui sixteen wide right aligned column">
                 <a href="{{route('calendar.month')}}">
-                    <div class="ui icon  green button" style="margin-right: 0.5cm">
+                    <div class="ui icon  blue button" style="margin-right: 0.5cm">
                         @lang('назад')
                         <i class="ui right arrow icon"></i>
                     </div>
@@ -40,14 +38,14 @@ $theme = theme();
 
                 @unless($day<=$currentDay && $monthInt==0)
                     <a href="{{ $routePrevDay}}">
-                        <i class="ui green chevron circle left icon medium toPreviousMonth"></i> &nbsp;
+                        <i class="ui blue chevron circle left icon medium toPreviousMonth"></i> &nbsp;
                     </a>
 
                 @endunless
                 {{$day}} {{$calendar->getMonths($month)}}
                 {{--стрелка за следващ ден--}}
                 <a href="{{$routeNextDay}}">
-                    <i class="ui green chevron circle right icon medium toPreviousMonth"></i> &nbsp;
+                    <i class="ui blue chevron circle right icon medium toPreviousMonth"></i> &nbsp;
                 </a>
 
             </h2>
@@ -73,44 +71,6 @@ $theme = theme();
             </div>
         </div>
         <div class="ui row">
-            @if(!empty($groceries->all()))
-                <div class="four wide column">
-                    <div class="ui center aligned grid">
-                        @foreach($groceries as $item)
-                            <div class="ui stretched row" style="margin-bottom: 0.5cm">
-                                <div onclick='viewLoad("{{$item->_id}}")' class="ui segment" style="width: 85%">
-                                    {{--Колко са чекнатите--}}
-                                    @php
-                                        $products = collect($item->products);
-                                        $total = $products->count();
-                                        $checked = $products->reject(function ($value) {
-                                            return !$value['checked'];
-                                        })->count();
-                                    @endphp
-                                    <h6 style="width:100%;text-align: right; margin-top: 0; margin-bottom: -7px">{{$checked}}
-                                        /{{$total}}</h6>
-                                    {{--Името на списъка--}}
-                                    <h4 style="margin-top: 0">{{isset($item->name) && $item->name ? $item->name : $item->date}}</h4>
-                                    <div class="ui divider"></div>
-                                    @php
-                                        if(sizeof($item->products) > 3){
-                                            $stop = 3;
-                                        } else {
-                                            $stop = sizeof($item->products);
-                                        }
-                                    @endphp
-                                    @for($i = 0; $i < $stop; $i++)
-                                        <p>{{$item->products[$i]['name']}}</p>
-                                    @endfor
-                                </div>
-                            </div>
-                        @endforeach
-                        <div class="ui row">
-                            {{$groceries->links()}}
-                        </div>
-                    </div>
-                </div>
-            @endif
             <div class="ui ten wide column">
                 <div class="ui segment" id="eventsHolder" style="padding-bottom: 65px">
                     <div id="first" class="ui horizontal divider" style="display: none;"></div>
@@ -128,12 +88,9 @@ $theme = theme();
                 </div>
             </div>
         </div>
-        @include('includes.modals.eventModal', ['id' => 'postModal', 'type' => 'Създаване на събитие'])
-        @include('includes.modals.eventModal', ['id' => 'editModal', 'type' => 'Редактиране на събитие'])
-        @include('includes.modals.groceryModal', ['id' => 'postGroceryModal', 'date' => $dayMonth, 'dayId' => 'dayPost', 'monthId' => 'monthPost', 'type' => 'Създаване на списък'])
-        @include('includes.modals.groceryModal', ['id' => 'editGroceryModal', 'date' => $dayMonth, 'dayId' => 'dayEdit', 'monthId' => 'monthEdit', 'type' => 'Редактиране на списък'])
-        @include('includes.modals.viewGroceryModal', ['origin' => 'calendar'])
-        @include('includes.modals.yes_noModal', ['id' => 'deleteModal', 'header' => 'Изтриване на събитие', 'content' => 'Наистина ли искате да изтриете това събитие?'])
+        {{--@include('includes.modals.eventModal', ['id' => 'postModal', 'type' => 'Създаване на събитие'])--}}
+        {{--@include('includes.modals.eventModal', ['id' => 'editModal', 'type' => 'Редактиране на събитие'])--}}
+        {{--@include('includes.modals.yes_noModal', ['id' => 'deleteModal', 'header' => 'Изтриване на събитие', 'content' => 'Наистина ли искате да изтриете това събитие?'])--}}
     </div>
     <br><br><br><br>
 @endsection
@@ -142,13 +99,13 @@ $theme = theme();
 <script>
     var hideSidebar = true;
 
-    postEventUrl = "{{route('postEvent')}}";
-    getEventsUrl = "{{route('getEvents')}}";
-    getOneEventUrl = "{{route('getOneEvent')}}";
-    deleteEventUrl = "{{route('deleteEvent')}}";
-    editEventUrl = "{{route('editEvent')}}";
-    dayMonth = "{{$dayMonth}}";
-    token = "{{Session::token()}}";
+    {{--postEventUrl = "{{route('postEvent')}}";--}}
+    {{--getEventsUrl = "{{route('getEvents')}}";--}}
+    {{--getOneEventUrl = "{{route('getOneEvent')}}";--}}
+    {{--deleteEventUrl = "{{route('deleteEvent')}}";--}}
+    {{--editEventUrl = "{{route('editEvent')}}";--}}
+    {{--dayMonth = "{{$dayMonth}}";--}}
+    {{--token = "{{Session::token()}}";--}}
     //за сменянето на дни със слайдване на пръста
     var monthOrDay='day';
     var hasPrevDay='{{!($day<=$currentDay && $monthInt==0)}}';
@@ -163,22 +120,6 @@ $theme = theme();
 
 @push('header')
 <link rel="stylesheet" type="text/css" href="{{ asset('css/day.css') }}">
-
-<style>
-    @unless($theme =='dark')
-    #eventsHolder .eventBox{
-        background-color:rgb(33,169,39,0.1);
-        background-color:rgba(33,169,39,0.1);
-    }
-    @else
-     #eventsHolder .eventBox{
-        background-color: rgba(255, 255, 255, 0.1);
-        background-color:rgba(255, 255, 255,0.1);
-    }
-    @endunless
-
-</style>
-
 @endpush
 
 

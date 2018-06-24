@@ -86,6 +86,7 @@
             <div {{$i!=$yearsDiff*12 ?'style=display:none':''}}  class="ui row month   " id="month{{$i}}">
 
                 @include('calendar.month',[
+                'year'=>date('Y')+$yearsDiff,
                 'freeSpaces'=>\App\Calendar::getFirstDayOfWeek($i),
                 'numberOfDays'=>\App\Calendar::getDaysMonth($i),
                 'month'=>$month,
@@ -112,7 +113,6 @@
         asset('js/sideBar.js'),
 
     ]])
-    {{--asset('js/leftRightGesture.js')--}}
 @endsection
 
 @push('header')

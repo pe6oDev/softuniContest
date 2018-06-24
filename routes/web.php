@@ -85,7 +85,12 @@ Route::middleware('auth')->group(function (){
 
     Route::get('week', 'CalendarController@getWeekView')->name('week');
 
-    Route::get('1',function(){})->name('getDay');//TODO::remove
+    Route::get('day/{day}/{month}/{year}','CalendarController@getDay')->name('getDay');//TODO::implement
+
+    Route::get('getWeekEvents', function (){
+        return [];
+    })->name('getWeekEvents'); //TODO implement
+
 
     Route::get('/month/{yearsDiff?}', 'CalendarController@getMonths')->name('calendar.month');
 
@@ -96,5 +101,7 @@ Route::middleware('auth')->group(function (){
 
         Route::post('users/change/type', 'Admin\AdminController@postChangeType')->name('changeUserType');
     });
+
+
 
 });

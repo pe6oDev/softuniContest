@@ -5,6 +5,7 @@
  * Created by pepo on 4/21/18.
  */
 $(document).ready(function () {
+
     //Преминаване към минала седмица
     $('.toPreviousWeek').click(function () {
         changeWeek("backwards");
@@ -24,16 +25,18 @@ $(document).ready(function () {
     loadWeek(day, month, year, "none");
 
     //Проверка за бутоните за дните от седмицата
-    if($(window).width() > 748){
+    if ($(window).width() > 748) {
         $('.dayButtons').hide();
     } else {
         $('.dayButtons').show();
     }
+
+
 });
 
 //Промяна на седмицата
-function changeWeek($forwardsOrBackwards){
-    if($forwardsOrBackwards === "forwards"){
+function changeWeek($forwardsOrBackwards) {
+    if ($forwardsOrBackwards === "forwards") {
         var day = $('.toNextWeek').attr('data-day');
         var month = $('.toNextWeek').attr('data-month');
         var year = $('.toNextWeek').attr('data-year');
@@ -52,14 +55,14 @@ function loadWeek(day, month, year, $forwardsOrBackwards) {
     $('.toNextWeek').hide();
     $('.toPreviousWeek').hide();
     var date = new Date();
-    if(date.getUTCDate() < 10){
+    if (date.getUTCDate() < 10) {
         var dayToday = "0" + date.getUTCDate();
     } else {
         var dayToday = date.getUTCDate();
     }
 
     var monthToday = date.getUTCMonth() + 1;
-    if(monthToday < 10){
+    if (monthToday < 10) {
         monthToday = "0" + monthToday;
     } else {
         monthToday = monthToday;
@@ -71,7 +74,7 @@ function loadWeek(day, month, year, $forwardsOrBackwards) {
         method: "GET",
         data: {day: day, month: month, year: year, forOrBack: $forwardsOrBackwards},
         success: function (data) {
-            if(data.week.indexOf(today) < 0){
+            if (data.week.indexOf(today) < 0) {
                 $('.toPreviousWeek').show();
             }
             $('.toNextWeek').show();
@@ -79,31 +82,31 @@ function loadWeek(day, month, year, $forwardsOrBackwards) {
                 date = value.split("-");
 
                 // За правнее на миналите дни disabled
-                let currentDate= new  Date();
-                let dayDate  = new Date(date[0], date[1]-1, date[2], 23, 59);
-                if(dayDate.getTime() < currentDate.getTime()){
+                let currentDate = new Date();
+                let dayDate = new Date(date[0], date[1] - 1, date[2], 23, 59);
+                if (dayDate.getTime() < currentDate.getTime()) {
                     $('#daySegment' + index).addClass('weekDisabled');
                     $('#weekDay' + index).removeAttr('href');
                 }
                 else {
                     $('#daySegment' + index).removeClass('weekDisabled');
-                    $('#weekDay' + index).attr('href', APP_URL+'/calendar/day/' + parseInt(date[1]) + '/' + parseInt(date[2]) + '')
+                    $('#weekDay' + index).attr('href', APP_URL + '/calendar/day/' + parseInt(date[1]) + '/' + parseInt(date[2]) + '')
                 }
 
 
-                if(index == 0){
+                if (index == 0) {
                     $('.toPreviousWeek').attr('data-day', date[2]);
                     $('.toPreviousWeek').attr('data-month', date[1]);
                     $('.toPreviousWeek').attr('data-year', date[0]);
-                    $('#startDate').text("" + date[2]  + " " + months[parseInt(date[1])])
+                    $('#startDate').text("" + date[2] + " " + months[parseInt(date[1])])
                 }
-                if(index == 6){
+                if (index == 6) {
                     $('.toNextWeek').attr('data-day', date[2]);
                     $('.toNextWeek').attr('data-month', date[1]);
                     $('.toNextWeek').attr('data-year', date[0]);
                     $('#endDate').text("" + date[2] + " " + months[parseInt(date[1])]);
                 }
-                $('#dayHeaderDate'+index).text(date[2]+" "+months[parseInt(date[1])])
+                $('#dayHeaderDate' + index).text(date[2] + " " + months[parseInt(date[1])])
             });
             // loadEvents(data.week)
         }
@@ -121,7 +124,7 @@ function loadEvents(week) {
                 var keyId = index;
                 $.each(data.weekEvents[value], function (index, value) {
                     console.log(value);
-                    eventNew(value)    ;
+                    eventNew(value);
                 })
             })
         }
@@ -129,7 +132,7 @@ function loadEvents(week) {
 }
 
 //Изкарване на екрана на нов евент
-function eventNew(event){
+function eventNew(event) {
     date = new Date()
     var currentHour = date.getHours();
     var currentMin = date.getMinutes();
@@ -145,14 +148,14 @@ function eventNew(event){
     var eventDate = new Date(year, month, day);
     var number = eventDate.getDay();
 
-    if (number == 0){
+    if (number == 0) {
         var keyId = 6;
     } else {
         var keyId = number - 1;
     }
-    console.log(keyId)  ;
+    console.log(keyId);
 
-    if(event.startHour == 0){
+    if (event.startHour == 0) {
         var idS = "first";
         var startDistance = 22 + parseInt(event.startMinutes);
     } else {
@@ -160,31 +163,31 @@ function eventNew(event){
         var startDistance = 53 + parseInt(event.startMinutes);
     }
     var hourHeight = 14;
-    if(parseInt(event.startHour) != parseInt(event.endHour)){
+    if (parseInt(event.startHour) != parseInt(event.endHour)) {
         var multiplier = parseInt(event.endHour) - parseInt(event.startHour);
-        if(parseInt(event.endMinutes) < parseInt(event.startMinutes)){
-            var eventHeight = multiplier*60 + multiplier*hourHeight - (parseInt(event.startMinutes) - parseInt(event.endMinutes))
+        if (parseInt(event.endMinutes) < parseInt(event.startMinutes)) {
+            var eventHeight = multiplier * 60 + multiplier * hourHeight - (parseInt(event.startMinutes) - parseInt(event.endMinutes))
         } else {
-            var eventHeight = multiplier*60 + multiplier*hourHeight + (parseInt(event.endMinutes) - parseInt(event.startMinutes))
+            var eventHeight = multiplier * 60 + multiplier * hourHeight + (parseInt(event.endMinutes) - parseInt(event.startMinutes))
         }
     } else {
         var eventHeight = parseInt(event.endMinutes) - parseInt(event.startMinutes)
     }
 
-    if(parseInt(event.startHour) < 10){
+    if (parseInt(event.startHour) < 10) {
         event.startHour = "0" + event.startHour;
     }
-    if(parseInt(event.startMinutes) < 10){
+    if (parseInt(event.startMinutes) < 10) {
         event.startMinutes = "0" + event.startMinutes;
     }
-    if(parseInt(event.endHour) < 10){
+    if (parseInt(event.endHour) < 10) {
         event.endHour = "0" + event.endHour;
     }
-    if(parseInt(event.endMinutes) < 10){
+    if (parseInt(event.endMinutes) < 10) {
         event.endMinutes = "0" + event.endMinutes;
     }
 
-    $("<div class='"+ "ui segment eventBox" +"' id='" + event.id + "' style='" + "position: absolute; text-align: left; height: "  + eventHeight + "px;  margin-top: " + startDistance + "px" + "'><span id='" + event.id + "text" + "'><b>" + event.name + "</b></span><div class='"  + "ui flowing popup" + "'><div class='" + "ui two column center aligned grid" + "'><div class='column'><div id='" + event.id + "Edit" + "' class='" + "ui tiny icon black button" + "'><i class='"+ "ui edit icon" + "'></i></div></div><div class='column'><div id='" + event.id + "Delete" + "' class='" + "ui tiny icon red button" + "'><i class='"+ "ui delete icon" + "'></i></div></div></div></div>").insertAfter("#" + idS + "-" + keyId + "");
+    $("<div class='" + "ui segment eventBox" + "' id='" + event.id + "' style='" + "position: absolute; text-align: left; height: " + eventHeight + "px;  margin-top: " + startDistance + "px" + "'><span id='" + event.id + "text" + "'><b>" + event.name + "</b></span><div class='" + "ui flowing popup" + "'><div class='" + "ui two column center aligned grid" + "'><div class='column'><div id='" + event.id + "Edit" + "' class='" + "ui tiny icon black button" + "'><i class='" + "ui edit icon" + "'></i></div></div><div class='column'><div id='" + event.id + "Delete" + "' class='" + "ui tiny icon red button" + "'><i class='" + "ui delete icon" + "'></i></div></div></div></div>").insertAfter("#" + idS + "-" + keyId + "");
 
     $("#" + event.id + "Delete").attr('onclick', "deleteEvent(" + "'" + event.id + "'" + ")");
     $("#" + event.id + "Edit").attr('onclick', "editEvent(" + "'" + event.id + "'" + ")");
@@ -198,14 +201,14 @@ function eventNew(event){
         }
     });
 
-    if((currentHour > parseInt(event.startHour) || (currentHour == parseInt(event.startHour) && currentMin > parseInt(event.startMinutes))) && dayMonth === event.day){
-        if(theme === "dark"){
+    if ((currentHour > parseInt(event.startHour) || (currentHour == parseInt(event.startHour) && currentMin > parseInt(event.startMinutes))) && dayMonth === event.day) {
+        if (theme === "dark") {
             $('#' + event.id).css('background-color', 'rgb(205,92,92)');
         } else {
             $('#' + event.id).css('background-color', 'rgb(255,160,122)');
         }
     } else {
-        if(theme === "dark"){
+        if (theme === "dark") {
             $('#' + event.id).css('background-color', 'rgb(128,128,128)');
         } else {
             $('#' + event.id).css('background-color', 'rgb(152,251,152)');
@@ -240,7 +243,7 @@ function editEvent(id) {
 }
 
 //Показване на ден
-function goToDay($i){
+function goToDay($i) {
     var day = document.getElementById("daySegment" + $i);
     day.scrollIntoView();
 }
