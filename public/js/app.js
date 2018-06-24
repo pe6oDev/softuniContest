@@ -32166,23 +32166,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         createEvent: function createEvent(url, modal) {
             var vue = this;
 
-            if (vue.id === "postModal") {
-                if (vue.date === "") {
-                    var day = vue.selectedDay;
-                    var month = vue.selectedMonth;
-                    var dayMonth = "" + day + "/" + month + "";
-                }
-            } else {
-                var dayMonth = vue.loadedDate;
-            }
+            var startDate = $('#calendarStart').getDate();
+            var endDate = $('#calendarEnd').getDate();
 
             var data = {
                 name: vue.name,
-                startHour: parseInt(vue.startHour),
-                startMinutes: parseInt(vue.startMinutes),
-                endHour: parseInt(vue.endHour),
-                endMinutes: parseInt(vue.endMinutes),
-                dayMonth: dayMonth,
+                startDate: startDate,
+                endDate: endDate,
                 notifications: vue.notifications,
                 event_id: vue.eventId
             };

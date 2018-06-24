@@ -91,6 +91,8 @@ Route::middleware('auth')->group(function (){
         return [];
     })->name('getWeekEvents'); //TODO implement
 
+    Route::post('postEvent', 'CalendarController@postEvent')->name('postEvent');
+
 
     Route::get('/month/{yearsDiff?}', 'CalendarController@getMonths')->name('calendar.month');
 
