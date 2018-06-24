@@ -1,6 +1,7 @@
 @include('includes.headers.headerMeta')
 
 <script>
+    APP_URL = "{{config('app.url')}}";
     window.Laravel = {!! json_encode([
         'user' => Auth::user()??Auth::user(),
         'csrfToken' => csrf_token(),

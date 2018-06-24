@@ -55,7 +55,7 @@ if(auth()->user()->theme){$theme=auth()->user()->theme;}
                     @if($newRow==1)
                         <div  class="ui row ">
                             @endif
-                            <a href="{{route('getDay', [$month, $day])}}" class="ui column">
+                            <a href="{{route('getDay', [$month, $day, $year])}}" class="ui column">
 
                                 <span>{{$day}}</span>
 
