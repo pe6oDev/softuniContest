@@ -119,7 +119,7 @@
 <script>
     var monthOrDay='month';
 </script>
-<script src="{{asset('js/calendar.min.js')}}"></script>
+
 <link rel="stylesheet" href="{{asset('css/app.css')}}">
 @endpush
 

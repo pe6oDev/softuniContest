@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -70,7 +70,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(4);
+var bind = __webpack_require__(5);
 var isBuffer = __webpack_require__(19);
 
 /*global toString:true*/
@@ -533,10 +533,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(6);
+    adapter = __webpack_require__(7);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(6);
+    adapter = __webpack_require__(7);
   }
   return adapter;
 }
@@ -607,10 +607,16 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(18);
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -628,7 +634,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -818,7 +824,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -829,7 +835,7 @@ var settle = __webpack_require__(22);
 var buildURL = __webpack_require__(24);
 var parseHeaders = __webpack_require__(25);
 var isURLSameOrigin = __webpack_require__(26);
-var createError = __webpack_require__(7);
+var createError = __webpack_require__(8);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(27);
 
 module.exports = function xhrAdapter(config) {
@@ -1005,7 +1011,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1030,7 +1036,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1042,7 +1048,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1068,7 +1074,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 /*
@@ -1150,7 +1156,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -1169,7 +1175,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(46)
+var listToStyles = __webpack_require__(45)
 
 /*
 type StyleObject = {
@@ -1378,15 +1384,15 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(13);
-module.exports = __webpack_require__(60);
+__webpack_require__(14);
+module.exports = __webpack_require__(62);
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -1396,7 +1402,7 @@ module.exports = __webpack_require__(60);
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(14);
+__webpack_require__(15);
 
 window.Vue = __webpack_require__(36);
 
@@ -1406,22 +1412,23 @@ window.Vue = __webpack_require__(36);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', __webpack_require__(40));
-Vue.component('change-password', __webpack_require__(43));
-Vue.component('make-password', __webpack_require__(49));
-Vue.component('user-info', __webpack_require__(54));
-Vue.component('event-modal', __webpack_require__(57));
+Vue.component('example-component', __webpack_require__(39));
+Vue.component('change-password', __webpack_require__(42));
+Vue.component('make-password', __webpack_require__(48));
+Vue.component('user-info', __webpack_require__(53));
+Vue.component('event-modal', __webpack_require__(56));
+Vue.component('admin-table', __webpack_require__(59));
 
 var app = new Vue({
   el: '#app'
 });
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-window._ = __webpack_require__(15);
+window._ = __webpack_require__(16);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -1441,7 +1448,7 @@ window._ = __webpack_require__(15);
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(17);
+window.axios = __webpack_require__(4);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -1477,7 +1484,7 @@ if (token) {
 // });
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -1494,7 +1501,7 @@ if (token) {
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.10';
+  var VERSION = '4.17.5';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -1918,14 +1925,6 @@ if (token) {
   /** Used to access faster Node.js helpers. */
   var nodeUtil = (function() {
     try {
-      // Use `util.types` for Node.js 10+.
-      var types = freeModule && freeModule.require && freeModule.require('util').types;
-
-      if (types) {
-        return types;
-      }
-
-      // Legacy `process.binding('util')` for Node.js < 10.
       return freeProcess && freeProcess.binding && freeProcess.binding('util');
     } catch (e) {}
   }());
@@ -18587,10 +18586,10 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(16)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(17)(module)))
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -18618,12 +18617,6 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(18);
-
-/***/ }),
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18631,7 +18624,7 @@ module.exports = __webpack_require__(18);
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(4);
+var bind = __webpack_require__(5);
 var Axios = __webpack_require__(20);
 var defaults = __webpack_require__(3);
 
@@ -18666,9 +18659,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(9);
+axios.Cancel = __webpack_require__(10);
 axios.CancelToken = __webpack_require__(34);
-axios.isCancel = __webpack_require__(8);
+axios.isCancel = __webpack_require__(9);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -18821,7 +18814,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(7);
+var createError = __webpack_require__(8);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -19256,7 +19249,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(31);
-var isCancel = __webpack_require__(8);
+var isCancel = __webpack_require__(9);
 var defaults = __webpack_require__(3);
 var isAbsoluteURL = __webpack_require__(32);
 var combineURLs = __webpack_require__(33);
@@ -19416,7 +19409,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(9);
+var Cancel = __webpack_require__(10);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -30477,18 +30470,15 @@ module.exports = Vue;
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
-            (typeof self !== "undefined" && self) ||
-            window;
-var apply = Function.prototype.apply;
+/* WEBPACK VAR INJECTION */(function(global) {var apply = Function.prototype.apply;
 
 // DOM APIs, for completeness
 
 exports.setTimeout = function() {
-  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
+  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
 };
 exports.setInterval = function() {
-  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
+  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
 };
 exports.clearTimeout =
 exports.clearInterval = function(timeout) {
@@ -30503,7 +30493,7 @@ function Timeout(id, clearFn) {
 }
 Timeout.prototype.unref = Timeout.prototype.ref = function() {};
 Timeout.prototype.close = function() {
-  this._clearFn.call(scope, this._id);
+  this._clearFn.call(window, this._id);
 };
 
 // Does not start the time, just sets up the members needed.
@@ -30531,7 +30521,7 @@ exports._unrefActive = exports.active = function(item) {
 
 // setimmediate attaches itself to the global object
 __webpack_require__(38);
-// On some exotic environments, it's not clear which object `setimmediate` was
+// On some exotic environments, it's not clear which object `setimmeidate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
 exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
@@ -30734,19 +30724,18 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(6)))
 
 /***/ }),
-/* 39 */,
-/* 40 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(41)
+var __vue_script__ = __webpack_require__(40)
 /* template */
-var __vue_template__ = __webpack_require__(42)
+var __vue_template__ = __webpack_require__(41)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -30785,7 +30774,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 41 */
+/* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30814,7 +30803,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 42 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -30857,19 +30846,19 @@ if (false) {
 }
 
 /***/ }),
-/* 43 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(44)
+  __webpack_require__(43)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(47)
+var __vue_script__ = __webpack_require__(46)
 /* template */
-var __vue_template__ = __webpack_require__(48)
+var __vue_template__ = __webpack_require__(47)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -30908,17 +30897,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 44 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(45);
+var content = __webpack_require__(44);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(11)("0cc2d0af", content, false, {});
+var update = __webpack_require__(12)("0cc2d0af", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -30934,10 +30923,10 @@ if(false) {
 }
 
 /***/ }),
-/* 45 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)(false);
+exports = module.exports = __webpack_require__(11)(false);
 // imports
 
 
@@ -30948,7 +30937,7 @@ exports.push([module.i, "\n.slide-fade-enter-active {\n    -webkit-transition: a
 
 
 /***/ }),
-/* 46 */
+/* 45 */
 /***/ (function(module, exports) {
 
 /**
@@ -30981,7 +30970,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 47 */
+/* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -31116,7 +31105,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 48 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -31313,19 +31302,19 @@ if (false) {
 }
 
 /***/ }),
-/* 49 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(50)
+  __webpack_require__(49)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(52)
+var __vue_script__ = __webpack_require__(51)
 /* template */
-var __vue_template__ = __webpack_require__(53)
+var __vue_template__ = __webpack_require__(52)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -31364,17 +31353,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 50 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(51);
+var content = __webpack_require__(50);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(11)("4a5fa0c0", content, false, {});
+var update = __webpack_require__(12)("4a5fa0c0", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -31390,10 +31379,10 @@ if(false) {
 }
 
 /***/ }),
-/* 51 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)(false);
+exports = module.exports = __webpack_require__(11)(false);
 // imports
 
 
@@ -31404,7 +31393,7 @@ exports.push([module.i, "\n.slide-fade-enter-active {\n    -webkit-transition: a
 
 
 /***/ }),
-/* 52 */
+/* 51 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -31518,7 +31507,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 53 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -31678,15 +31667,15 @@ if (false) {
 }
 
 /***/ }),
-/* 54 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(55)
+var __vue_script__ = __webpack_require__(54)
 /* template */
-var __vue_template__ = __webpack_require__(56)
+var __vue_template__ = __webpack_require__(55)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -31725,7 +31714,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 55 */
+/* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -31784,7 +31773,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 56 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -31877,15 +31866,15 @@ if (false) {
 }
 
 /***/ }),
-/* 57 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(58)
+var __vue_script__ = __webpack_require__(57)
 /* template */
-var __vue_template__ = __webpack_require__(59)
+var __vue_template__ = __webpack_require__(58)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -31924,7 +31913,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 58 */
+/* 57 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -32518,7 +32507,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 59 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -32899,7 +32888,984 @@ if (false) {
 }
 
 /***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(60)
+/* template */
+var __vue_template__ = __webpack_require__(61)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/AdminTable.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-275f5094", Component.options)
+  } else {
+    hotAPI.reload("data-v-275f5094", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
 /* 60 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+
+        //адреса за сменяне на права (тип потребител)
+        changeTypeUrl: {
+            type: String
+        },
+
+        /**
+         * getN - по колко записа да взима от базата
+         */
+        getN: {
+            type: Number,
+            default: 20,
+            required: false,
+            validator: function validator(value) {
+                return value >= 0;
+            }
+        },
+        /**
+         * loadUrl - адреса, към който се правят всички заявки
+         */
+        loadUrl: {
+            type: String,
+            required: true
+        },
+        /**
+         * nothingFoundMess - какво да се изписва
+         * при връщане на празен[]
+         * най чест  = "не бе открито нищо" || "Nothing found"
+         */
+        nothingFoundMess: {
+            type: String,
+            default: 'Nothing found!'
+        },
+        /**
+         * searchPrompt - hint-a на полетата за търсене
+         * най-често = 'търси' || 'search'
+         */
+        searchPrompt: {
+            type: String,
+            default: 'search'
+        },
+        /**
+         *  headerName - заглавието на страницата
+         *  (изписва се над таблицата)
+         */
+        headerName: {
+            required: true,
+            type: String
+        },
+        /**
+         * loadMoreLabel - текста на бутона за "зареди още"
+         * най често = "load more" || "зарадеи още"
+         */
+        loadMoreLabel: {
+            type: String,
+            required: true
+        },
+        /**
+         * tableHeaders - заглавията на колоните
+         */
+        tableHeaders: {
+            type: Array,
+            required: true
+        },
+        /**
+         * type - вижа на страницата
+         * (използва за избиране на правилното таблично тяло)
+         */
+        type: {
+            type: String,
+            required: true,
+            validator: function validator(value) {
+                return ['days', 'users', 'visitLog', 'userSettings'].indexOf(value) != -1;
+            }
+        },
+        /**
+         * keys - ключоете на полетата както са в базата
+         * (използва се в случай че данните, които идват от сървъра са разбъркани спрямо tableHeaders)
+         */
+        keys: {
+            type: Array,
+            required: false
+        },
+        /**
+         * noSearch - index-ите на полета, по които да не се търси
+         */
+        noSearch: {
+            type: Array,
+            required: false,
+            default: function _default() {
+                return [];
+            }
+        },
+        /**
+         * noSort - index-ите на полета, по които да не се сортира
+         */
+        noSort: {
+            type: Array,
+            required: false,
+            default: function _default() {
+                return [];
+            }
+        },
+        /**
+         * checkBoxSearch - index-ите на полета, по които да се прави да/не търсене
+         */
+        checkBoxSearch: {
+            type: Array,
+            required: false,
+            default: function _default() {
+                return [];
+            }
+        },
+        /**
+         * rowWidth - широчините на колоните (в % )
+         * пример [20,20,20,40] - така първите 3 колони
+         * ще заемат по 20% от наличното пространство
+         */
+        rowWidth: {
+            type: Array,
+            default: function _default() {
+                return [];
+            },
+            required: false
+        },
+        /**
+         * showTotalNum
+         * дали да покаже колко/колко
+         */
+        showTotalNum: {
+            type: Boolean,
+            default: function _default() {
+                return true;
+            },
+            required: true
+        }
+    },
+    data: function data() {
+        //прави  checkBoxSearchQueries във масив с дължина = this.tableHeaders.length
+        // във формат [{'yes':null,'no':null}, {'yes':null,'no':null} ...]
+        var checkBoxSearchQueries = {};
+        for (var i = 0; i <= this.tableHeaders.length; i++) {
+            if (this.checkBoxSearch.indexOf(i) != -1) checkBoxSearchQueries[i] = {
+                'no': null,
+                'yes': null
+            };
+        }
+        return {
+            'loadingErr': null, //дали има грешка при зареждането на данните
+            'noDataWarn': null, //дали сървъра е върнал празен []
+            'data': null, // данните за таблицата
+            'skip': 0, //колко записа вече са заредни
+            'loadMoreEnabled': true, // дали има възможност за зареждане на още
+            'sortDirection': -1, // посоката на сортиране ( -1 = reverse)
+            'searchQueries': {}, // заявките за търсене ( във вида  {$dataBaseField:$search } {'email':'test@gma'})
+            'checkBoxSearchQueries': checkBoxSearchQueries, // заявките за да/не търсене ( във вида  {$dataBaseField:bool } {'email_notifications':false})
+            'totalNum': 0 //броя на записите в базата (които отговярят на заявките за търсене)
+        };
+    },
+    mounted: function mounted() {
+        //първоначално зареждане на даниите
+        this.loadRequest();
+    },
+
+    methods: {
+
+        /*
+         сменя типа на потребител
+         */
+        changeType: function changeType(userId, type) {
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(this.changeTypeUrl, {
+                userId: userId,
+                type: type
+            }).then(function () {
+                console.log('done');
+            });
+        },
+
+
+        /**
+         * loadMore
+         *
+         * зарежда още данни
+         *
+         */
+        loadMore: function loadMore() {
+            this.loadRequest(this.skip);
+        },
+
+        /**
+         * sort
+         *
+         * сортира по избрано поле
+         * @param sortable{int} = index-a на полето
+         *
+         */
+        sort: function sort(sortable) {
+            var _this = this;
+
+            this.sortDirection *= -1;
+            this.data = _.sortBy(this.data, [function (o) {
+                return o[_this.getKey(sortable)];
+            }]);
+            if (this.sortDirection < 0) {
+                this.data = _.reverse(this.data);
+            }
+        },
+
+
+        /**
+         * getKey
+         *
+         * Връща index-a, както е в масива с данните
+         * пример index = 1 - връща day
+         *
+         * @param index {int}  елемент от this.headerName
+         * @returns {string}
+         */
+        getKey: function getKey(index) {
+            var rowKey = '';
+            if (this.keys === undefined) {
+                rowKey = Object.keys(this.data[0])[index];
+            } else {
+                rowKey = this.keys[index];
+            }
+            return rowKey;
+        },
+
+        /**
+         * loadRequest
+         *
+         * Прави заявка към сървъра (променя this.data)
+         *
+         * @param skip {int} колко записа да пропусне (използва се при loadMore)
+         */
+        loadRequest: function loadRequest() {
+            var _this2 = this;
+
+            var skip = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+            //прави копия на this.realSearchQuery || this.realCheckBoxSearchQueries (защото иначе се trigger-ват watcher-ите им и взаимно се промненят)
+            var textQueries = this.realSearchQuery;
+            var checkBoxQueries = this.realCheckBoxSearchQueries;
+            var search = {};
+            _.forEach(textQueries, function (e, i) {
+                search[i] = e;
+            });
+            _.forEach(checkBoxQueries, function (e, i) {
+                search[i] = e;
+            });
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post(this.loadUrl, {
+                'skip': skip,
+                'take': this.getN,
+                'search': search
+
+            }).then(function (d) {
+                //ако НЕ е направена "зареди още" заявка
+                if (skip == 0) {
+                    _this2.skip = _this2.getN;
+                    _this2.loadMoreEnabled = true;
+                    console.log(d.data.stats);
+                    _this2.data = d.data.stats.data;
+                    _this2.totalNum = d.data.stats.count;
+                }
+                //ако Е направена "зареди още" заявка
+                else {
+                        if (d.data.stats.data.length) {
+                            _this2.skip = Number(_this2.skip) + Number(_this2.getN);
+                            _this2.data = _.union(_this2.data, d.data.stats.data);
+                        } else {
+                            _this2.loadMoreEnabled = false;
+                        }
+                    }
+            }).catch(function () {
+                _this2.loadingErr = true;
+            });
+        },
+        makeSearchQuery: function makeSearchQuery(arr) {
+            var _this3 = this;
+
+            var q = _.mapKeys(arr, function (value, key) {
+                return _this3.getKey(key);
+            });
+            return _.omitBy(q, function (e) {
+                return !Boolean(e) && e !== false;
+            });
+        }
+    },
+    watch: {
+        realSearchQuery: _.debounce(function () {
+            this.loadRequest();
+        },
+        //Броя милесекунди преди потребителя да спре да пише
+        200),
+        checkBoxSearchQueries: function checkBoxSearchQueries() {},
+        realCheckBoxSearchQueries: function realCheckBoxSearchQueries() {
+            this.loadRequest();
+        },
+        data: function data() {
+            $('.ui.dropdown').dropdown();
+            if (!this.data.length) {
+                this.noDataWarn = true;
+            } else {
+                this.noDataWarn = false;
+            }
+
+            if (this.data.length < Number(this.skip)) {
+                this.loadMoreEnabled = false;
+            }
+        }
+    },
+    computed: {
+        realSearchQuery: function realSearchQuery() {
+            return this.makeSearchQuery(this.searchQueries);
+        },
+        realCheckBoxSearchQueries: function realCheckBoxSearchQueries() {
+            var queries = {};
+            _.forEach(this.checkBoxSearchQueries, function (e, i) {
+                if (e['yes']) {
+                    queries[i] = true;
+                } else if (e['no']) {
+                    queries[i] = false;
+                }
+            });
+            return this.makeSearchQuery(queries);
+        }
+    }
+});
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "ui center aligned  grid" }, [
+    _vm.data && _vm.showTotalNum
+      ? _c("div", { staticClass: "ui row" }, [
+          _c("div", { staticClass: "ui sixteen wide right aligned column" }, [
+            _vm._v(
+              "\n            " +
+                _vm._s(_vm.data.length) +
+                "/" +
+                _vm._s(_vm.totalNum) +
+                "\n        "
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "ui row" }, [
+      _c("div", { staticClass: "ui seventeen  wide column" }, [
+        _c("table", { staticClass: "ui  fluid celled table green" }, [
+          _c("thead", [
+            _c(
+              "tr",
+              _vm._l(_vm.tableHeaders, function(header, index) {
+                return _c(
+                  "th",
+                  {
+                    staticClass: "center aligned header",
+                    style: { width: _vm.rowWidth[index] + "%" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(header) +
+                        "\n                        "
+                    ),
+                    _vm._v(" "),
+                    _vm.noSort.indexOf(index) == -1
+                      ? _c("i", {
+                          staticClass: "sort ui icon",
+                          on: {
+                            click: function($event) {
+                              _vm.sort(index)
+                            }
+                          }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _vm.noSearch.indexOf(index) == -1 &&
+                    _vm.checkBoxSearch.indexOf(index) == -1
+                      ? _c("span", { staticClass: "ui  search" }, [
+                          _c("span", { staticClass: "ui input" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.searchQueries[index],
+                                  expression: "searchQueries[index]"
+                                }
+                              ],
+                              staticClass: "prompt",
+                              staticStyle: { width: "100%" },
+                              attrs: {
+                                placeholder: _vm.searchPrompt,
+                                type: "text"
+                              },
+                              domProps: { value: _vm.searchQueries[index] },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.searchQueries,
+                                    index,
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.checkBoxSearch.indexOf(index) != -1
+                      ? _c("span", [
+                          _c(
+                            "div",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: !_vm.checkBoxSearchQueries[index][
+                                    "no"
+                                  ],
+                                  expression:
+                                    "!checkBoxSearchQueries[index]['no']"
+                                }
+                              ],
+                              staticClass: "ui  checkbox"
+                            },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value:
+                                      _vm.checkBoxSearchQueries[index]["yes"],
+                                    expression:
+                                      "checkBoxSearchQueries[index]['yes']"
+                                  }
+                                ],
+                                attrs: {
+                                  type: "checkbox",
+                                  name: "yes",
+                                  id: "yes"
+                                },
+                                domProps: {
+                                  checked: Array.isArray(
+                                    _vm.checkBoxSearchQueries[index]["yes"]
+                                  )
+                                    ? _vm._i(
+                                        _vm.checkBoxSearchQueries[index]["yes"],
+                                        null
+                                      ) > -1
+                                    : _vm.checkBoxSearchQueries[index]["yes"]
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$a =
+                                        _vm.checkBoxSearchQueries[index]["yes"],
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = null,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          _vm.$set(
+                                            _vm.checkBoxSearchQueries[index],
+                                            "yes",
+                                            $$a.concat([$$v])
+                                          )
+                                      } else {
+                                        $$i > -1 &&
+                                          _vm.$set(
+                                            _vm.checkBoxSearchQueries[index],
+                                            "yes",
+                                            $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1))
+                                          )
+                                      }
+                                    } else {
+                                      _vm.$set(
+                                        _vm.checkBoxSearchQueries[index],
+                                        "yes",
+                                        $$c
+                                      )
+                                    }
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm._m(0, true)
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: !_vm.checkBoxSearchQueries[index][
+                                    "yes"
+                                  ],
+                                  expression:
+                                    "!checkBoxSearchQueries[index]['yes']"
+                                }
+                              ],
+                              staticClass: "ui  checkbox"
+                            },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value:
+                                      _vm.checkBoxSearchQueries[index]["no"],
+                                    expression:
+                                      "checkBoxSearchQueries[index]['no']"
+                                  }
+                                ],
+                                attrs: {
+                                  type: "checkbox",
+                                  name: "no",
+                                  id: "no"
+                                },
+                                domProps: {
+                                  checked: Array.isArray(
+                                    _vm.checkBoxSearchQueries[index]["no"]
+                                  )
+                                    ? _vm._i(
+                                        _vm.checkBoxSearchQueries[index]["no"],
+                                        null
+                                      ) > -1
+                                    : _vm.checkBoxSearchQueries[index]["no"]
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$a =
+                                        _vm.checkBoxSearchQueries[index]["no"],
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = null,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          _vm.$set(
+                                            _vm.checkBoxSearchQueries[index],
+                                            "no",
+                                            $$a.concat([$$v])
+                                          )
+                                      } else {
+                                        $$i > -1 &&
+                                          _vm.$set(
+                                            _vm.checkBoxSearchQueries[index],
+                                            "no",
+                                            $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1))
+                                          )
+                                      }
+                                    } else {
+                                      _vm.$set(
+                                        _vm.checkBoxSearchQueries[index],
+                                        "no",
+                                        $$c
+                                      )
+                                    }
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm._m(1, true)
+                            ]
+                          )
+                        ])
+                      : _vm._e()
+                  ]
+                )
+              })
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.data, function(user) {
+              return _c("tr", [
+                _c("td", { staticClass: "center aligned" }, [
+                  _vm._v(_vm._s(user["email"]))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "center aligned" }, [
+                  _vm._v(_vm._s(user["created_at"]))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "center aligned" }, [
+                  _c("div", { staticClass: "ui dropdown" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "default text",
+                        staticStyle: { color: "#000" }
+                      },
+                      [
+                        user["type"] == "customer"
+                          ? _c("span", [_vm._v("клиент")])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        user["type"] == "partner"
+                          ? _c("span", [_vm._v("партньор")])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        user["type"] == "employee"
+                          ? _c("span", [_vm._v("служител")])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        user["type"] == "admin"
+                          ? _c("span", [_vm._v("администратор")])
+                          : _vm._e()
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "menu" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "item",
+                          on: {
+                            click: function($event) {
+                              _vm.changeType(user["id"], "customer")
+                            }
+                          }
+                        },
+                        [_vm._v("клиент")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "item",
+                          on: {
+                            click: function($event) {
+                              _vm.changeType(user["id"], "partner")
+                            }
+                          }
+                        },
+                        [_vm._v("партньор")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "item",
+                          on: {
+                            click: function($event) {
+                              _vm.changeType(user["id"], "employee")
+                            }
+                          }
+                        },
+                        [_vm._v("служител")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "item",
+                          on: {
+                            click: function($event) {
+                              _vm.changeType(user["id"], "admin")
+                            }
+                          }
+                        },
+                        [_vm._v("администратор")]
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            })
+          ),
+          _vm._v(" "),
+          _c("tfoot", [
+            _vm.loadMoreEnabled && !_vm.noDataWarn && !_vm.loadingErr
+              ? _c("tr", [
+                  _c(
+                    "th",
+                    {
+                      staticClass: "ui center aligned ",
+                      attrs: { colspan: _vm.tableHeaders.length }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "ui fluid   button",
+                          on: { click: _vm.loadMore }
+                        },
+                        [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.loadMoreLabel) +
+                              "\n                        "
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.loadingErr
+              ? _c("tr", [
+                  _c(
+                    "th",
+                    {
+                      staticClass: "ui center aligned ",
+                      attrs: { colspan: _vm.tableHeaders.length }
+                    },
+                    [
+                      _c("div", { staticClass: "ui error message" }, [
+                        _vm._v("Error")
+                      ])
+                    ]
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            !_vm.loadingErr && _vm.noDataWarn
+              ? _c("tr", [
+                  _c(
+                    "th",
+                    {
+                      staticClass: "ui center aligned ",
+                      attrs: { colspan: _vm.tableHeaders.length }
+                    },
+                    [
+                      _c("div", { staticClass: "ui warning message" }, [
+                        _vm._v(_vm._s(_vm.nothingFoundMess))
+                      ])
+                    ]
+                  )
+                ])
+              : _vm._e()
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [_c("i", { staticClass: "icon green check" })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [_c("i", { staticClass: "icon red delete" })])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-275f5094", module.exports)
+  }
+}
+
+/***/ }),
+/* 62 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

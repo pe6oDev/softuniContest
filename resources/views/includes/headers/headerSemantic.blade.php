@@ -5,3 +5,4 @@
 
 
 <script src="{{ asset('semantic/dist/semantic.min.js') }}{{config('app.cache')? '':'?'.str_random()}}"></script>
+<script src="{{asset('js/calendar.min.js')}}"></script>
