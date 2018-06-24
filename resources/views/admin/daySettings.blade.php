@@ -13,7 +13,7 @@
                     <h2 class="header">Настройки за неработни дни</h2>
                 </div>
             </div>
-            <day-settings></day-settings>
+            <day-settings save-url=""></day-settings>
         </div>
     </div>
 @endsection
