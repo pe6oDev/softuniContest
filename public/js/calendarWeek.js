@@ -90,7 +90,7 @@ function loadWeek(day, month, year, $forwardsOrBackwards) {
                 }
                 else {
                     $('#daySegment' + index).removeClass('weekDisabled');
-                    $('#weekDay' + index).attr('href', APP_URL + '/calendar/day/' + parseInt(date[1]) + '/' + parseInt(date[2]) + '')
+                    $('#weekDay' + index).attr('href', APP_URL + '/day/' + parseInt(date[1]) + '/' + parseInt(date[2]) +'/' + new Date().getFullYear())
                 }
 
 
