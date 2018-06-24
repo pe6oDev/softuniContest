@@ -33782,6 +33782,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['saveUrl'],
     mounted: function mounted() {
         console.log('Component mounted.');
     },
@@ -33808,6 +33809,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         humandate: function humandate(value) {
             var date = new Date(value);
             return date.getUTCDate() + ' . ' + (date.getUTCMonth() + 1) + ' . ' + date.getFullYear();
+        }
+    },
+    watch: {
+        //За промяна на датите (заявка отзад)
+        dates: function dates() {
+            axios.post(this.saveUrl, {
+                dates: this.dates
+            });
         }
     }
 });
