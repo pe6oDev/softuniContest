@@ -95,10 +95,7 @@ Route::middleware('auth')->group(function (){
 
     Route::get('getRestDays', 'CalendarController@getRestDays')->name('getRestDays');
 
-    Route::post('postRestDay', 'CalendarController@postRestDay')->name('postRestDay');
-
-    Route::post('deleteRestDay', 'CalendarController@deleteRestDay')->name('deleteRestDay');
-
+    Route::get('getNameDays', 'CalendarController@getNameDays')->name('getNameDays');
 
     Route::get('/month/{yearsDiff?}', 'CalendarController@getMonths')->name('calendar.month');
 
@@ -111,7 +108,15 @@ Route::middleware('auth')->group(function (){
 
         Route::get('daySettings', 'Admin\AdminController@getDaySettings')->name('getDaySettings');
 
+        Route::post('postRestDay', 'CalendarController@postRestDay')->name('postRestDay');
+
+        Route::post('deleteRestDay', 'CalendarController@deleteRestDay')->name('deleteRestDay');
+
         Route::get('name/days', 'Admin\AdminController@getNameDaySettings')->name('getNameDaysSettings');
+
+        Route::post('postNameDay', 'CalendarController@postNameDay')->name('postNameDay');
+
+        Route::post('deleteNameDay', 'CalendarController@deleteNameDay')->name('deleteNameDay');
 
         Route::get('promotion/days', 'Admin\AdminController@getPromotionsSettings')->name('getPromotionsSettings');
     });

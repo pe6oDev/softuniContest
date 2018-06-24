@@ -32,9 +32,9 @@
 
         <div class="ui eight wide center aligned column" v-for="(day,i) in nameDays">
             <div class="ui segment" style="padding: 10px 10px 10px 10px">
-                {{day.date | humandate }} - {{day.name}}
+                {{day.normalDate}} - {{day.name}}
                 &nbsp;&nbsp;
-                <div v-on:click="deleteDate(i)" class="ui icon  small circular red button">
+                <div v-on:click="deleteDate(day._id, i)" class="ui icon  small circular red button">
                     <i class="icon trash"></i>
                 </div>
             </div>
@@ -45,7 +45,18 @@
 
 <script>
 export default {
-    props: ['saveUrl'],
+    mounted() {
+        var vue = this
+        console.log('Component mounted.')
+        axios.get(this.getUrl).then(response => {
+            vue.nameDays = response.data.nameDays
+        })
+    },
+    props: [
+        'saveUrl',
+        'getUrl',
+        'deleteUrl'
+    ],
     data: function () {
         return {
             nameDays: [],
@@ -56,34 +67,41 @@ export default {
     methods: {
         addDay: function () {
             if ($('#calendar').calendar('get date') && this.nameDay && this.description) {
-                this.nameDays.push({
+                var data = {
                     'date': $('#calendar').calendar('get date'),
                     'name':this.nameDay,
-                    'description': this.description,
-                });
-                $('#calendar').calendar('clear');
-                this.nameDay = '';
-                this.description = '';
+                    'description': this.description
+                };
+                axios.post(this.saveUrl, data).then(response => {
+                    this.nameDays.push(response.data.newName)
+                    $('#calendar').calendar('clear');
+                    this.nameDay = '';
+                    this.description = '';
+                })
             }
 
         },
-        deleteDate: function (i) {
+        deleteDate: function (id, i) {
             this.nameDays.splice(i, 1);
-        }
-    },
-    filters: {
-        humandate: function (value) {
-            let date = new Date(value);
-            return date.getUTCDate() + '.' + (date.getUTCMonth() + 1) + '.' + date.getFullYear();
-        }
-    },
-    watch: {
-        //За промяна на датите (заявка отзад)
-        dates: function () {
-            axios.post(this.saveUrl, {
-                dates: this.nameDays
+            var data = {id: id}
+            axios.post(this.deleteUrl, data).then(response => {
+
             })
         }
-    }
+    },
+//    filters: {
+//        humandate: function (value) {
+//            let date = new Date(value);
+//            return date.getUTCDate() + '.' + (date.getUTCMonth() + 1) + '.' + date.getFullYear();
+//        }
+//    },
+//    watch: {
+//        //За промяна на датите (заявка отзад)
+//        dates: function () {
+//            axios.post(this.saveUrl, {
+//                dates: this.nameDays
+//            })
+//        }
+//    }
 }
 </script>

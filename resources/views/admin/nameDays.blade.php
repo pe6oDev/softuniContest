@@ -13,7 +13,11 @@
                     <h2 class="header">Настройки за именни дни</h2>
                 </div>
             </div>
-            <name-days-settings save-url=""></name-days-settings>
+            <name-days-settings
+                    save-url="{{route('postNameDay')}}"
+                    get-url = "{{route('getNameDays')}}"
+                    delete-url = "{{route('deleteNameDay')}}"
+            ></name-days-settings>
         </div>
     </div>
 @endsection

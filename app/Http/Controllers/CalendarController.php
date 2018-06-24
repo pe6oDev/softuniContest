@@ -129,6 +129,11 @@ class CalendarController
         }
     }
 
+
+    /**
+     * Зарежда почивни дни от mongodb
+     *
+     */
     function getRestDays(){
         $restDays = CalendarModel::where('type', 'restDay')->get();
         foreach($restDays as $day){
@@ -138,6 +143,11 @@ class CalendarController
         return response()->json(['restDays' => $restDays], 200);
     }
 
+    /**
+     * Запазва почивни дни в mongodb
+     *
+     * @param Request $request
+     */
     function postRestDay(Request $request){
         $restDay = strtotime($request->get('restDay'));
 
@@ -153,7 +163,62 @@ class CalendarController
         return response()->json(['newRest' => $calendar], 200);
     }
 
+    /**
+     * Изтрива почивен ден от mongodb
+     *
+     * @param Request $request
+     */
     function deleteRestDay(Request $request){
+        $id = $request->get('id');
+
+        CalendarModel::where('_id', $id)->forceDelete();
+
+        return response()->json([], 200);
+    }
+
+    /**
+     * Зарежда имени дни от mongodb
+     *
+     */
+    function getNameDays(){
+        $nameDays = CalendarModel::where('type', 'nameDay')->get();
+
+        foreach($nameDays as $day){
+            $day->normalDate = date('d/m/Y', $day->startDate);
+        }
+
+        return response()->json(['nameDays' => $nameDays], 200);
+    }
+
+    /**
+     * Запазва имен ден в mongodb
+     *
+     * @param Request $request
+     */
+    function postNameDay(Request $request){
+        $nameDay = strtotime($request->get('date'));
+        $name = $request->get('name');
+        $text = $request->get('description');
+
+        $calendar = new CalendarModel;
+        $calendar->name = $name;
+        $calendar->text = $text;
+        $calendar->wholeDay = true;
+        $calendar->startDate = $nameDay;
+        $calendar->visibility = "public";
+        $calendar->type = "nameDay";
+        $calendar->save();
+        $calendar->normalDate = date('d/m/Y', $nameDay);
+
+        return response()->json(['newName' => $calendar], 200);
+    }
+
+    /**
+     * Изтрива имен ден от mongodb
+     *
+     * @param Request $request
+     */
+    function deleteNameDay(Request $request){
         $id = $request->get('id');
 
         CalendarModel::where('_id', $id)->forceDelete();

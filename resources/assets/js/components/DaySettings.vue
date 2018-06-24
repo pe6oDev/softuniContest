@@ -33,9 +33,10 @@
             'deleteUrl'
         ],
         mounted() {
+            var vue = this
             console.log('Component mounted.')
             axios.get(this.getUrl).then(response => {
-                this.dates = response.data.restDays
+                vue.dates = response.data.restDays
             })
         },
         data: function(){
@@ -59,7 +60,7 @@
             deleteDate:function(id, i){
                 this.dates.splice(i);
                 var data = {id: id}
-                axios.post(deleteUrl, data).then(response => {
+                axios.post(this.deleteUrl, data).then(response => {
 
                 })
             }

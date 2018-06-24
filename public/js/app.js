@@ -1388,7 +1388,7 @@ function applyToTag (styleElement, obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(14);
-module.exports = __webpack_require__(71);
+module.exports = __webpack_require__(68);
 
 
 /***/ }),
@@ -1420,7 +1420,7 @@ Vue.component('event-modal', __webpack_require__(56));
 Vue.component('admin-table', __webpack_require__(59));
 Vue.component('day-settings', __webpack_require__(62));
 Vue.component('name-days-settings', __webpack_require__(65));
-Vue.component('promotions-settings', __webpack_require__(68));
+Vue.component('promotions-settings', __webpack_require__(72));
 
 var app = new Vue({
   el: '#app'
@@ -1504,7 +1504,7 @@ if (token) {
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.5';
+  var VERSION = '4.17.10';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -1928,6 +1928,14 @@ if (token) {
   /** Used to access faster Node.js helpers. */
   var nodeUtil = (function() {
     try {
+      // Use `util.types` for Node.js 10+.
+      var types = freeModule && freeModule.require && freeModule.require('util').types;
+
+      if (types) {
+        return types;
+      }
+
+      // Legacy `process.binding('util')` for Node.js < 10.
       return freeProcess && freeProcess.binding && freeProcess.binding('util');
     } catch (e) {}
   }());
@@ -30473,15 +30481,18 @@ module.exports = Vue;
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {var apply = Function.prototype.apply;
+/* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
+            (typeof self !== "undefined" && self) ||
+            window;
+var apply = Function.prototype.apply;
 
 // DOM APIs, for completeness
 
 exports.setTimeout = function() {
-  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
+  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
 };
 exports.setInterval = function() {
-  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
+  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
 };
 exports.clearTimeout =
 exports.clearInterval = function(timeout) {
@@ -30496,7 +30507,7 @@ function Timeout(id, clearFn) {
 }
 Timeout.prototype.unref = Timeout.prototype.ref = function() {};
 Timeout.prototype.close = function() {
-  this._clearFn.call(window, this._id);
+  this._clearFn.call(scope, this._id);
 };
 
 // Does not start the time, just sets up the members needed.
@@ -30524,7 +30535,7 @@ exports._unrefActive = exports.active = function(item) {
 
 // setimmediate attaches itself to the global object
 __webpack_require__(38);
-// On some exotic environments, it's not clear which object `setimmeidate` was
+// On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
 exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
@@ -33860,9 +33871,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['saveUrl'],
+    props: ['saveUrl', 'getUrl', 'deleteUrl'],
     mounted: function mounted() {
+        var vue = this;
         console.log('Component mounted.');
+        axios.get(this.getUrl).then(function (response) {
+            vue.dates = response.data.restDays;
+        });
     },
 
     data: function data() {
@@ -33872,31 +33887,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         addDay: function addDay() {
+            var _this = this;
+
             if ($('#calendar').calendar('get date')) {
-                this.dates.push($('#calendar').calendar('get date'));
-                $('#calendar').calendar('clear');
-                this.date = null;
+                var restDay = $('#calendar').calendar('get date');
+                var data = { restDay: restDay };
+                axios.post(this.saveUrl, data).then(function (response) {
+                    _this.dates.push(response.data.newRest);
+                    $('#calendar').calendar('clear');
+                    _this.date = null;
+                });
             }
         },
-        deleteDate: function deleteDate(i) {
-            console.log(i);
-            this.dates.splice(i, 1);
-        }
-    },
-    filters: {
-        humandate: function humandate(value) {
-            var date = new Date(value);
-            return date.getUTCDate() + ' . ' + (date.getUTCMonth() + 1) + ' . ' + date.getFullYear();
-        }
-    },
-    watch: {
-        //За промяна на датите (заявка отзад)
-        dates: function dates() {
-            axios.post(this.saveUrl, {
-                dates: this.dates
-            });
+        deleteDate: function deleteDate(id, i) {
+            this.dates.splice(i);
+            var data = { id: id };
+            axios.post(this.deleteUrl, data).then(function (response) {});
         }
     }
+    //        filters: {
+    //            humandate: function (value) {
+    //                let date = new Date(value);
+    //                return  date.getUTCDate()+' . '+(date.getUTCMonth()+1) +' . '+date.getFullYear();
+    //            }
+    //        },
+    //        watch:{
+    //            //За промяна на датите (заявка отзад)
+    //            dates:function(){
+    //                axios.post(this.saveUrl,{
+    //                    dates:this.dates
+    //                })
+    //            }
+    //        }
 });
 
 /***/ }),
@@ -33935,9 +33957,7 @@ var render = function() {
               },
               [
                 _vm._v(
-                  "\n            " +
-                    _vm._s(_vm._f("humandate")(date)) +
-                    "\n            "
+                  "\n            " + _vm._s(date.normalDate) + "\n            "
                 ),
                 _c(
                   "div",
@@ -33945,7 +33965,7 @@ var render = function() {
                     staticClass: "ui icon  small circular red button",
                     on: {
                       click: function($event) {
-                        _vm.deleteDate(i)
+                        _vm.deleteDate(date._id, i)
                       }
                     }
                   },
@@ -34087,7 +34107,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['saveUrl'],
+    mounted: function mounted() {
+        var vue = this;
+        console.log('Component mounted.');
+        axios.get(this.getUrl).then(function (response) {
+            vue.nameDays = response.data.nameDays;
+        });
+    },
+
+    props: ['saveUrl', 'getUrl', 'deleteUrl'],
     data: function data() {
         return {
             nameDays: [],
@@ -34097,35 +34125,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         addDay: function addDay() {
+            var _this = this;
+
             if ($('#calendar').calendar('get date') && this.nameDay && this.description) {
-                this.nameDays.push({
+                var data = {
                     'date': $('#calendar').calendar('get date'),
                     'name': this.nameDay,
                     'description': this.description
+                };
+                axios.post(this.saveUrl, data).then(function (response) {
+                    _this.nameDays.push(response.data.newName);
+                    $('#calendar').calendar('clear');
+                    _this.nameDay = '';
+                    _this.description = '';
                 });
-                $('#calendar').calendar('clear');
-                this.nameDay = '';
-                this.description = '';
             }
         },
-        deleteDate: function deleteDate(i) {
+        deleteDate: function deleteDate(id, i) {
             this.nameDays.splice(i, 1);
-        }
-    },
-    filters: {
-        humandate: function humandate(value) {
-            var date = new Date(value);
-            return date.getUTCDate() + '.' + (date.getUTCMonth() + 1) + '.' + date.getFullYear();
-        }
-    },
-    watch: {
-        //За промяна на датите (заявка отзад)
-        dates: function dates() {
-            axios.post(this.saveUrl, {
-                dates: this.nameDays
-            });
+            var data = { id: id };
+            axios.post(this.deleteUrl, data).then(function (response) {});
         }
     }
+    //    filters: {
+    //        humandate: function (value) {
+    //            let date = new Date(value);
+    //            return date.getUTCDate() + '.' + (date.getUTCMonth() + 1) + '.' + date.getFullYear();
+    //        }
+    //    },
+    //    watch: {
+    //        //За промяна на датите (заявка отзад)
+    //        dates: function () {
+    //            axios.post(this.saveUrl, {
+    //                dates: this.nameDays
+    //            })
+    //        }
+    //    }
 });
 
 /***/ }),
@@ -34220,7 +34255,7 @@ var render = function() {
               [
                 _vm._v(
                   "\n            " +
-                    _vm._s(_vm._f("humandate")(day.date)) +
+                    _vm._s(day.normalDate) +
                     " - " +
                     _vm._s(day.name) +
                     "\n              \n            "
@@ -34231,7 +34266,7 @@ var render = function() {
                     staticClass: "ui icon  small circular red button",
                     on: {
                       click: function($event) {
-                        _vm.deleteDate(i)
+                        _vm.deleteDate(day._id, i)
                       }
                     }
                   },
@@ -34273,14 +34308,23 @@ if (false) {
 
 /***/ }),
 /* 68 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(69)
+var __vue_script__ = __webpack_require__(73)
 /* template */
-var __vue_template__ = __webpack_require__(70)
+var __vue_template__ = __webpack_require__(74)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34319,7 +34363,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 69 */
+/* 73 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -34426,7 +34470,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 70 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -34593,12 +34637,6 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-06304da7", module.exports)
   }
 }
-
-/***/ }),
-/* 71 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
