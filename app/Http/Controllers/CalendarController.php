@@ -77,9 +77,22 @@ class CalendarController
         (int)$monthNow <= $month ? $year = (int)date('Y') : $year = (int)date('Y') + 1;
         $dt = Carbon::createFromDate($year, $month, $day);
 
+        $wholeDayEvents=CalendarModel
+            ::where('wholeDay', true)
+            ->where(function ($query) {
+                $query ->where('user_id', Auth::user()->id)
+                    ->orWhere('visibility', '=', 'public');
+            })->get();
 
-        dump(Carbon::tomorrow()->timestamp);
-        dd(Carbon::yesterday()->timestamp);
+        foreach ($wholeDayEvents as &$event) {
+            if (! date('d/m/Y', $event->event['startDate']) == $day.'/'.$month.'/'.$year  ) {
+               unset($event);
+            }
+        }
+
+
+//        dump(Carbon::tomorrow()->timestamp);
+//        dd(Carbon::yesterday()->timestamp);
 
         return view('calendar.day', [
             'currentDay' => $currentDay,
@@ -89,17 +102,7 @@ class CalendarController
             'monthInt' => $relativeMonth,
             'carbonDt' => $dt,
             'year' => $year,
-            'wholeDayEvents' => CalendarModel
-                ::where('wholeDay', true)
-//                ->where('startDate' ,'>', Carbon::yesterday()->timestamp)
-//                ->where('startDate' ,'<', Carbon::tomorrow()->timestamp)
-                ->where(function ($query) {
-                    $query ->where('user_id', Auth::user()->id)
-                        ->orWhere('visibility', '=', 'public');
-                })
-
-
-                ->get()
+            'wholeDayEvents' => $wholeDayEvents
         ]);
 
     }
@@ -139,6 +142,13 @@ class CalendarController
         }
     }
 
+    /**
+     * Зарежда събитя в страницата за ден
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     *
+     */
     function getEvents(Request $request)
     {
         $date = $request->get('date');
