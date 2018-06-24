@@ -10,7 +10,15 @@ $(document).ready(function () {
         $('#pageLoader').hide()
     }, 20);
 
-
+    $("#floatingButton").click(function () {
+        $("#postModal")
+            .modal({
+                transition: 'fade',
+            })
+            .modal('show');
+        $('#calendarStart').calendar();
+        $('#calendarEnd').calendar();
+    });
 });
 
 

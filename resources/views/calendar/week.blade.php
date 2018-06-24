@@ -101,6 +101,8 @@
         </a>
     </div>
     <br><br>
+    @include('includes.modals.eventModal', ['id' => 'postModal', 'type' => 'Създаване на събитие', 'dayMonth' => '', 'dayId' => 'dayPost', 'monthId' => 'monthPost'])
+
 @endsection
 
 @section('header')
@@ -117,6 +119,11 @@
         {{--var deleteEventUrl = "{{route('deleteEvent')}}";--}}
         var token = "{{Session::token()}}";
         var months = {!!  json_encode(\App\Calendar::getMonths())!!};
+
+        $('.calendar').click(function(){
+            $('#calendar').popup()
+        })
+
     </script>
 
     <style>

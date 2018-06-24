@@ -57,19 +57,8 @@ class CalendarController
     function getMonths(Request $request, $yearsDiff = 0)
     {
         $user_id = Auth::user()->id;
-//        $events = CalendarModel::where('event.user_id', $user_id)->where('deleted_at', null)->get();
         $dates = [];
         $daysWithEvents = [];
-//        foreach ($events as $event) {
-//            $e = $event->event;
-//            if (array_key_exists($e['day'], $dates)) {
-//                array_push($dates[$e['day']], $e['name']);
-//            } else {
-//                $dates[$e['day']] = [$e['name']];
-//            }
-//            $numberOfEvents = count($dates[$e['day']]);
-//            $daysWithEvents[$e['day']] = $numberOfEvents;
-//        }
 
         return view('calendar.calendar', ['dates' => $daysWithEvents, 'yearsDiff' => $yearsDiff]);
     }
@@ -88,6 +77,10 @@ class CalendarController
         (int)$monthNow <= $month ? $year = (int)date('Y') : $year = (int)date('Y') + 1;
         $dt = Carbon::createFromDate($year, $month, $day);
 
+
+        dump(Carbon::tomorrow()->timestamp);
+        dd(Carbon::yesterday()->timestamp);
+
         return view('calendar.day', [
             'currentDay' => $currentDay,
             'month' => $month,
@@ -98,8 +91,14 @@ class CalendarController
             'year' => $year,
             'wholeDayEvents' => CalendarModel
                 ::where('wholeDay', true)
-                ->where('user_id', Auth::user()->id)
-//                ->where('startDate', time())
+//                ->where('startDate' ,'>', Carbon::yesterday()->timestamp)
+//                ->where('startDate' ,'<', Carbon::tomorrow()->timestamp)
+                ->where(function ($query) {
+                    $query ->where('user_id', Auth::user()->id)
+                        ->orWhere('visibility', '=', 'public');
+                })
+
+
                 ->get()
         ]);
 
@@ -110,27 +109,28 @@ class CalendarController
      *
      * @param Request $request
      */
-    function postEvent(Request $request){
+    function postEvent(Request $request)
+    {
         $name = $request->get('name');
         $wholeDay = $request->get('wholeDay');
         $startTime = strtotime($request->get('startDate'));
         $endTime = strtotime($request->get('endDate'));
         $notifications = $request->get('notifications');
         $visibility = $request->get('visibility');
-        if($startTime < $endTime || $wholeDay == true){
+        if ($startTime < $endTime || $wholeDay == true) {
             $startDate = date('d/m/Y', $startTime);
             $endDate = date('d/m/Y', $endTime);
-            if($startDate == $endDate){
+            if ($startDate == $endDate) {
                 $calendar = new CalendarModel;
                 $calendar->name = $name;
                 $calendar->wholeDay = $wholeDay;
-                if($wholeDay == false){
+                if ($wholeDay == false) {
                     $calendar->startDate = $startTime;
                     $calendar->endDate = $endTime;
                 } else {
                     $calendar->startDate = $startTime;
                 }
-                if($visibility === "personal"){
+                if ($visibility === "personal") {
                     $calendar->user_id = Auth::user()->id;
                 }
                 $calendar->visibility = $visibility;
@@ -139,7 +139,8 @@ class CalendarController
         }
     }
 
-    function getEvents(Request $request){
+    function getEvents(Request $request)
+    {
         $date = $request->get('date');
         $user_id = Auth::user()->id;
 
@@ -163,9 +164,10 @@ class CalendarController
      * Зарежда почивни дни от mongodb
      *
      */
-    function getRestDays(){
+    function getRestDays()
+    {
         $restDays = CalendarModel::where('type', 'restDay')->get();
-        foreach($restDays as $day){
+        foreach ($restDays as $day) {
             $day->normalDate = date('d/m/Y', $day->startDate);
         }
 
@@ -177,7 +179,8 @@ class CalendarController
      *
      * @param Request $request
      */
-    function postRestDay(Request $request){
+    function postRestDay(Request $request)
+    {
         $restDay = strtotime($request->get('restDay'));
 
         $calendar = new CalendarModel;
@@ -197,7 +200,8 @@ class CalendarController
      *
      * @param Request $request
      */
-    function deleteRestDay(Request $request){
+    function deleteRestDay(Request $request)
+    {
         $id = $request->get('id');
 
         CalendarModel::where('_id', $id)->forceDelete();
@@ -209,10 +213,11 @@ class CalendarController
      * Зарежда имени дни от mongodb
      *
      */
-    function getNameDays(){
+    function getNameDays()
+    {
         $nameDays = CalendarModel::where('type', 'nameDay')->get();
 
-        foreach($nameDays as $day){
+        foreach ($nameDays as $day) {
             $day->normalDate = date('d/m/Y', $day->startDate);
         }
 
@@ -224,7 +229,8 @@ class CalendarController
      *
      * @param Request $request
      */
-    function postNameDay(Request $request){
+    function postNameDay(Request $request)
+    {
         $nameDay = strtotime($request->get('date'));
         $name = $request->get('name');
         $text = $request->get('description');
@@ -247,7 +253,8 @@ class CalendarController
      *
      * @param Request $request
      */
-    function deleteNameDay(Request $request){
+    function deleteNameDay(Request $request)
+    {
         $id = $request->get('id');
 
         CalendarModel::where('_id', $id)->forceDelete();

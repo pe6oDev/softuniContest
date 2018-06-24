@@ -37,15 +37,7 @@ $(document).ready(function(){
         changeMonths($(this),1)
     });
 
-    $("#floatingButton").click(function () {
-        $("#postModal")
-            .modal({
-                transition: 'fade',
-            })
-            .modal('show');
-        $('#calendarStart').calendar();
-        $('#calendarEnd').calendar();
-    });
+
 
 
 

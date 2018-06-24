@@ -69,7 +69,7 @@
                                     'id'=>$event->id,
                                     'color'=>App\EventsColors::colors[$event->type],
                                     'header'=>$event->name,
-                                    'description'=>$event->description
+                                    'description'=>$event->text
                                     ])
                 @endforeach
 
@@ -90,9 +90,7 @@
                 </div>
             </div>
         </div>
-        {{--@include('includes.modals.eventModal', ['id' => 'postModal', 'type' => 'Създаване на събитие'])--}}
-        {{--@include('includes.modals.eventModal', ['id' => 'editModal', 'type' => 'Редактиране на събитие'])--}}
-        {{--@include('includes.modals.yes_noModal', ['id' => 'deleteModal', 'header' => 'Изтриване на събитие', 'content' => 'Наистина ли искате да изтриете това събитие?'])--}}
+        @include('includes.modals.eventModal', ['id' => 'postModal', 'type' => 'Създаване на събитие', 'dayMonth' => '', 'dayId' => 'dayPost', 'monthId' => 'monthPost'])
 
         <div id="floatingButton" class=" ui red button huge circular icon">
             <i class="ui add icon"></i>
@@ -104,13 +102,13 @@
 
 @push('scripts')
 <script>
+
+    $('.calendar').click(function(){
+        $('#calendar').popup()
+    });
+
     var hideSidebar = true;
 
-    {{--postEventUrl = "{{route('postEvent')}}";--}}
-            {{--getEventsUrl = "{{route('getEvents')}}";--}}
-            {{--getOneEventUrl = "{{route('getOneEvent')}}";--}}
-            {{--deleteEventUrl = "{{route('deleteEvent')}}";--}}
-            {{--editEventUrl = "{{route('editEvent')}}";--}}
         date = "{{$date}}";
     token = "{{Session::token()}}";
     //за сменянето на дни със слайдване на пръста
