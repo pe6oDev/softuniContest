@@ -24,9 +24,7 @@ Route::get('/', function (\Illuminate\Http\Request $request) {
 
 
 
-Route::get('/login', function () {
-    return view('dashboard');
-})->name('login');
+Route::get('/login',  'Auth\LoginController@getLogIn')->name('login');
 
 
 
@@ -90,8 +88,10 @@ Route::middleware('auth')->group(function (){
     Route::get('1',function(){})->name('getDay');//TODO::remove
     Route::get('/month/{yearsDiff?}', 'CalendarController@getMonths')->name('calendar.month');
 
-    Route::get('users',function(){
-       return view('users.users');
-    });
+    Route::get('users','Admin\AdminController@getUsers');
+
+    Route::post('users/ajax','Admin\AdminController@getUsersAjax')->name('usersAjax');
+
+    Route::post('users/change/type', 'Admin\AdminController@postChangeType')->name('changeUserType');
 
 });
